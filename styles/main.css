@@ -10,3 +10,7 @@
 .si {
     display: inline;
 }
+
+.dontShowAtStart {
+    display: none;
+}

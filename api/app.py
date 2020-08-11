@@ -1,1 +1,2 @@
-print("test for weyland")
+# used for storing user data (instead of localStorage)
+# used for password management

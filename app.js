@@ -4,24 +4,55 @@ const birthdate = document.querySelector("#birthdateInput");
 
 const finished_button = document.querySelector("#finished-input");
 
+
 if (localStorage.getItem("age-expectancy") != null) {
     document.querySelector("#gen-data-info").style.display = "none";
     // TODO: hide input when loading this...
     generateUserMap();
 } else {
     finished_button.addEventListener("click", function (e) {
-        createMap(true);
-        e.preventDefault();
-    });
-}
-
-function createMap(is_new, e) {
-    if (is_new == true) {
         if (expectancy.value == "" || birthdate.value == "") {
             warningOutput(e);
             const error = setTimeout(warningHide, 3000);
             return;
+        } else {
+        createMap(true);
+        e.preventDefault();
         }
+    });
+}
+
+document.querySelector("#reset-stuff").addEventListener("click", tryReset);
+
+function tryReset() {
+    const serious = confirm(
+        "Are you SURE you want to reset? This action is IRREVERSIBLE!"
+    );
+    if (serious == true) {
+        localStorage.clear();
+        location.reload();
+    }
+}
+
+const send_emails = document.querySelector("#send-emails");
+send_emails.addEventListener("click", showEmailDialog);
+function showEmailDialog() {
+    if (send_emails.checked) {
+        let invisibles = document.querySelectorAll(".emailDialog");
+        invisibles.forEach((invisible) => {
+            invisible.classList.remove("invisible");
+        });
+    } else {
+        let invisibles = document.querySelectorAll(".emailDialog");
+        invisibles.forEach((invisible) => {
+            invisible.classList.add("invisible");
+        });
+    }
+}
+
+function createMap(is_new, e) {
+    document.querySelector(".dontShowAtStart").classList.remove("dontShowAtStart")
+    if (is_new == true) {
 
         const age_expectancy = expectancy.value;
         const birthdate_value = birthdate.value;
@@ -133,16 +164,14 @@ function rewriteModal(i) {
     document.querySelector(`#what-did-${i}`).classList.remove("invisible");
 
     // check for save button click
-    console.log("welcome to save button")
     document
         .querySelector(`#submit-year-${i}`)
         .addEventListener("mouseup", generateEditModalBox);
 
     function editModalBox(i) {
-        console.log("within editmodalbox")
         // change back to edit
         document.querySelector(`#submit-year-${i}`).textContent = "Edit";
-    
+
         // display changes
         document.querySelector(`#what-did-${i}`).classList.add("invisible");
         if (
@@ -152,22 +181,29 @@ function rewriteModal(i) {
             var converter = new showdown.Converter(),
                 text = document.querySelector(`#what-did-${i}`).value,
                 html = converter.makeHtml(text);
-            localStorage.setItem(i, document.querySelector(`#what-did-${i}`).value);
+            localStorage.setItem(
+                i,
+                document.querySelector(`#what-did-${i}`).value
+            );
         } else {
             html = document.querySelector(`#user-text-${i}`).innerHTML;
         }
-    
+
         document.querySelector(`#user-text-${i}`).innerHTML = html;
-    
+
         // clear textarea
         document.querySelector(`#what-did-${i}`).value = "";
-    
-        document.querySelector(`#submit-year-${i}`).removeEventListener("mouseup", generateEditModalBox)
+
+        document
+            .querySelector(`#submit-year-${i}`)
+            .removeEventListener("mouseup", generateEditModalBox);
     }
 
     function generateEditModalBox() {
         editModalBox(i);
-        document.querySelector(`#submit-year-${i}`).removeEventListener("mouseup", generateEditModalBox);
+        document
+            .querySelector(`#submit-year-${i}`)
+            .removeEventListener("mouseup", generateEditModalBox);
     }
 }
 
@@ -184,4 +220,3 @@ function checkSavedText(i) {
         document.querySelector(`#user-text-${i}`).innerHTML = html;
     }
 }
-
