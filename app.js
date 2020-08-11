@@ -74,7 +74,8 @@ function createMap(is_new, e) {
         const saveChanges =
             newBtnStyling.children[0].children[0].children[0].children[2]
                 .children[1];
-        saveChanges.addEventListener("click", () => {
+        // note -> rewriting modal for save changes!
+        saveChanges.addEventListener("mousedown", () => {
             rewriteModal(i);
         });
         newBtn.addEventListener("click", () => {
@@ -123,7 +124,7 @@ function shadeButtons(age_expectancy, birthday) {
     }
 }
 
-// TODO: support rewriting modal multiple times
+// FIXME: support rewriting modal multiple times
 function rewriteModal(i) {
     // change button name
     document.querySelector(`#submit-year-${i}`).textContent = "Save changes";
@@ -132,33 +133,42 @@ function rewriteModal(i) {
     document.querySelector(`#what-did-${i}`).classList.remove("invisible");
 
     // check for save button click
+    console.log("welcome to save button")
     document
         .querySelector(`#submit-year-${i}`)
-        .addEventListener("click", function () {
-            // save modal text to local storage
-            localStorage.setItem(
-                i,
-                document.querySelector(`#what-did-${i}`).value
-            );
+        .addEventListener("mouseup", generateEditModalBox);
 
-            // change back to edit
-            document.querySelector(`#submit-year-${i}`).textContent = "Edit";
+    function editModalBox(i) {
+        console.log("within editmodalbox")
+        // change back to edit
+        document.querySelector(`#submit-year-${i}`).textContent = "Edit";
+    
+        // display changes
+        document.querySelector(`#what-did-${i}`).classList.add("invisible");
+        if (
+            document.querySelector(`#user-text-${i}`).innerHTML[0] != "<" ||
+            document.querySelector(`#what-did-${i}`).value != ""
+        ) {
+            var converter = new showdown.Converter(),
+                text = document.querySelector(`#what-did-${i}`).value,
+                html = converter.makeHtml(text);
+            localStorage.setItem(i, document.querySelector(`#what-did-${i}`).value);
+        } else {
+            html = document.querySelector(`#user-text-${i}`).innerHTML;
+        }
+    
+        document.querySelector(`#user-text-${i}`).innerHTML = html;
+    
+        // clear textarea
+        document.querySelector(`#what-did-${i}`).value = "";
+    
+        document.querySelector(`#submit-year-${i}`).removeEventListener("mouseup", generateEditModalBox)
+    }
 
-            // display changes
-            document.querySelector(`#what-did-${i}`).classList.add("invisible");
-            if (document.querySelector(`#user-text-${i}`).innerHTML[0] != "<") {
-                var converter = new showdown.Converter(),
-                    text = document.querySelector(`#what-did-${i}`).value,
-                    html = converter.makeHtml(text);
-            } else {
-                html = document.querySelector(`#user-text-${i}`).innerHTML;
-            }
-
-            document.querySelector(`#user-text-${i}`).innerHTML = html;
-
-            // clear textarea
-            document.querySelector(`#what-did-${i}`).value = "";
-        });
+    function generateEditModalBox() {
+        editModalBox(i);
+        document.querySelector(`#submit-year-${i}`).removeEventListener("mouseup", generateEditModalBox);
+    }
 }
 
 function generateUserMap() {
@@ -174,3 +184,4 @@ function checkSavedText(i) {
         document.querySelector(`#user-text-${i}`).innerHTML = html;
     }
 }
+
