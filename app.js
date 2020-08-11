@@ -125,8 +125,7 @@ function shadeButtons(age_expectancy, birthday) {
 
 // TODO: support rewriting modal multiple times
 function rewriteModal(i) {
-    console.log("at rewrite modal " + i)
-    // change button name and class
+    // change button name
     document.querySelector(`#submit-year-${i}`).textContent = "Save changes";
 
     // allow markdown input + remove invisible class
@@ -147,9 +146,13 @@ function rewriteModal(i) {
 
             // display changes
             document.querySelector(`#what-did-${i}`).classList.add("invisible");
-            var converter = new showdown.Converter(),
-                text = document.querySelector(`#what-did-${i}`).value,
-                html = converter.makeHtml(text);
+            if (document.querySelector(`#user-text-${i}`).innerHTML[0] != "<") {
+                var converter = new showdown.Converter(),
+                    text = document.querySelector(`#what-did-${i}`).value,
+                    html = converter.makeHtml(text);
+            } else {
+                html = document.querySelector(`#user-text-${i}`).innerHTML;
+            }
 
             document.querySelector(`#user-text-${i}`).innerHTML = html;
 
