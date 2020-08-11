@@ -6,3 +6,7 @@
 .invisible {
     visibility: hidden;
 }
+
+.si {
+    display: inline;
+}
