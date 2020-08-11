@@ -4,17 +4,41 @@ const birthdate = document.querySelector("#birthdateInput");
 
 const finished_button = document.querySelector("#finished-input");
 
-finished_button.addEventListener("click", createMap);
+if (localStorage.getItem("age-expectancy") != null) {
+    document.querySelector("#gen-data-info").style.display = "none";
+    generateUserMap();
+} else {
+    console.log("there is a new user")
+    finished_button.addEventListener("click", function (e) {
+        console.log("it was clicked!!!")
+        createMap(true, e);
+        e.preventDefault();
+    });
+}
 
-function createMap(e) {
-    if (expectancy.value == "" || birthdate.value == "") {
-        warningOutput(e);
-        const error = setTimeout(warningHide, 3000);
-        return;
+function createMap(is_new, e) {
+    if (is_new == true) {
+        console.log("wihtin new value")
+        if (expectancy.value == "" || birthdate.value == "") {
+            warningOutput(e);
+            const error = setTimeout(warningHide, 3000);
+            return;
+        }
+
+        const age_expectancy = expectancy.value;
+        const birthdate_value = birthdate.value;
+
+        localStorage.setItem("age-expectancy", expectancy.value);
+        localStorage.setItem("birthday", birthdate.value);
+    } else {
+        age_expectancy = localStorage.getItem("age-expectancy")
+        birthdate_value = localStorage.getItem("birthday")
     }
 
+    console.log("creating map!...")
+
     const btnContainer = document.querySelector(".output");
-    for (let i = 0; i < expectancy.value; i++) {
+    for (let i = 0; i < age_expectancy; i++) {
         const newBtn = document.createElement("button");
         newBtn.setAttribute("id", `year-${i + 1}`);
         newBtn.setAttribute("type", "button");
@@ -30,7 +54,9 @@ function createMap(e) {
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Year ${i + 1}</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Year ${
+                            i + 1
+                        }</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                         </button>
@@ -49,8 +75,10 @@ function createMap(e) {
             </div>
         </div>`;
 
-        const saveChanges = newBtnStyling.children[0].children[0].children[0].children[2].children[1];
-        console.log(saveChanges)
+        const saveChanges =
+            newBtnStyling.children[0].children[0].children[0].children[2]
+                .children[1];
+        console.log(saveChanges);
         saveChanges.addEventListener("click", () => {
             rewriteModal(i);
         });
@@ -63,7 +91,7 @@ function createMap(e) {
     // prevent submit button from being clicked again
     document.querySelector("#finished-input").style.display = "none";
 
-    shadeButtons();
+    shadeButtons(age_expectancy, birthdate_value);
     e.preventDefault();
 }
 
@@ -78,9 +106,9 @@ function warningHide() {
     document.querySelector(".get-data").classList.add("d-none");
 }
 
-function shadeButtons() {
+function shadeButtons(age_expectancy, birthday) {
     function calculateAge() {
-        let dob = new Date(birthdate.value);
+        let dob = new Date(birthday);
         dob = Date.now() - dob.getTime();
         ageDate = new Date(dob);
         return Math.abs(ageDate.getUTCFullYear() - 1970);
@@ -92,14 +120,13 @@ function shadeButtons() {
     }
     document.querySelector(`#year-${age}`).classList.add("btn-warning");
     // document.querySelector(`#year-${age}`).style.backgroundColor = "yellow";
-    for (let x = age + 1; x <= expectancy.value; x++) {
+    for (let x = age + 1; x <= age_expectancy; x++) {
         // document.querySelector(`#year-${x}`).style.backgroundColor = "#32CD32";
         document.querySelector(`#year-${x}`).classList.add("btn-success");
     }
 }
 
 function rewriteModal(i) {
-    console.log("within rewrite modal i is" + i);
     // change button name and class
     document.querySelector(`#submit-year-${i}`).textContent = "Save changes";
 
@@ -117,7 +144,21 @@ function rewriteModal(i) {
             );
 
             // change back to edit
+            document.querySelector(`#submit-year-${i}`).textContent = "Edit";
 
             // display changes
+            document.querySelector(`#what-did-${i}`).classList.add("invisible");
+            var converter = new showdown.Converter(),
+                text = document.querySelector(`#what-did-${i}`).value,
+                html = converter.makeHtml(text);
+
+            document.querySelector(`#user-text-${i}`).innerHTML = html;
+
+            // clear textarea
+            document.querySelector(`#what-did-${i}`).value = "";
         });
+}
+
+function generateUserMap(e) {
+    createMap(false, e);
 }
