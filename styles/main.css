@@ -14,3 +14,9 @@
 .dontShowAtStart {
     display: none;
 }
+
+.smallInput {
+    /* font-size: 30%; */
+    /* Would need to be done for all headings, manually. */
+    font-size: 100%;
+}

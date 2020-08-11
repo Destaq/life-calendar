@@ -89,8 +89,8 @@ function createMap(is_new, e) {
                         </button>
                     </div>
                     <div class="modal-body">
-                        <center><label for="what-did-${i}"><strong>Goals/Accomplished</strong></label></center>
-                        <div id="user-text-${i}"></div>
+                        <center><label for="what-did-${i}"><strong><u>Goals/Accomplished</u></strong></label></center>
+                        <div id="user-text-${i}" class="smallInput"></div>
                             <textarea class="form-control invisible" id="what-did-${i}" placeholder="Supports Markdown!"></textarea>
                         </div>
                         <div class="modal-footer">
@@ -105,7 +105,7 @@ function createMap(is_new, e) {
         const saveChanges =
             newBtnStyling.children[0].children[0].children[0].children[2]
                 .children[1];
-        // note -> rewriting modal for save changes!
+                
         saveChanges.addEventListener("mousedown", () => {
             rewriteModal(i);
         });
@@ -160,6 +160,11 @@ function rewriteModal(i) {
     // change button name
     document.querySelector(`#submit-year-${i}`).textContent = "Save changes";
 
+    // modify textarea
+    // FIXME: only works the first time
+    document.querySelector(`#what-did-${i}`).innerHTML = document.querySelector(`#user-text-${i}`).textContent
+    console.log(document.querySelector(`#what-did-${i}`))
+
     // allow markdown input + remove invisible class
     document.querySelector(`#what-did-${i}`).classList.remove("invisible");
 
@@ -178,6 +183,9 @@ function rewriteModal(i) {
             document.querySelector(`#user-text-${i}`).innerHTML[0] != "<" ||
             document.querySelector(`#what-did-${i}`).value != ""
         ) {
+
+            // document.querySelector(`#user-text-${i}`).innerHTML
+
             var converter = new showdown.Converter(),
                 text = document.querySelector(`#what-did-${i}`).value,
                 html = converter.makeHtml(text);
