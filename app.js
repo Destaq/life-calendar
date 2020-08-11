@@ -6,19 +6,17 @@ const finished_button = document.querySelector("#finished-input");
 
 if (localStorage.getItem("age-expectancy") != null) {
     document.querySelector("#gen-data-info").style.display = "none";
+    // TODO: hide input when loading this...
     generateUserMap();
 } else {
-    console.log("there is a new user")
     finished_button.addEventListener("click", function (e) {
-        console.log("it was clicked!!!")
-        createMap(true, e);
+        createMap(true);
         e.preventDefault();
     });
 }
 
 function createMap(is_new, e) {
     if (is_new == true) {
-        console.log("wihtin new value")
         if (expectancy.value == "" || birthdate.value == "") {
             warningOutput(e);
             const error = setTimeout(warningHide, 3000);
@@ -34,8 +32,6 @@ function createMap(is_new, e) {
         age_expectancy = localStorage.getItem("age-expectancy")
         birthdate_value = localStorage.getItem("birthday")
     }
-
-    console.log("creating map!...")
 
     const btnContainer = document.querySelector(".output");
     for (let i = 0; i < age_expectancy; i++) {
@@ -78,10 +74,12 @@ function createMap(is_new, e) {
         const saveChanges =
             newBtnStyling.children[0].children[0].children[0].children[2]
                 .children[1];
-        console.log(saveChanges);
         saveChanges.addEventListener("click", () => {
             rewriteModal(i);
         });
+        newBtn.addEventListener("click", () => {
+            checkSavedText(i);
+        })
 
         btnContainer.append(newBtn);
         btnContainer.append(newBtnStyling);
@@ -92,7 +90,6 @@ function createMap(is_new, e) {
     document.querySelector("#finished-input").style.display = "none";
 
     shadeButtons(age_expectancy, birthdate_value);
-    e.preventDefault();
 }
 
 function warningOutput(e) {
@@ -126,6 +123,7 @@ function shadeButtons(age_expectancy, birthday) {
     }
 }
 
+// TODO: support rewriting modal multiple times
 function rewriteModal(i) {
     // change button name and class
     document.querySelector(`#submit-year-${i}`).textContent = "Save changes";
@@ -159,6 +157,12 @@ function rewriteModal(i) {
         });
 }
 
-function generateUserMap(e) {
-    createMap(false, e);
+function generateUserMap() {
+    createMap(false);
+}
+
+function checkSavedText(i) {
+    if (localStorage.getItem(i) != null) {
+        document.querySelector(`#user-text-${i}`).innerHTML = localStorage.getItem(i)
+    }
 }
