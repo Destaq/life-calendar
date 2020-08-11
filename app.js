@@ -29,8 +29,8 @@ function createMap(is_new, e) {
         localStorage.setItem("age-expectancy", expectancy.value);
         localStorage.setItem("birthday", birthdate.value);
     } else {
-        age_expectancy = localStorage.getItem("age-expectancy")
-        birthdate_value = localStorage.getItem("birthday")
+        age_expectancy = localStorage.getItem("age-expectancy");
+        birthdate_value = localStorage.getItem("birthday");
     }
 
     const btnContainer = document.querySelector(".output");
@@ -79,7 +79,7 @@ function createMap(is_new, e) {
         });
         newBtn.addEventListener("click", () => {
             checkSavedText(i);
-        })
+        });
 
         btnContainer.append(newBtn);
         btnContainer.append(newBtnStyling);
@@ -125,6 +125,7 @@ function shadeButtons(age_expectancy, birthday) {
 
 // TODO: support rewriting modal multiple times
 function rewriteModal(i) {
+    console.log("at rewrite modal " + i)
     // change button name and class
     document.querySelector(`#submit-year-${i}`).textContent = "Save changes";
 
@@ -163,6 +164,10 @@ function generateUserMap() {
 
 function checkSavedText(i) {
     if (localStorage.getItem(i) != null) {
-        document.querySelector(`#user-text-${i}`).innerHTML = localStorage.getItem(i)
+        const markdown = localStorage.getItem(i);
+        var converter = new showdown.Converter(),
+            text = markdown,
+            html = converter.makeHtml(text);
+        document.querySelector(`#user-text-${i}`).innerHTML = html;
     }
 }
