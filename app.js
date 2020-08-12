@@ -4,6 +4,11 @@ const birthdate = document.querySelector("#birthdateInput");
 
 const finished_button = document.querySelector("#finished-input");
 
+let is_clipboard = false;
+
+$("body").tooltip({
+    selector: ".btn",
+});
 
 if (localStorage.getItem("age-expectancy") != null) {
     document.querySelector("#gen-data-info").style.display = "none";
@@ -16,8 +21,8 @@ if (localStorage.getItem("age-expectancy") != null) {
             const error = setTimeout(warningHide, 3000);
             return;
         } else {
-        createMap(true);
-        e.preventDefault();
+            createMap(true);
+            e.preventDefault();
         }
     });
 }
@@ -51,9 +56,10 @@ function showEmailDialog() {
 }
 
 function createMap(is_new, e) {
-    document.querySelector(".dontShowAtStart").classList.remove("dontShowAtStart")
+    document
+        .querySelector(".dontShowAtStart")
+        .classList.remove("dontShowAtStart");
     if (is_new == true) {
-
         const age_expectancy = expectancy.value;
         const birthdate_value = birthdate.value;
 
@@ -91,7 +97,7 @@ function createMap(is_new, e) {
                     <div class="modal-body">
                         <center><label for="what-did-${i}"><strong><u>Goals/Accomplished</u></strong></label></center>
                         <div id="user-text-${i}" class="smallInput"></div>
-                            <textarea class="form-control invisible" id="what-did-${i}" placeholder="Supports Markdown!"></textarea>
+                            <textarea class="form-control invisible" id="what-did-${i}" placeholder="Supports Markdown and copying to clipboard!"></textarea>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -105,7 +111,7 @@ function createMap(is_new, e) {
         const saveChanges =
             newBtnStyling.children[0].children[0].children[0].children[2]
                 .children[1];
-                
+
         saveChanges.addEventListener("mousedown", () => {
             rewriteModal(i);
         });
@@ -160,13 +166,78 @@ function rewriteModal(i) {
     // change button name
     document.querySelector(`#submit-year-${i}`).textContent = "Save changes";
 
-    // modify textarea
-    // FIXME: only works the first time
-    document.querySelector(`#what-did-${i}`).innerHTML = document.querySelector(`#user-text-${i}`).textContent
-    console.log(document.querySelector(`#what-did-${i}`))
+    // modify textarea FIXME - only works first time
+    // document.querySelector(`#what-did-${i}`).innerHTML = document.querySelector(
+    //     `#user-text-${i}`
+    // ).textContent;
+    // console.log(document.querySelector(`#what-did-${i}`));
+
+    // add clipboard button
+    const clipboard_button = document.createElement("button");
+    clipboard_button.classList.add("btn");
+    clipboard_button.setAttribute("id", `clipboard-copy-${i}`);
+    clipboard_button.setAttribute("data-toggle", "tooltip");
+    clipboard_button.setAttribute("data-placement", "top");
+    clipboard_button.setAttribute("type", "button");
+    clipboard_button.setAttribute("title", "Copy to clipboard!");
+    clipboard_button.innerHTML = `
+    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-clipboard" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd" d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+        <path fill-rule="evenodd" d="M9.5 1h-3a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+    </svg>
+    `;
+    // clipboard_button.addEventListener("click", function () {
+    //     copyAboveToClipboard(i);
+    // });
+    clipboard_button.addEventListener("click", function () {
+        copyAboveToClipboard(i);
+    });
+
+    if (is_clipboard == false) {
+        is_clipboard = true;
+        document
+            .querySelector(`#submit-year-${i}`)
+            .parentElement.insertBefore(
+                clipboard_button,
+                document.querySelector(`#submit-year-${i}`).parentElement
+                    .children[1]
+            );
+    }
 
     // allow markdown input + remove invisible class
     document.querySelector(`#what-did-${i}`).classList.remove("invisible");
+
+    // fill clipboard with data from localStorage if there
+    function copyAboveToClipboard(i) {
+        if (localStorage.getItem(i) != null) {
+            var cb = document.getElementById("cb");
+            cb.textContent = "yay!";
+            cb.style.display = "block";
+            console.log(cb);
+            cb.select();
+            document.execCommand("copy");
+            cb.style.display = "none";
+
+            const copy_success = document.createElement("div");
+            copy_success.classList.add("alert");
+            copy_success.classList.add("alert-success");
+            copy_success.setAttribute("role", "alert");
+            copy_success.innerHTML = "Copied!";
+
+            // note copy success
+            document
+                .querySelector(`#what-did-${i}`)
+                .parentElement.insertBefore(
+                    copy_success,
+                    document.querySelector(`#what-did-${i}`).parentElement
+                        .children[0]
+                );
+
+            setTimeout(function () {
+                copy_success.remove();
+            }, 2000);
+        }
+    }
 
     // check for save button click
     document
@@ -174,6 +245,14 @@ function rewriteModal(i) {
         .addEventListener("mouseup", generateEditModalBox);
 
     function editModalBox(i) {
+        // remove clipboard button
+        if (is_clipboard == true) {
+            document
+                .querySelector(`#submit-year-${i}`)
+                .parentElement.removeChild(clipboard_button);
+            is_clipboard = false;
+        }
+
         // change back to edit
         document.querySelector(`#submit-year-${i}`).textContent = "Edit";
 
@@ -183,7 +262,6 @@ function rewriteModal(i) {
             document.querySelector(`#user-text-${i}`).innerHTML[0] != "<" ||
             document.querySelector(`#what-did-${i}`).value != ""
         ) {
-
             // document.querySelector(`#user-text-${i}`).innerHTML
 
             var converter = new showdown.Converter(),
