@@ -161,7 +161,6 @@ function shadeButtons(age_expectancy, birthday) {
     }
 }
 
-// FIXME: support rewriting modal multiple times
 function rewriteModal(i) {
     // change button name
     document.querySelector(`#submit-year-${i}`).textContent = "Save changes";
@@ -218,7 +217,7 @@ function rewriteModal(i) {
             copy_success.setAttribute("role", "alert");
             copy_success.innerHTML = "Copied!";
 
-            // note copy success
+            // share copy success
             document
                 .querySelector(`#what-did-${i}`)
                 .parentElement.insertBefore(
