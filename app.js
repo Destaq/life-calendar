@@ -97,7 +97,7 @@ function createMap(is_new, e) {
                     <div class="modal-body">
                         <center><label for="what-did-${i}"><strong><u>Goals/Accomplished</u></strong></label></center>
                         <div id="user-text-${i}" class="smallInput"></div>
-                            <textarea class="form-control invisible" id="what-did-${i}" placeholder="Supports Markdown and copying to clipboard!"></textarea>
+                            <textarea class="form-control invisible" id="what-did-${i}" placeholder="Supports Markdown and copying down previous text!"></textarea>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -179,16 +179,14 @@ function rewriteModal(i) {
     clipboard_button.setAttribute("data-toggle", "tooltip");
     clipboard_button.setAttribute("data-placement", "top");
     clipboard_button.setAttribute("type", "button");
-    clipboard_button.setAttribute("title", "Copy to clipboard!");
+    clipboard_button.setAttribute("title", "Paste old text to input!");
     clipboard_button.innerHTML = `
     <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-clipboard" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
         <path fill-rule="evenodd" d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
         <path fill-rule="evenodd" d="M9.5 1h-3a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
     </svg>
     `;
-    // clipboard_button.addEventListener("click", function () {
-    //     copyAboveToClipboard(i);
-    // });
+
     clipboard_button.addEventListener("click", function () {
         copyAboveToClipboard(i);
     });
@@ -210,13 +208,9 @@ function rewriteModal(i) {
     // fill clipboard with data from localStorage if there
     function copyAboveToClipboard(i) {
         if (localStorage.getItem(i) != null) {
-            var cb = document.getElementById("cb");
-            cb.textContent = "yay!";
-            cb.style.display = "block";
-            console.log(cb);
-            cb.select();
-            document.execCommand("copy");
-            cb.style.display = "none";
+            document.querySelector(`#what-did-${i}`).value = localStorage.getItem(i)
+            console.log(localStorage.getItem(i))
+            document.querySelector(`#what-did-${i}`).value
 
             const copy_success = document.createElement("div");
             copy_success.classList.add("alert");
