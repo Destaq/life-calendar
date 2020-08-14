@@ -1,32 +1,78 @@
+const http = new SimpleHTTP();
+
 const expectancy = document.querySelector("#years");
 
 const birthdate = document.querySelector("#birthdateInput");
 
 const finished_button = document.querySelector("#finished-input");
 
+// whether or not the clipboard button is displayed
 let is_clipboard = false;
+let current_view = "weeks";
 
+// whether or not they are a new user
+let is_new_user = true;
+
+// granularity button views
+const granularity_decades = document.querySelector("#view-decades");
+const granularity_years = document.querySelector("#view-years");
+const granularity_months = document.querySelector("#view-months");
+const granularity_weeks = document.querySelector("#view-weeks");
+const granularity_days = document.querySelector("#view-days");
+
+// current view (defaults to years)
+
+granularity_decades.addEventListener("click", function() {
+    current_view = "decades";
+    createMap(is_new_user, current_view)
+})
+
+granularity_years.addEventListener("click", function() {
+    current_view = "years";
+    createMap(is_new_user, current_view)
+})
+
+granularity_months.addEventListener("click", function() {
+    current_view = "months";
+    createMap(is_new_user, current_view)
+})
+
+granularity_weeks.addEventListener("click", function() {
+    current_view = "weeks";
+    createMap(is_new_user, current_view)
+})
+
+granularity_days.addEventListener("click", function() {
+    current_view = "days";
+    createMap(is_new_user, current_view)
+})
+
+// set up the tooltip
 $("body").tooltip({
     selector: ".btn",
 });
 
+// generate map from localStorage if not empty, else from blank
 if (localStorage.getItem("age-expectancy") != null) {
     document.querySelector("#gen-data-info").style.display = "none";
     // TODO: hide input when loading this...
     generateUserMap();
 } else {
     finished_button.addEventListener("click", function (e) {
+        // warn if they filled out the information incorrectly
+        // TODO: don't show the Restart and Granularity buttons if this occurs
         if (expectancy.value == "" || birthdate.value == "") {
             warningOutput(e);
             const error = setTimeout(warningHide, 3000);
             return;
         } else {
-            createMap(true);
+            createMap(is_new_user, current_view);
             e.preventDefault();
         }
     });
 }
 
+// reset button (will be moved to their settings)
 document.querySelector("#reset-stuff").addEventListener("click", tryReset);
 
 function tryReset() {
@@ -39,6 +85,7 @@ function tryReset() {
     }
 }
 
+// checkbox for whether or not they want to add their email (again, link to user signup)
 const send_emails = document.querySelector("#send-emails");
 send_emails.addEventListener("click", showEmailDialog);
 function showEmailDialog() {
@@ -55,7 +102,7 @@ function showEmailDialog() {
     }
 }
 
-function createMap(is_new, e) {
+function createMap(is_new, gran_level, e) {
     document
         .querySelector(".dontShowAtStart")
         .classList.remove("dontShowAtStart");
@@ -71,19 +118,21 @@ function createMap(is_new, e) {
     }
 
     const btnContainer = document.querySelector(".output");
+
+    // create all of the buttons from scratch - FIXME: look into caching HTML
     for (let i = 0; i < age_expectancy; i++) {
         const newBtn = document.createElement("button");
         newBtn.setAttribute("id", `year-${i + 1}`);
         newBtn.setAttribute("type", "button");
         newBtn.setAttribute("class", "mr-1 mb-1 year-button btn");
         newBtn.setAttribute("data-toggle", "modal");
-        newBtn.setAttribute("data-target", `#Modal${i}`);
+        newBtn.setAttribute("data-target", `#Modal${i + 1}`);
         newBtn.innerHTML = `${i + 1}`;
 
         const newBtnStyling = document.createElement("span");
 
         newBtnStyling.innerHTML += `
-        <div class="modal fade" id="Modal${i}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" display="inline">
+        <div class="modal fade" id="Modal${i + 1}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" display="inline">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -95,19 +144,20 @@ function createMap(is_new, e) {
                         </button>
                     </div>
                     <div class="modal-body">
-                        <center><label for="what-did-${i}"><strong><u>Goals/Accomplished</u></strong></label></center>
-                        <div id="user-text-${i}" class="smallInput"></div>
-                            <textarea class="form-control invisible" id="what-did-${i}" placeholder="Supports Markdown and copying down previous text!"></textarea>
+                        <center><label for="what-did-${i + 1}"><strong><u>Goals/Accomplished</u></strong></label></center>
+                        <div id="user-text-${i + 1}" class="smallInput"></div>
+                            <textarea class="form-control invisible" id="what-did-${i + 1}" placeholder="Supports Markdown and copying down previous text!"></textarea>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary edit" id="submit-year-${i}">Edit</button>
+                            <button type="button" class="btn btn-primary edit" id="submit-year-${i + 1}">Edit</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>`;
 
+        // button for saving markdown changes
         const saveChanges =
             newBtnStyling.children[0].children[0].children[0].children[2]
                 .children[1];
@@ -123,13 +173,14 @@ function createMap(is_new, e) {
         btnContainer.append(newBtnStyling);
     }
 
-    // });
     // prevent submit button from being clicked again
     document.querySelector("#finished-input").style.display = "none";
 
+    // shade buttons based on the person's current journey in life
     shadeButtons(age_expectancy, birthdate_value);
 }
 
+// TODO: move to custom message + custom color
 function warningOutput(e) {
     let warning = "Please fill out all data!";
     document.querySelector(".get-data").classList.remove("d-none");
@@ -149,6 +200,8 @@ function shadeButtons(age_expectancy, birthday) {
         return Math.abs(ageDate.getUTCFullYear() - 1970);
     }
     const age = calculateAge();
+
+    // supports custom + bootstrap colors
     for (let x = 1; x < age; x++) {
         // document.querySelector(`#year-${x}`).style.backgroundColor = "#CD5C5C";
         document.querySelector(`#year-${x}`).classList.add("btn-danger");
@@ -163,18 +216,12 @@ function shadeButtons(age_expectancy, birthday) {
 
 function rewriteModal(i) {
     // change button name
-    document.querySelector(`#submit-year-${i}`).textContent = "Save changes";
+    document.querySelector(`#submit-year-${i + 1}`).textContent = "Save changes";
 
-    // modify textarea FIXME - only works first time
-    // document.querySelector(`#what-did-${i}`).innerHTML = document.querySelector(
-    //     `#user-text-${i}`
-    // ).textContent;
-    // console.log(document.querySelector(`#what-did-${i}`));
-
-    // add clipboard button
+    // add clipboard button (although slightly misleading)
     const clipboard_button = document.createElement("button");
     clipboard_button.classList.add("btn");
-    clipboard_button.setAttribute("id", `clipboard-copy-${i}`);
+    clipboard_button.setAttribute("id", `clipboard-copy-${i + 1}`);
     clipboard_button.setAttribute("data-toggle", "tooltip");
     clipboard_button.setAttribute("data-placement", "top");
     clipboard_button.setAttribute("type", "button");
@@ -187,42 +234,44 @@ function rewriteModal(i) {
     `;
 
     clipboard_button.addEventListener("click", function () {
-        copyAboveToClipboard(i);
+        copyAboveToTextarea(i + 1);
     });
 
     if (is_clipboard == false) {
         is_clipboard = true;
         document
-            .querySelector(`#submit-year-${i}`)
+            .querySelector(`#submit-year-${i + 1}`)
             .parentElement.insertBefore(
                 clipboard_button,
-                document.querySelector(`#submit-year-${i}`).parentElement
+                document.querySelector(`#submit-year-${i + 1}`).parentElement
                     .children[1]
             );
     }
 
     // allow markdown input + remove invisible class
-    document.querySelector(`#what-did-${i}`).classList.remove("invisible");
+    document.querySelector(`#what-did-${i + 1}`).classList.remove("invisible");
 
-    // fill clipboard with data from localStorage if there
-    function copyAboveToClipboard(i) {
+    // fill textarea with data from localStorage if there
+    function copyAboveToTextarea(i) {
         if (localStorage.getItem(i) != null) {
-            document.querySelector(`#what-did-${i}`).value = localStorage.getItem(i)
-            console.log(localStorage.getItem(i))
-            document.querySelector(`#what-did-${i}`).value
+            document.querySelector(
+                `#what-did-${i}`
+            ).value = localStorage.getItem(i);
+            console.log(localStorage.getItem(i));
+            document.querySelector(`#what-did-${i}`).value;
 
             const copy_success = document.createElement("div");
             copy_success.classList.add("alert");
             copy_success.classList.add("alert-success");
             copy_success.setAttribute("role", "alert");
-            copy_success.innerHTML = "Copied!";
+            copy_success.innerHTML = "Copied down!";
 
-            // share copy success
+            // show copy success
             document
-                .querySelector(`#what-did-${i}`)
+                .querySelector(`#what-did-${i + 1}`)
                 .parentElement.insertBefore(
                     copy_success,
-                    document.querySelector(`#what-did-${i}`).parentElement
+                    document.querySelector(`#what-did-${i + 1}`).parentElement
                         .children[0]
                 );
 
@@ -234,68 +283,69 @@ function rewriteModal(i) {
 
     // check for save button click
     document
-        .querySelector(`#submit-year-${i}`)
+        .querySelector(`#submit-year-${i + 1}`)
         .addEventListener("mouseup", generateEditModalBox);
 
     function editModalBox(i) {
         // remove clipboard button
         if (is_clipboard == true) {
             document
-                .querySelector(`#submit-year-${i}`)
+                .querySelector(`#submit-year-${i + 1}`)
                 .parentElement.removeChild(clipboard_button);
             is_clipboard = false;
         }
 
         // change back to edit
-        document.querySelector(`#submit-year-${i}`).textContent = "Edit";
+        document.querySelector(`#submit-year-${i + 1}`).textContent = "Edit";
 
         // display changes
-        document.querySelector(`#what-did-${i}`).classList.add("invisible");
+        document.querySelector(`#what-did-${i + 1}`).classList.add("invisible");
         if (
-            document.querySelector(`#user-text-${i}`).innerHTML[0] != "<" ||
-            document.querySelector(`#what-did-${i}`).value != ""
+            document.querySelector(`#user-text-${i + 1}`).innerHTML[0] != "<" ||
+            document.querySelector(`#what-did-${i + 1}`).value != ""
         ) {
-            // document.querySelector(`#user-text-${i}`).innerHTML
-
+            // converts markdown to HTML
             var converter = new showdown.Converter(),
-                text = document.querySelector(`#what-did-${i}`).value,
+                text = document.querySelector(`#what-did-${i + 1}`).value,
                 html = converter.makeHtml(text);
             localStorage.setItem(
-                i,
-                document.querySelector(`#what-did-${i}`).value
+                i + 1,
+                document.querySelector(`#what-did-${i + 1}`).value
             );
         } else {
-            html = document.querySelector(`#user-text-${i}`).innerHTML;
+            html = document.querySelector(`#user-text-${i + 1}`).innerHTML;
         }
 
-        document.querySelector(`#user-text-${i}`).innerHTML = html;
+        document.querySelector(`#user-text-${i + 1}`).innerHTML = html;
 
         // clear textarea
-        document.querySelector(`#what-did-${i}`).value = "";
+        document.querySelector(`#what-did-${i + 1}`).value = "";
 
         document
-            .querySelector(`#submit-year-${i}`)
+            .querySelector(`#submit-year-${i + 1}`)
             .removeEventListener("mouseup", generateEditModalBox);
     }
 
     function generateEditModalBox() {
         editModalBox(i);
         document
-            .querySelector(`#submit-year-${i}`)
+            .querySelector(`#submit-year-${i + 1}`)
             .removeEventListener("mouseup", generateEditModalBox);
     }
 }
 
 function generateUserMap() {
-    createMap(false);
+    is_new_user = false;
+    createMap(is_new_user, current_view);
 }
 
+// checks if there is saved markdown text in localStorage
 function checkSavedText(i) {
-    if (localStorage.getItem(i) != null) {
-        const markdown = localStorage.getItem(i);
+    if (localStorage.getItem(i + 1) != null) {
+        const markdown = localStorage.getItem(i + 1);
         var converter = new showdown.Converter(),
             text = markdown,
             html = converter.makeHtml(text);
-        document.querySelector(`#user-text-${i}`).innerHTML = html;
+        document.querySelector(`#user-text-${i + 1}`).innerHTML = html;
     }
 }
