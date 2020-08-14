@@ -8,7 +8,10 @@ const finished_button = document.querySelector("#finished-input");
 
 // whether or not the clipboard button is displayed
 let is_clipboard = false;
-let current_view = "weeks";
+let current_view = "Years";
+
+// default modification
+let modifier = 50;
 
 // whether or not they are a new user
 let is_new_user = true;
@@ -22,30 +25,30 @@ const granularity_days = document.querySelector("#view-days");
 
 // current view (defaults to years)
 
-granularity_decades.addEventListener("click", function() {
-    current_view = "decades";
-    createMap(is_new_user, current_view)
-})
+granularity_decades.addEventListener("click", function () {
+    current_view = "Decades";
+    createMap(is_new_user, current_view);
+});
 
-granularity_years.addEventListener("click", function() {
-    current_view = "years";
-    createMap(is_new_user, current_view)
-})
+granularity_years.addEventListener("click", function () {
+    current_view = "Years";
+    createMap(is_new_user, current_view);
+});
 
-granularity_months.addEventListener("click", function() {
-    current_view = "months";
-    createMap(is_new_user, current_view)
-})
+granularity_months.addEventListener("click", function () {
+    current_view = "Months";
+    createMap(is_new_user, current_view);
+});
 
-granularity_weeks.addEventListener("click", function() {
-    current_view = "weeks";
-    createMap(is_new_user, current_view)
-})
+granularity_weeks.addEventListener("click", function () {
+    current_view = "Weeks";
+    createMap(is_new_user, current_view);
+});
 
-granularity_days.addEventListener("click", function() {
-    current_view = "days";
-    createMap(is_new_user, current_view)
-})
+granularity_days.addEventListener("click", function () {
+    current_view = "Days";
+    createMap(is_new_user, current_view);
+});
 
 // set up the tooltip
 $("body").tooltip({
@@ -103,9 +106,14 @@ function showEmailDialog() {
 }
 
 function createMap(is_new, gran_level, e) {
-    document
-        .querySelector(".dontShowAtStart")
-        .classList.remove("dontShowAtStart");
+    try {
+        document
+            .querySelector(".dontShowAtStart")
+            .classList.remove("dontShowAtStart");
+    } catch (e) {
+        // this means that they have selected another view
+        document.querySelector(".output").innerHTML = "";
+    }
     if (is_new == true) {
         const age_expectancy = expectancy.value;
         const birthdate_value = birthdate.value;
@@ -119,10 +127,30 @@ function createMap(is_new, gran_level, e) {
 
     const btnContainer = document.querySelector(".output");
 
+    // find button modifier
+    switch (gran_level) {
+        case "Days":
+            // todo - support leap years
+            modifier = 365;
+            break;
+        case "Months":
+            modifier = 12;
+            break;
+        case "Years":
+            modifier = 1;
+            break;
+        case "Decades":
+            modifier = 0.1;
+            break;
+        default:
+            modifier = 52;
+            break;
+    }
+
     // create all of the buttons from scratch - FIXME: look into caching HTML
-    for (let i = 0; i < age_expectancy; i++) {
+    for (let i = 0; i < age_expectancy * modifier; i++) {
         const newBtn = document.createElement("button");
-        newBtn.setAttribute("id", `year-${i + 1}`);
+        newBtn.setAttribute("id", `${gran_level}-${i + 1}`);
         newBtn.setAttribute("type", "button");
         newBtn.setAttribute("class", "mr-1 mb-1 year-button btn");
         newBtn.setAttribute("data-toggle", "modal");
@@ -132,11 +160,13 @@ function createMap(is_new, gran_level, e) {
         const newBtnStyling = document.createElement("span");
 
         newBtnStyling.innerHTML += `
-        <div class="modal fade" id="Modal${i + 1}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" display="inline">
+        <div class="modal fade" id="Modal${
+            i + 1
+        }" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" display="inline">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Year ${
+                        <h5 class="modal-title" id="exampleModalLabel">${current_view.slice(start=0, end=current_view.length - 1)} ${
                             i + 1
                         }</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -144,13 +174,19 @@ function createMap(is_new, gran_level, e) {
                         </button>
                     </div>
                     <div class="modal-body">
-                        <center><label for="what-did-${i + 1}"><strong><u>Goals/Accomplished</u></strong></label></center>
+                        <center><label for="what-did-${
+                            i + 1
+                        }"><strong><u>Goals/Accomplished</u></strong></label></center>
                         <div id="user-text-${i + 1}" class="smallInput"></div>
-                            <textarea class="form-control invisible" id="what-did-${i + 1}" placeholder="Supports Markdown and copying down previous text!"></textarea>
+                            <textarea class="form-control invisible" id="what-did-${
+                                i + 1
+                            }" placeholder="Supports Markdown and copying down previous text!"></textarea>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary edit" id="submit-year-${i + 1}">Edit</button>
+                            <button type="button" class="btn btn-primary edit" id="submit-year-${
+                                i + 1
+                            }">Edit</button>
                         </div>
                     </div>
                 </div>
@@ -200,23 +236,23 @@ function shadeButtons(age_expectancy, birthday) {
         return Math.abs(ageDate.getUTCFullYear() - 1970);
     }
     const age = calculateAge();
-
     // supports custom + bootstrap colors
-    for (let x = 1; x < age; x++) {
+    for (let x = 1; x < (age * modifier); x++) {
         // document.querySelector(`#year-${x}`).style.backgroundColor = "#CD5C5C";
-        document.querySelector(`#year-${x}`).classList.add("btn-danger");
+        document.querySelector(`#${current_view}-${x}`).classList.add("btn-danger");
     }
-    document.querySelector(`#year-${age}`).classList.add("btn-warning");
+    document.querySelector(`#${current_view}-${age * modifier}`).classList.add("btn-warning");
     // document.querySelector(`#year-${age}`).style.backgroundColor = "yellow";
-    for (let x = age + 1; x <= age_expectancy; x++) {
+    for (let x = (age * modifier) + 1; x <= age_expectancy * modifier; x++) {
         // document.querySelector(`#year-${x}`).style.backgroundColor = "#32CD32";
-        document.querySelector(`#year-${x}`).classList.add("btn-success");
+        document.querySelector(`#${current_view}-${x}`).classList.add("btn-success");
     }
 }
 
 function rewriteModal(i) {
     // change button name
-    document.querySelector(`#submit-year-${i + 1}`).textContent = "Save changes";
+    document.querySelector(`#submit-year-${i + 1}`).textContent =
+        "Save changes";
 
     // add clipboard button (although slightly misleading)
     const clipboard_button = document.createElement("button");
@@ -253,11 +289,11 @@ function rewriteModal(i) {
 
     // fill textarea with data from localStorage if there
     function copyAboveToTextarea(i) {
-        if (localStorage.getItem(i) != null) {
+        if (localStorage.getItem(`${current_view}-${i}`) != null) {
             document.querySelector(
                 `#what-did-${i}`
-            ).value = localStorage.getItem(i);
-            console.log(localStorage.getItem(i));
+            ).value = localStorage.getItem(`${current_view}-${i}`);
+            console.log(localStorage.getItem(`${current_view}-${i}`));
             document.querySelector(`#what-did-${i}`).value;
 
             const copy_success = document.createElement("div");
@@ -309,7 +345,7 @@ function rewriteModal(i) {
                 text = document.querySelector(`#what-did-${i + 1}`).value,
                 html = converter.makeHtml(text);
             localStorage.setItem(
-                i + 1,
+                `${current_view}-${i + 1}`,
                 document.querySelector(`#what-did-${i + 1}`).value
             );
         } else {
@@ -341,8 +377,8 @@ function generateUserMap() {
 
 // checks if there is saved markdown text in localStorage
 function checkSavedText(i) {
-    if (localStorage.getItem(i + 1) != null) {
-        const markdown = localStorage.getItem(i + 1);
+    if (localStorage.getItem(`${current_view}-${i + 1}`) != null) {
+        const markdown = localStorage.getItem(`${current_view}-${i + 1}`);
         var converter = new showdown.Converter(),
             text = markdown,
             html = converter.makeHtml(text);
