@@ -1,18 +1,16 @@
 import os
 from dotenv import load_dotenv
-from flask import Flask
-from flask.templating import render_template
-from flask_restful import Resource, Api
+from flask import Flask, render_template
+from flask_classful import FlaskView
 from flask_jwt import JWT, jwt_required, current_identity
 from werkzeug.security import safe_str_cmp
 
-from generate_download import download
+# import flask-classful views
+from generate_download import MakeimageView
 
 app = Flask(__name__)
-api = Api(app)
 
 load_dotenv()
-
 
 class User:
     def __init__(self, id_, username, password):
@@ -46,12 +44,22 @@ def identity(payload):
 app.config["SECRET_KEY"] = os.getenv("APP_CONFIG_KEY")
 admin = JWT(app, authentication_handler=authenticate, identity_handler=identity)
 
-@app.route("/")
-def index():
-    return render_template("index.html")
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template("404.html"), 404
 
-app.register_blueprint(download)
+class View(FlaskView):
+    def index(self):
+        return render_template("index.html")
 
+class DownloadView(FlaskView):
+    def index(self):
+        return render_template("download.html")
+
+# register individual views
+View.register(app)
+DownloadView.register(app)
+MakeimageView.register(app)
 
 if __name__ == "__main__":
     app.run(debug=True)

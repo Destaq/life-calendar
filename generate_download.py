@@ -7,17 +7,7 @@ from PIL import Image
 from datetime import datetime
 from flask import Blueprint, request
 from flask_jwt import jwt_required, current_identity
-from flask_restful import Resource, Api, abort
-
-download = Blueprint(
-    "download",
-    __name__,
-    static_folder="../build",
-    static_url_path="/",
-    url_prefix="/api/",  # This applies to all resources in this blueprint.
-)
-
-api = Api(download)
+from flask_classful import FlaskView
 
 
 class EmptyMap:
@@ -285,7 +275,8 @@ def image_to_bytes(image_path):
     return encoded_img
 
 
-class MakeImage(Resource):
+class MakeimageView(FlaskView):
+
     def get(self):
         args = request.args
         username = args["username"]
@@ -304,5 +295,3 @@ class MakeImage(Resource):
 
         return {"result": image_to_bytes("poster.png")}
 
-
-api.add_resource(MakeImage, "make_image")

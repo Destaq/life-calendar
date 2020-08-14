@@ -1,4 +1,3 @@
-// http://localhost:5000/api/make_image?username=nothing&auth=nothing&map_type=nothing
 const http = new SimpleHTTP();
 var image = new Image();
 image.onload = function () {
@@ -6,11 +5,12 @@ image.onload = function () {
 };
 
 http.get(
-    "http://localhost:5000/api/make_image?username=nothing&auth=nothing&map_type=blank&interval=years"
+    "http://localhost:5000/makeimage?username=null&auth=nothing&map_type=full&interval=weeks"
 )
     .then((data) => {
         image.src = "data:image/png;base64," + data.result;
+        console.log("success!");
     })
     .catch((err) => console.log(err));
 
-document.querySelector(".container").appendChild(image);
+document.querySelector(".output").appendChild(image);
