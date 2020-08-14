@@ -1,0 +1,6 @@
+Werkzeug==1.0.1
+Flask_RESTful==0.3.8
+Flask==1.1.2
+Flask_JWT==0.3.2
+gunicorn==20.0.4
+python-dotenv==0.14.0

@@ -1,9 +1,12 @@
 import os
 from dotenv import load_dotenv
 from flask import Flask
+from flask.templating import render_template
 from flask_restful import Resource, Api
 from flask_jwt import JWT, jwt_required, current_identity
 from werkzeug.security import safe_str_cmp
+
+from generate_download import download
 
 app = Flask(__name__)
 api = Api(app)
@@ -42,6 +45,12 @@ def identity(payload):
 
 app.config["SECRET_KEY"] = os.getenv("APP_CONFIG_KEY")
 admin = JWT(app, authentication_handler=authenticate, identity_handler=identity)
+
+@app.route("/")
+def index():
+    return render_template("index.html")
+
+app.register_blueprint(download)
 
 
 if __name__ == "__main__":
