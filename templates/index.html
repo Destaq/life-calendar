@@ -1,126 +1,55 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
 
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <link rel="stylesheet" href="static/styles/main.css">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
-    <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-    <script type="text/javascript" src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
-        integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
-        crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"
-        integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
-        crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/showdown/dist/showdown.min.js"></script>
-    <title>Life Calendar</title>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('[data-toggle="tooltip"]').tooltip({
-                container: 'body'
-            })
-        })
-    </script>
-</head>
-
-<body>
-    <div class="container">
-        <nav class="navbar-dark navbar-expand-lg bg-dark navbar">
-            <a class="navbar-brand" href="/index.html">Life Calendar</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Statistics</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/download.html">Download</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item dropdown">
-                        <!-- TODO: change to username as text -->
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Profile
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="#">Profile</a>
-                            <a class="dropdown-item" href="#">Settings</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Logout</a>
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">About</a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-        <br>
-        <p><i>Your days are numbered. Make the most of them.</i></p>
+{% block content %}
+<h1>Life Calendar</h1>
+<br>
+<p><i>Your days are numbered. Make the most of them.</i></p>
 
 
-        <div class="btn-group dontShowAtStart">
-            <button class="btn btn-info mb-4 dropdown-toggle" id="granularity-select" type="button" data-toggle="dropdown" aria-haspopup="true"
-                aria-expanded="false">
-                Granularity
-            </button>
-            <div class="dropdown-menu">
-                <button id="view-decades" class="dropdown-item">Decades</button>
-                <button id="view-years" class="dropdown-item">Years</button>
-                <button id="view-months" class="dropdown-item">Months</button>
-                <button id="view-weeks" class="dropdown-item">Weeks</button>
-                <button id="view-days" class="dropdown-item">Days</button>
-            </div>
-            <button class="btn btn-warning mb-4 ml-2" type="button" id="reset-stuff">Restart</button>
-        </div>
-        <form id="gen-data-info">
-            <div class="get-data alert alert-danger d-none"></div>
-            <div class="form-group">
-                <form>
-                    <div class="form-group age-years">
-                        <label for="years">Age expectancy</label>
-                        <input type="number" class="form-control" id="years" aria-describedby="emailHelp">
-                    </div>
-                    <div class="form-group">
-                        <label for="birthDateInput-input">Birthdate</label>
-                        <input type="date" class="form-control" id="birthdateInput">
-                    </div>
-                    <div class="form-group form-check email-summary">
-                        <input type="checkbox" class="form-check-input" id="send-emails">
-                        <label class="form-check-label" for="exampleCheck1">I want to receive email summaries.</label>
-                    </div>
-                    <label class="invisible" for="exampleInputEmail1" class="emailDialog">Email address</label>
-                    <input type="email" class="form-control invisible emailDialog" id="exampleInputEmail1"
-                        aria-describedby="emailHelp" placeholder="Enter email">
-                    <small id="emailHelp" class="form-text emailDialog text-muted mb-3 invisible">We'll never share your
-                        email with anyone
-                        else.</small>
-                    <button type="submit" class="btn btn-primary" id="finished-input">Submit</button>
-                </form>
-            </div>
-        </form>
-
-        <div class="output" role="group">
-
-        </div>
-        <script src="/static/js/simpleHTTP.js"></script>
-        <script src="/static/js/app.js"></script>
-
+<div class="btn-group dontShowAtStart">
+    <button class="btn btn-info mb-4 dropdown-toggle" id="granularity-select" type="button" data-toggle="dropdown"
+        aria-haspopup="true" aria-expanded="false">
+        Granularity
+    </button>
+    <div class="dropdown-menu">
+        <button id="view-decades" class="dropdown-item">Decades</button>
+        <button id="view-years" class="dropdown-item">Years</button>
+        <button id="view-months" class="dropdown-item">Months</button>
+        <button id="view-weeks" class="dropdown-item">Weeks</button>
+        <button id="view-days" class="dropdown-item">Days</button>
     </div>
-</body>
+    <button class="btn btn-warning mb-4 ml-2" type="button" id="reset-stuff">Restart</button>
+</div>
+<form id="gen-data-info">
+    <div class="get-data alert alert-danger d-none"></div>
+    <div class="form-group">
+        <form>
+            <div class="form-group age-years">
+                <label for="years">Age expectancy</label>
+                <input type="number" class="form-control" id="years" aria-describedby="emailHelp">
+            </div>
+            <div class="form-group">
+                <label for="birthDateInput-input">Birthdate</label>
+                <input type="date" class="form-control" id="birthdateInput">
+            </div>
+            <div class="form-group form-check email-summary">
+                <input type="checkbox" class="form-check-input" id="send-emails">
+                <label class="form-check-label" for="exampleCheck1">I want to receive email summaries.</label>
+            </div>
+            <label class="invisible" for="exampleInputEmail1" class="emailDialog">Email address</label>
+            <input type="email" class="form-control invisible emailDialog" id="exampleInputEmail1"
+                aria-describedby="emailHelp" placeholder="Enter email">
+            <small id="emailHelp" class="form-text emailDialog text-muted mb-3 invisible">We'll never share your
+                email with anyone
+                else.</small>
+            <button type="submit" class="btn btn-primary" id="finished-input">Submit</button>
+        </form>
+    </div>
+</form>
 
-</html>
+<div class="output" role="group">
+
+</div>
+<script src="/static/js/simpleHTTP.js"></script>
+<script src="/static/js/app.js"></script>
+{% endblock %}

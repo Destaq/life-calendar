@@ -1,77 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-            integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-        <link rel="stylesheet" href="static/styles/main.css">
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-            crossorigin="anonymous"></script>
-        <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-        <script type="text/javascript" src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
-            integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
-            crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"
-            integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
-            crossorigin="anonymous"></script>
-        <script src="https://unpkg.com/showdown/dist/showdown.min.js"></script>
-        <title>Life Calendar</title>
-        <script type="text/javascript">
-            $(document).ready(function () {
-                $('[data-toggle="tooltip"]').tooltip({
-                    container: 'body'
-                })
-            })
-        </script>
-    </head>
-<body>
-    <div class="container">
-        <nav class="navbar-dark navbar-expand-lg bg-dark navbar">
-            <a class="navbar-brand" href="/index.html">Life Calendar</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+{% extends "base.html" %}
 
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Statistics</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/download.html">Download</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item dropdown">
-                        <!-- TODO: change to username as text -->
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Profile
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="#">Profile</a>
-                            <a class="dropdown-item" href="#">Settings</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Logout</a>
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">About</a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-        <h1>Download your Life Calendar!</h1>
-        <p>On this page, you can download a copy of your life calendar, in a few formats. This downloaded copy is high-quality, and you can use it to either make your own or simply hang it on a wall (since it syncs with your account if you are a registered user).</p>
-        <p>It supports both blank images and images like the one on the homepage. You can select the granularity as well (from weeks to years - shorter/longer is unfeasible).</p>
-    </div>
-    <script src="/static/js/simpleHTTP.js"></script>
-    <script src="/static/js/loadimage.js"></script>
-</body>
-</html>
+{% block content %}
+
+<h1>Download your Life Calendar!</h1>
+<p>On this page, you can download a copy of your life calendar, in a few formats. This downloaded copy is high-quality,
+    and you can use it to either make your own or simply hang it on a wall (since it syncs with your account if you are
+    a registered user).</p>
+<p>It supports both blank images and images like the one on the homepage. You can select the granularity as well (from
+    weeks to years - shorter/longer is unfeasible).</p>
+</div>
+<script src="/static/js/simpleHTTP.js"></script>
+<script src="/static/js/loadimage.js"></script>
+
+{% endblock %}
