@@ -10,6 +10,9 @@ const finished_button = document.querySelector("#finished-input");
 let is_clipboard = false;
 let current_view = "Years";
 
+// amount
+var amount;
+
 // default modification
 let modifier = 50;
 
@@ -125,6 +128,8 @@ function createMap(is_new, gran_level, e) {
         birthdate_value = localStorage.getItem("birthday");
     }
 
+    calculateAmount(birthdate_value);
+
     const btnContainer = document.querySelector(".output");
 
     // find button modifier
@@ -148,7 +153,7 @@ function createMap(is_new, gran_level, e) {
     }
 
     // create all of the buttons from scratch - FIXME: look into caching HTML
-    for (let i = 0; i < age_expectancy * modifier; i++) {
+    for (let i = 0; i < Math.floor(age_expectancy * modifier); i++) {
         const newBtn = document.createElement("button");
         newBtn.setAttribute("id", `${gran_level}-${i + 1}`);
         newBtn.setAttribute("type", "button");
@@ -228,22 +233,62 @@ function warningHide() {
     document.querySelector(".get-data").classList.add("d-none");
 }
 
-function shadeButtons(age_expectancy, birthday) {
-    function calculateAge() {
-        let dob = new Date(birthday);
-        dob = Date.now() - dob.getTime();
-        ageDate = new Date(dob);
-        return Math.abs(ageDate.getUTCFullYear() - 1970);
+function calculateAmount(birthday) {
+    let dob = new Date(birthday);
+    let c_time = new Date(Date.now())
+    
+    function YearDiff(d1, d2) {
+        var years;
+        years = d2.getFullYear() - d1.getFullYear()
+        return years;
     }
-    const age = calculateAge();
+
+    function MonthDiff(d1, d2) {
+        var months;
+        months = (d2.getFullYear() - d1.getFullYear()) * 12;
+        months -= d1.getMonth();
+        months += d2.getMonth();
+        return months <= 0 ? 0 : months;
+    }
+
+    switch (current_view) {
+        case "Decades":
+            amount = Math.floor((YearDiff(dob, c_time) - 1) / 10)
+            break;
+
+        case "Years":
+            amount = YearDiff(dob, c_time) - 1;
+            break;
+
+        case "Months":
+            amount = MonthDiff(dob, c_time) - 1;
+            break;
+
+        case "Weeks":
+            amount = Math.round((Date.now() - dob) / 604800000);
+            break;
+
+        case "Days":
+            amount = Math.ceil(Math.abs(Date.now() - dob) / (60 * 60 * 24 * 1000)) - 1;
+            break;
+    
+        default:
+            amount = 0;
+            break;
+    }
+}
+
+function shadeButtons(age_expectancy, birthday) {
+    console.log(current_view)
+    console.log(amount)
     // supports custom + bootstrap colors
-    for (let x = 1; x < (age * modifier); x++) {
+    for (let x = 1; x < amount; x++) {
         // document.querySelector(`#year-${x}`).style.backgroundColor = "#CD5C5C";
         document.querySelector(`#${current_view}-${x}`).classList.add("btn-danger");
     }
-    document.querySelector(`#${current_view}-${age * modifier}`).classList.add("btn-warning");
+    document.querySelector(`#${current_view}-${amount}`).classList.add("btn-warning");
     // document.querySelector(`#year-${age}`).style.backgroundColor = "yellow";
-    for (let x = (age * modifier) + 1; x <= age_expectancy * modifier; x++) {
+    for (let x = amount + 1; x <= age_expectancy * modifier; x++) {
         // document.querySelector(`#year-${x}`).style.backgroundColor = "#32CD32";
         document.querySelector(`#${current_view}-${x}`).classList.add("btn-success");
     }
