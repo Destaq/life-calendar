@@ -1,16 +1,39 @@
 const http = new SimpleHTTP();
-var image = new Image();
-image.onload = function () {
-    console.log(image.width); // image is loaded and we have image width
-};
+const radios = document.getElementsByName("gridRadios");
+const blankMapCheck = document.querySelector("#checkBlankCalendar");
 
-http.get(
-    "http://localhost:5000/makeimage?username=null&auth=nothing&map_type=full&interval=weeks"
-)
-    .then((data) => {
-        image.src = "data:image/png;base64," + data.result;
-        console.log("success!");
-    })
-    .catch((err) => console.log(err));
+// submit button
+document.querySelector("#submitCalendarInfo").addEventListener("click", function(e) {
+    document.querySelector(".output").innerHTML = "";
+    var image = new Image();
+    let interval = "weeks";
+    for (let i = 0; i < radios.length; i++) {
+        if (radios[i].checked) {
+            interval = radios[i].value;
+            break;
+        }
+    }
 
-document.querySelector(".output").appendChild(image);
+    let mapType = "full";
+    if (blankMapCheck.checked == true) {
+        mapType = "blank";
+    }
+    
+    http.get(
+        `http://localhost:5000/api/makeimage?username=null&auth=nothing&map_type=${mapType}&interval=${interval}`
+    )
+        .then((data) => {
+            image.src = "data:image/png;base64," + data.result;
+        })
+        .catch((err) => console.log(err));
+    
+    // add image preview
+    document.querySelector(".output").appendChild(image);
+
+    // embed file for downloading
+
+    // embed file for printing
+
+    e.preventDefault();
+})
+

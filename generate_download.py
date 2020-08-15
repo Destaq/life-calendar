@@ -275,7 +275,8 @@ def image_to_bytes(image_path):
     return encoded_img
 
 
-class MakeimageView(FlaskView):
+class MakeImageView(FlaskView):
+    route_base = "/makeimage"
 
     def get(self):
         args = request.args

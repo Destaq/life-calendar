@@ -3,13 +3,65 @@
 {% block content %}
 
 <h1>Download your Life Calendar!</h1>
-<p>On this page, you can download a copy of your life calendar, in a few formats. This downloaded copy is high-quality,
+<p>On this page, you can download a copy of your life calendar, with a preview supported and ready-to-print This
+    downloaded copy is high-quality,
     and you can use it to either make your own or simply hang it on a wall (since it syncs with your account if you are
     a registered user).</p>
-<p>It supports both blank images and images like the one on the homepage. You can select the granularity as well (from
-    weeks to years - shorter/longer is unfeasible).</p>
+<div class="jumbotron">
+    <p>You can customize your personal life calendar below. There are two main options - <strong>granularity</strong>
+        and <strong>calendar type</strong>.</p>
+    <p><strong>Granularity</strong> dictates the life calendar size <em>(i.e., whether to have a life calendar in weeks,
+            in months, etc.)</em>.</p>
+    <p><strong>Calendar Type</strong> affects the life calendar type - blank or full. If you do not select blank, you
+        will have a life calendar available as an image to you that mirrors your current life calendar (in colors and
+        position). If you select blank, you will simply receive a blank life calendar that pertains to your age
+        expectancy.</p>
+    <hr>
+    <form class="myForm">
+        <fieldset class="form-group">
+            <div class="row">
+                <legend class="col-form-label col-sm-2 pt-0">Granularity</legend>
+                <div class="col-sm-10">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="gridRadios" id="weeksView" value="weeks"
+                            checked>
+                        <label class="form-check-label" for="weeksView">
+                            Weeks
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="gridRadios" id="monthsView" value="months">
+                        <label class="form-check-label" for="monthsView">
+                            Months
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="gridRadios" id="yearView" value="years">
+                        <label class="form-check-label" for="yearView">
+                            Years
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+        <div class="form-group row">
+            <div class="col-sm-2">Calendar Type</div>
+            <div class="col-sm-10">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="checkBlankCalendar">
+                    <label class="form-check-label" for="checkBlankCalendar">
+                        Blank Calendar
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-secondary" id="submitCalendarInfo">Submit</button>
+        </div>
+    </form>
+</div>
 <div class="output">
-    
+
 </div>
 <script src="/static/js/simpleHTTP.js"></script>
 <script src="/static/js/loadimage.js"></script>
