@@ -279,8 +279,6 @@ function calculateAmount(birthday) {
 }
 
 function shadeButtons(age_expectancy, birthday) {
-    console.log(current_view)
-    console.log(amount)
     // supports custom + bootstrap colors
     for (let x = 1; x < amount; x++) {
         // document.querySelector(`#year-${x}`).style.backgroundColor = "#CD5C5C";
@@ -338,7 +336,6 @@ function rewriteModal(i) {
             document.querySelector(
                 `#what-did-${i}`
             ).value = localStorage.getItem(`${current_view}-${i}`);
-            console.log(localStorage.getItem(`${current_view}-${i}`));
             document.querySelector(`#what-did-${i}`).value;
 
             const copy_success = document.createElement("div");
@@ -365,7 +362,7 @@ function rewriteModal(i) {
     // check for save button click
     document
         .querySelector(`#submit-year-${i + 1}`)
-        .addEventListener("mouseup", generateEditModalBox);
+        .addEventListener("mousedown", generateEditModalBox);
 
     function editModalBox(i) {
         // remove clipboard button
@@ -404,14 +401,14 @@ function rewriteModal(i) {
 
         document
             .querySelector(`#submit-year-${i + 1}`)
-            .removeEventListener("mouseup", generateEditModalBox);
+            .removeEventListener("mousedown", generateEditModalBox);
     }
 
     function generateEditModalBox() {
         editModalBox(i);
         document
             .querySelector(`#submit-year-${i + 1}`)
-            .removeEventListener("mouseup", generateEditModalBox);
+            .removeEventListener("mousedown", generateEditModalBox);
     }
 }
 
