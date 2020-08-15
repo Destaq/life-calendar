@@ -3,12 +3,12 @@ import math
 import base64
 import os
 
-from PIL import Image
 from datetime import datetime
-from flask import Blueprint, request
+from flask import request
 from flask_jwt import jwt_required, current_identity
 from flask_classful import FlaskView
 
+# TODO: add x and y labels for posters
 
 class EmptyMap:
     def __init__(self, age_expectancy, form="weeks"):
@@ -31,14 +31,24 @@ class EmptyMap:
                 self.ctx.stroke()
 
         elif form == "months":
-            self.surface = cairo.ImageSurface(
-                cairo.FORMAT_ARGB32, 720, math.ceil(self.expectancy * 30 / 2) + 30
-            )
+            if ((self.expectancy * 30) / 2) % 2 == 1:
+                self.surface = cairo.ImageSurface(
+                    cairo.FORMAT_ARGB32, 720, math.ceil(self.expectancy * 30 / 2) + 15
+                )
 
-            self.ctx = cairo.Context(self.surface)
-            self.ctx.rectangle(0, 0, 720, math.ceil(self.expectancy * 30 / 2) + 30)
-            self.ctx.set_source_rgb(255, 255, 255)
-            self.ctx.fill()
+                self.ctx = cairo.Context(self.surface)
+                self.ctx.rectangle(0, 0, 720, math.ceil(self.expectancy * 30 / 2) + 15)
+                self.ctx.set_source_rgb(255, 255, 255)
+                self.ctx.fill()
+            else:
+                self.surface = cairo.ImageSurface(
+                    cairo.FORMAT_ARGB32, 720, math.ceil(self.expectancy * 30 / 2)
+                )
+
+                self.ctx = cairo.Context(self.surface)
+                self.ctx.rectangle(0, 0, 720, math.ceil(self.expectancy * 30 / 2))
+                self.ctx.set_source_rgb(255, 255, 255)
+                self.ctx.fill()
 
             for i in range(self.expectancy * 12):
                 self.ctx.rectangle(i % 24 * 30, math.floor(i / 24) * 30, 28, 28)
@@ -50,11 +60,11 @@ class EmptyMap:
 
             if (self.expectancy / 7).is_integer() == False:
                 self.surface = cairo.ImageSurface(
-                    cairo.FORMAT_ARGB32, 558, math.ceil((self.expectancy / 7) * 80) + 68
+                    cairo.FORMAT_ARGB32, 558, math.ceil((self.expectancy / 7) * 80) + 64
                 )
                 self.ctx = cairo.Context(self.surface)
                 self.ctx.rectangle(
-                    0, 0, 558, math.ceil((self.expectancy / 7 * 80) + 68)
+                    0, 0, 558, math.ceil((self.expectancy / 7 * 80) + 64)
                 )
 
             else:
@@ -131,13 +141,25 @@ class Map:
             self.box_modifier = 12
             self.size_modifer = 28
 
-            self.surface = cairo.ImageSurface(
-                cairo.FORMAT_ARGB32, 720, math.ceil(self.age_expectancy * 30 / 2) + 300
-            )
-            self.ctx = cairo.Context(self.surface)
-            self.ctx.rectangle(0, 0, 720, math.ceil(self.age_expectancy * 30 / 2) + 30)
-            self.ctx.set_source_rgb(255, 255, 255)
-            self.ctx.fill()
+            if ((self.age_expectancy * 30) / 2) % 2 == 1:
+                self.surface = cairo.ImageSurface(
+                    cairo.FORMAT_ARGB32, 720, math.ceil(self.age_expectancy * 30 / 2) + 15
+                )
+
+                self.ctx = cairo.Context(self.surface)
+                self.ctx.rectangle(0, 0, 720, math.ceil(self.age_expectancy * 30 / 2) + 15)
+                self.ctx.set_source_rgb(255, 255, 255)
+                self.ctx.fill()
+            else:
+                self.surface = cairo.ImageSurface(
+                    cairo.FORMAT_ARGB32, 720, math.ceil(self.age_expectancy * 30 / 2)
+                )
+
+                self.ctx = cairo.Context(self.surface)
+                self.ctx.rectangle(0, 0, 720, math.ceil(self.age_expectancy * 30 / 2))
+                self.ctx.set_source_rgb(255, 255, 255)
+                self.ctx.fill()
+
             self.birthdate = birthdate
 
             current_day = datetime.today().strftime("%d-%m-%Y")
@@ -237,7 +259,6 @@ class Map:
         # NOTE: this will have to be changed based on input as well, modify parameters
         # self.add_stage("27-10-2005", "27-09-2006")
 
-        # FIXME: createt individual pngs on the server, then send + delete those
         self.surface.write_to_png("poster.png")
 
     def add_stage(self, start_time, end_time):
@@ -292,7 +313,7 @@ class MakeImageView(FlaskView):
 
         else:
             # used only for life expectancy
-            EmptyMap(77, map_form)
+            EmptyMap(79, map_form)
 
         return {"result": image_to_bytes("poster.png")}
 
