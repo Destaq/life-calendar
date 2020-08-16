@@ -1,4 +1,5 @@
 import os
+import json
 from dotenv import load_dotenv
 from flask import Flask, render_template
 from flask_classful import FlaskView
@@ -64,10 +65,20 @@ class DownloadView(FlaskView):
     def index(self):
         return render_template("download.html")
 
+class JSONDataView(FlaskView):
+    route_base = "/data/expectancydata/"
+
+    def get(self):
+        with open("data/ageExpectancy.json") as json_file:
+            data = {"result": json.load(json_file)}
+
+            return data
+
 
 # register individual views
 View.register(app)
 DownloadView.register(app)
+JSONDataView.register(app)
 MakeImageView.register(app, route_prefix="/api")
 
 if __name__ == "__main__":

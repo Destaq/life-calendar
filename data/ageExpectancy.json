@@ -1,0 +1,1304 @@
+[
+  {
+    "Rank": 1,
+    "Region": "Hong Kong",
+    "Overall": 84.7,
+    "Female": 87.6,
+    "Male": 81.8
+  },
+  {
+    "Rank": 2,
+    "Region": "Japan",
+    "Overall": 84.5,
+    "Female": 87.5,
+    "Male": 81.1
+  },
+  {
+    "Rank": 3,
+    "Region": "Singapore",
+    "Overall": 83.8,
+    "Female": 85.8,
+    "Male": 81.5
+  },
+  {
+    "Rank": 4,
+    "Region": "Italy",
+    "Overall": 83.6,
+    "Female": 85.5,
+    "Male": 81.7
+  },
+  {
+    "Rank": 5,
+    "Region": "Spain",
+    "Overall": 83.4,
+    "Female": 86.1,
+    "Male": 80.7
+  },
+  {
+    "Rank": 5,
+    "Region": "Switzerland",
+    "Overall": 83.4,
+    "Female": 85.3,
+    "Male": 81.1
+  },
+  {
+    "Rank": 7,
+    "Region": "Australia",
+    "Overall": 83.3,
+    "Female": 85.3,
+    "Male": 81.3
+  },
+  {
+    "Rank": 8,
+    "Region": "Iceland",
+    "Overall": 82.9,
+    "Female": 84.4,
+    "Male": 81.3
+  },
+  {
+    "Rank": 9,
+    "Region": "Israel",
+    "Overall": 82.8,
+    "Female": 84.4,
+    "Male": 81.1
+  },
+  {
+    "Rank": 9,
+    "Region": "South Korea",
+    "Overall": 82.8,
+    "Female": 85.8,
+    "Male": 79.7
+  },
+  {
+    "Rank": 11,
+    "Region": "Sweden",
+    "Overall": 82.7,
+    "Female": 84.4,
+    "Male": 80.9
+  },
+  {
+    "Rank": 12,
+    "Region": "France",
+    "Overall": 82.5,
+    "Female": 85.4,
+    "Male": 79.6
+  },
+  {
+    "Rank": 13,
+    "Region": "Malta",
+    "Overall": 82.4,
+    "Female": 84.1,
+    "Male": 80.5
+  },
+  {
+    "Rank": 14,
+    "Region": "Canada",
+    "Overall": 82.3,
+    "Female": 84.3,
+    "Male": 80.3
+  },
+  {
+    "Rank": 14,
+    "Region": "Norway",
+    "Overall": 82.3,
+    "Female": 84.3,
+    "Male": 80.3
+  },
+  {
+    "Rank": 16,
+    "Region": "Greece",
+    "Overall": 82.1,
+    "Female": 84.5,
+    "Male": 79.6
+  },
+  {
+    "Rank": 16,
+    "Region": "Ireland",
+    "Overall": 82.1,
+    "Female": 83.7,
+    "Male": 80.4
+  },
+  {
+    "Rank": 16,
+    "Region": "Luxembourg",
+    "Overall": 82.1,
+    "Female": 84.2,
+    "Male": 80
+  },
+  {
+    "Rank": 16,
+    "Region": "Netherlands",
+    "Overall": 82.1,
+    "Female": 83.8,
+    "Male": 80.4
+  },
+  {
+    "Rank": 16,
+    "Region": "New Zealand",
+    "Overall": 82.1,
+    "Female": 83.9,
+    "Male": 80.4
+  },
+  {
+    "Rank": 21,
+    "Region": "Portugal",
+    "Overall": 81.9,
+    "Female": 84.7,
+    "Male": 78.8
+  },
+  {
+    "Rank": 22,
+    "Region": "Andorra",
+    "Overall": 81.8,
+    "Female": "",
+    "Male": ""
+  },
+  {
+    "Rank": 23,
+    "Region": "Finland",
+    "Overall": 81.7,
+    "Female": 84.6,
+    "Male": 78.9
+  },
+  {
+    "Rank": 25,
+    "Region": "Belgium",
+    "Overall": 81.5,
+    "Female": 83.8,
+    "Male": 79.1
+  },
+  {
+    "Rank": 26,
+    "Region": "Austria",
+    "Overall": 81.4,
+    "Female": 83.8,
+    "Male": 79
+  },
+  {
+    "Rank": 27,
+    "Region": "Germany",
+    "Overall": 81.2,
+    "Female": 83.6,
+    "Male": 78.8
+  },
+  {
+    "Rank": 28,
+    "Region": "Slovenia",
+    "Overall": 81.2,
+    "Female": 83.9,
+    "Male": 78.4
+  },
+  {
+    "Rank": 29,
+    "Region": "United Kingdom",
+    "Overall": 81.2,
+    "Female": 83,
+    "Male": 79.5
+  },
+  {
+    "Rank": 30,
+    "Region": "Cyprus",
+    "Overall": 80.8,
+    "Female": 82.9,
+    "Male": 78.7
+  },
+  {
+    "Rank": 31,
+    "Region": "Denmark",
+    "Overall": 80.8,
+    "Female": 82.8,
+    "Male": 77.8
+  },
+  {
+    "Rank": 32,
+    "Region": "Liechtenstein",
+    "Overall": 80.5,
+    "Female": "",
+    "Male": ""
+  },
+  {
+    "Rank": 33,
+    "Region": "Costa Rica",
+    "Overall": 80.1,
+    "Female": 82.7,
+    "Male": 77.5
+  },
+  {
+    "Rank": 34,
+    "Region": "Chile",
+    "Overall": 80,
+    "Female": 82.4,
+    "Male": 77.6
+  },
+  {
+    "Rank": 35,
+    "Region": "Czech Republic",
+    "Overall": 79.2,
+    "Female": 81.8,
+    "Male": 76.6
+  },
+  {
+    "Rank": 36,
+    "Region": "Barbados",
+    "Overall": 79.1,
+    "Female": 80.4,
+    "Male": 77.7
+  },
+  {
+    "Rank": 37,
+    "Region": "Lebanon",
+    "Overall": 78.9,
+    "Female": 80.8,
+    "Male": 77.1
+  },
+  {
+    "Rank": 38,
+    "Region": "United States of America",
+    "Overall": 78.9,
+    "Female": 81.4,
+    "Male": 76.3
+  },
+  {
+    "Rank": -1,
+    "Region": "Albania",
+    "Overall": 78.5,
+    "Female": 81.4,
+    "Male": 75.8
+  },
+  {
+    "Rank": 39,
+    "Region": "Cuba",
+    "Overall": 78.6,
+    "Female": 80.6,
+    "Male": 76.7
+  },
+  {
+    "Rank": 40,
+    "Region": "Estonia",
+    "Overall": 78.6,
+    "Female": 82.4,
+    "Male": 73.9
+  },
+  {
+    "Rank": 41,
+    "Region": "Poland",
+    "Overall": 78.5,
+    "Female": 82.4,
+    "Male": 74.6
+  },
+  {
+    "Rank": 42,
+    "Region": "Croatia",
+    "Overall": 78.3,
+    "Female": 81.5,
+    "Male": 75.1
+  },
+  {
+    "Rank": 43,
+    "Region": "Panama",
+    "Overall": 78.3,
+    "Female": 81.6,
+    "Male": 75.2
+  },
+  {
+    "Rank": 44,
+    "Region": "Turkey",
+    "Overall": 78.3,
+    "Female": 81,
+    "Male": 75.6
+  },
+  {
+    "Rank": 45,
+    "Region": "United Arab Emirates",
+    "Overall": 77.8,
+    "Female": 79.2,
+    "Male": 77.1
+  },
+  {
+    "Rank": 46,
+    "Region": "Uruguay",
+    "Overall": 77.8,
+    "Female": 81.4,
+    "Male": 74
+  },
+  {
+    "Rank": 47,
+    "Region": "Oman",
+    "Overall": 77.6,
+    "Female": 80.1,
+    "Male": 75.9
+  },
+  {
+    "Rank": 48,
+    "Region": "Slovakia",
+    "Overall": 77.4,
+    "Female": 80.8,
+    "Male": 73.8
+  },
+  {
+    "Rank": 49,
+    "Region": "Bosnia and Herzegovina",
+    "Overall": 77.3,
+    "Female": 79.7,
+    "Male": 74.8
+  },
+  {
+    "Rank": 50,
+    "Region": "Bahrain",
+    "Overall": 77.2,
+    "Female": 78.3,
+    "Male": 76.3
+  },
+  {
+    "Rank": 51,
+    "Region": "Colombia",
+    "Overall": 77.1,
+    "Female": 79.9,
+    "Male": 74.3
+  },
+  {
+    "Rank": 52,
+    "Region": "Antigua and Barbuda",
+    "Overall": 76.9,
+    "Female": 78,
+    "Male": 75.7
+  },
+  {
+    "Rank": 53,
+    "Region": "Thailand",
+    "Overall": 76.9,
+    "Female": 80.7,
+    "Male": 73.2
+  },
+  {
+    "Rank": 54,
+    "Region": "Ecuador",
+    "Overall": 76.8,
+    "Female": 79.6,
+    "Male": 74.1
+  },
+  {
+    "Rank": 55,
+    "Region": "Montenegro",
+    "Overall": 76.8,
+    "Female": 79.2,
+    "Male": 74.3
+  },
+  {
+    "Rank": 56,
+    "Region": "Sri Lanka",
+    "Overall": 76.8,
+    "Female": 80.1,
+    "Male": 73.4
+  },
+  {
+    "Rank": 57,
+    "Region": "Algeria",
+    "Overall": 76.7,
+    "Female": 77.9,
+    "Male": 75.5
+  },
+  {
+    "Rank": 58,
+    "Region": "Hungary",
+    "Overall": 76.7,
+    "Female": 80.1,
+    "Male": 73.1
+  },
+  {
+    "Rank": 59,
+    "Region": "People's Republic of China",
+    "Overall": 76.7,
+    "Female": 79.1,
+    "Male": 74.5
+  },
+  {
+    "Rank": 60,
+    "Region": "Argentina",
+    "Overall": 76.5,
+    "Female": 79.9,
+    "Male": 73.1
+  },
+  {
+    "Rank": 61,
+    "Region": "Iran",
+    "Overall": 76.5,
+    "Female": 77.7,
+    "Male": 75.4
+  },
+  {
+    "Rank": 62,
+    "Region": "Morocco",
+    "Overall": 76.5,
+    "Female": 77.7,
+    "Male": 75.2
+  },
+  {
+    "Rank": 63,
+    "Region": "Peru",
+    "Overall": 76.5,
+    "Female": 79.3,
+    "Male": 73.8
+  },
+  {
+    "Rank": 64,
+    "Region": "Tunisia",
+    "Overall": 76.5,
+    "Female": 78.5,
+    "Male": 74.5
+  },
+  {
+    "Rank": 65,
+    "Region": "Malaysia",
+    "Overall": 76.1,
+    "Female": 78.3,
+    "Male": 74.2
+  },
+  {
+    "Rank": 66,
+    "Region": "Saint Lucia",
+    "Overall": 76.1,
+    "Female": 77.4,
+    "Male": 74.7
+  },
+  {
+    "Rank": 67,
+    "Region": "Romania",
+    "Overall": 75.9,
+    "Female": 79.4,
+    "Male": 72.5
+  },
+  {
+    "Rank": 68,
+    "Region": "Serbia",
+    "Overall": 75.8,
+    "Female": 78.5,
+    "Male": 73.3
+  },
+  {
+    "Rank": 69,
+    "Region": "Brazil",
+    "Overall": 75.7,
+    "Female": 79.4,
+    "Male": 72
+  },
+  {
+    "Rank": 70,
+    "Region": "Brunei",
+    "Overall": 75.7,
+    "Female": 77,
+    "Male": 74.6
+  },
+  {
+    "Rank": 71,
+    "Region": "Lithuania",
+    "Overall": 75.7,
+    "Female": 81.2,
+    "Male": 70.1
+  },
+  {
+    "Rank": 72,
+    "Region": "North Macedonia",
+    "Overall": 75.7,
+    "Female": 77.7,
+    "Male": 73.7
+  },
+  {
+    "Rank": 73,
+    "Region": "Kuwait",
+    "Overall": 75.4,
+    "Female": 76.5,
+    "Male": 74.7
+  },
+  {
+    "Rank": 74,
+    "Region": "Vietnam",
+    "Overall": 75.3,
+    "Female": 79.4,
+    "Male": 71.2
+  },
+  {
+    "Rank": 75,
+    "Region": "Latvia",
+    "Overall": 75.2,
+    "Female": 79.9,
+    "Male": 70.1
+  },
+  {
+    "Rank": 76,
+    "Region": "Honduras",
+    "Overall": 75.1,
+    "Female": 77.4,
+    "Male": 72.8
+  },
+  {
+    "Rank": 77,
+    "Region": "Mexico",
+    "Overall": 75,
+    "Female": 77.8,
+    "Male": 72.1
+  },
+  {
+    "Rank": 78,
+    "Region": "Saudi Arabia",
+    "Overall": 75,
+    "Female": 76.6,
+    "Male": 73.8
+  },
+  {
+    "Rank": 79,
+    "Region": "Armenia",
+    "Overall": 74.9,
+    "Female": 78.4,
+    "Male": 71.2
+  },
+  {
+    "Rank": 80,
+    "Region": "Bulgaria",
+    "Overall": 74.9,
+    "Female": 78.5,
+    "Male": 71.4
+  },
+  {
+    "Rank": 81,
+    "Region": "Mauritius",
+    "Overall": 74.9,
+    "Female": 78.4,
+    "Male": 71.5
+  },
+  {
+    "Rank": 82,
+    "Region": "Belarus",
+    "Overall": 74.6,
+    "Female": 79.4,
+    "Male": 69.4
+  },
+  {
+    "Rank": 83,
+    "Region": "Saint Kitts and Nevis",
+    "Overall": 74.6,
+    "Female": "",
+    "Male": ""
+  },
+  {
+    "Rank": 84,
+    "Region": "Belize",
+    "Overall": 74.5,
+    "Female": 77.7,
+    "Male": 71.6
+  },
+  {
+    "Rank": 85,
+    "Region": "Jamaica",
+    "Overall": 74.4,
+    "Female": 76,
+    "Male": 72.8
+  },
+  {
+    "Rank": 86,
+    "Region": "Jordan",
+    "Overall": 74.4,
+    "Female": 76.2,
+    "Male": 72.7
+  },
+  {
+    "Rank": 87,
+    "Region": "Nicaragua",
+    "Overall": 74.3,
+    "Female": 77.8,
+    "Male": 70.7
+  },
+  {
+    "Rank": 88,
+    "Region": "Guatemala",
+    "Overall": 74.1,
+    "Female": 76.9,
+    "Male": 71.1
+  },
+  {
+    "Rank": 89,
+    "Region": "Paraguay",
+    "Overall": 74.1,
+    "Female": 76.3,
+    "Male": 72.2
+  },
+  {
+    "Rank": 90,
+    "Region": "Dominican Republic",
+    "Overall": 73.9,
+    "Female": 77.2,
+    "Male": 70.8
+  },
+  {
+    "Rank": 91,
+    "Region": "Marshall Islands",
+    "Overall": 73.9,
+    "Female": "",
+    "Male": ""
+  },
+  {
+    "Rank": 92,
+    "Region": "Palestine",
+    "Overall": 73.9,
+    "Female": 75.6,
+    "Male": 72.3
+  },
+  {
+    "Rank": 93,
+    "Region": "Bahamas",
+    "Overall": 73.8,
+    "Female": 75.9,
+    "Male": 71.5
+  },
+  {
+    "Rank": 94,
+    "Region": "Palau",
+    "Overall": 73.7,
+    "Female": "",
+    "Male": ""
+  },
+  {
+    "Rank": 95,
+    "Region": "Georgia",
+    "Overall": 73.6,
+    "Female": 78,
+    "Male": 69.2
+  },
+  {
+    "Rank": 96,
+    "Region": "Trinidad and Tobago",
+    "Overall": 73.4,
+    "Female": 76.1,
+    "Male": 70.8
+  },
+  {
+    "Rank": 97,
+    "Region": "Seychelles",
+    "Overall": 73.3,
+    "Female": 77.3,
+    "Male": 69.8
+  },
+  {
+    "Rank": 98,
+    "Region": "Kazakhstan",
+    "Overall": 73.2,
+    "Female": 77.3,
+    "Male": 68.8
+  },
+  {
+    "Rank": 99,
+    "Region": "Samoa",
+    "Overall": 73.2,
+    "Female": 75.3,
+    "Male": 71.2
+  },
+  {
+    "Rank": 100,
+    "Region": "El Salvador",
+    "Overall": 73.1,
+    "Female": 77.6,
+    "Male": 68.2
+  },
+  {
+    "Rank": 101,
+    "Region": "Azerbaijan",
+    "Overall": 72.9,
+    "Female": 75.3,
+    "Male": 70.3
+  },
+  {
+    "Rank": 102,
+    "Region": "Cabo Verde",
+    "Overall": 72.8,
+    "Female": 76,
+    "Male": 69.3
+  },
+  {
+    "Rank": 103,
+    "Region": "Solomon Islands",
+    "Overall": 72.8,
+    "Female": 74.7,
+    "Male": 71.2
+  },
+  {
+    "Rank": 104,
+    "Region": "Libya",
+    "Overall": 72.7,
+    "Female": 75.8,
+    "Male": 69.9
+  },
+  {
+    "Rank": 105,
+    "Region": "Grenada",
+    "Overall": 72.4,
+    "Female": 74.9,
+    "Male": 70.1
+  },
+  {
+    "Rank": 106,
+    "Region": "Russia",
+    "Overall": 72.4,
+    "Female": 77.6,
+    "Male": 66.9
+  },
+  {
+    "Rank": 107,
+    "Region": "Saint Vincent and the Grenadines",
+    "Overall": 72.4,
+    "Female": 75,
+    "Male": 70.2
+  },
+  {
+    "Rank": 108,
+    "Region": "Bangladesh",
+    "Overall": 72.3,
+    "Female": 74.3,
+    "Male": 70.6
+  },
+  {
+    "Rank": 109,
+    "Region": "Venezuela",
+    "Overall": 72.1,
+    "Female": 76.1,
+    "Male": 68.4
+  },
+  {
+    "Rank": 110,
+    "Region": "Ukraine",
+    "Overall": 72,
+    "Female": 76.7,
+    "Male": 67
+  },
+  {
+    "Rank": 111,
+    "Region": "Egypt",
+    "Overall": 71.8,
+    "Female": 74.2,
+    "Male": 69.6
+  },
+  {
+    "Rank": 112,
+    "Region": "Moldova",
+    "Overall": 71.8,
+    "Female": 76.1,
+    "Male": 67.5
+  },
+  {
+    "Rank": 113,
+    "Region": "Syria",
+    "Overall": 71.8,
+    "Female": 77.8,
+    "Male": 66.6
+  },
+  {
+    "Rank": 114,
+    "Region": "Suriname",
+    "Overall": 71.6,
+    "Female": 74.9,
+    "Male": 68.4
+  },
+  {
+    "Rank": 115,
+    "Region": "Bhutan",
+    "Overall": 71.5,
+    "Female": 71.8,
+    "Male": 71.1
+  },
+  {
+    "Rank": 116,
+    "Region": "Indonesia",
+    "Overall": 71.5,
+    "Female": 73.7,
+    "Male": 69.4
+  },
+  {
+    "Rank": 117,
+    "Region": "Uzbekistan",
+    "Overall": 71.5,
+    "Female": 73.7,
+    "Male": 69.4
+  },
+  {
+    "Rank": 118,
+    "Region": "Kyrgyzstan",
+    "Overall": 71.3,
+    "Female": 75.5,
+    "Male": 67.3
+  },
+  {
+    "Rank": 119,
+    "Region": "Bolivia",
+    "Overall": 71.2,
+    "Female": 74.2,
+    "Male": 68.4
+  },
+  {
+    "Rank": 120,
+    "Region": "Philippines",
+    "Overall": 71.1,
+    "Female": 75.4,
+    "Male": 67.1
+  },
+  {
+    "Rank": 121,
+    "Region": "Tajikistan",
+    "Overall": 70.9,
+    "Female": 73.2,
+    "Male": 68.7
+  },
+  {
+    "Rank": 122,
+    "Region": "Tonga",
+    "Overall": 70.8,
+    "Female": 72.8,
+    "Male": 68.9
+  },
+  {
+    "Rank": 123,
+    "Region": "Iraq",
+    "Overall": 70.5,
+    "Female": 72.5,
+    "Male": 68.4
+  },
+  {
+    "Rank": 124,
+    "Region": "Nepal",
+    "Overall": 70.5,
+    "Female": 71.9,
+    "Male": 69
+  },
+  {
+    "Rank": 125,
+    "Region": "Vanuatu",
+    "Overall": 70.3,
+    "Female": 72,
+    "Male": 68.8
+  },
+  {
+    "Rank": 126,
+    "Region": "Sao Tome and Principe",
+    "Overall": 70.2,
+    "Female": 72.6,
+    "Male": 67.8
+  },
+  {
+    "Rank": 127,
+    "Region": "Guyana",
+    "Overall": 69.8,
+    "Female": 73,
+    "Male": 66.8
+  },
+  {
+    "Rank": 128,
+    "Region": "Mongolia",
+    "Overall": 69.7,
+    "Female": 74,
+    "Male": 65.6
+  },
+  {
+    "Rank": 129,
+    "Region": "Cambodia",
+    "Overall": 69.6,
+    "Female": 71.6,
+    "Male": 67.3
+  },
+  {
+    "Rank": 130,
+    "Region": "India",
+    "Overall": 69.4,
+    "Female": 70.7,
+    "Male": 68.2
+  },
+  {
+    "Rank": 131,
+    "Region": "Botswana",
+    "Overall": 69.3,
+    "Female": 72,
+    "Male": 66.2
+  },
+  {
+    "Rank": 132,
+    "Region": "Timor Leste",
+    "Overall": 69.3,
+    "Female": 71.4,
+    "Male": 67.3
+  },
+  {
+    "Rank": 133,
+    "Region": "Rwanda",
+    "Overall": 68.7,
+    "Female": 70.8,
+    "Male": 66.5
+  },
+  {
+    "Rank": 134,
+    "Region": "Kiribati",
+    "Overall": 68.1,
+    "Female": 72.1,
+    "Male": 64
+  },
+  {
+    "Rank": 135,
+    "Region": "Turkmenistan",
+    "Overall": 68.1,
+    "Female": 71.6,
+    "Male": 64.6
+  },
+  {
+    "Rank": 136,
+    "Region": "Federated States of Micronesia",
+    "Overall": 67.8,
+    "Female": 69.5,
+    "Male": 66.1
+  },
+  {
+    "Rank": 137,
+    "Region": "Senegal",
+    "Overall": 67.7,
+    "Female": 69.6,
+    "Male": 65.5
+  },
+  {
+    "Rank": 138,
+    "Region": "Laos",
+    "Overall": 67.6,
+    "Female": 69.4,
+    "Male": 65.8
+  },
+  {
+    "Rank": 139,
+    "Region": "Fiji",
+    "Overall": 67.3,
+    "Female": 69.2,
+    "Male": 65.6
+  },
+  {
+    "Rank": 140,
+    "Region": "Pakistan",
+    "Overall": 67.1,
+    "Female": 68.1,
+    "Male": 66.2
+  },
+  {
+    "Rank": 141,
+    "Region": "Myanmar",
+    "Overall": 66.9,
+    "Female": 69.9,
+    "Male": 63.8
+  },
+  {
+    "Rank": 142,
+    "Region": "Madagascar",
+    "Overall": 66.7,
+    "Female": 68.3,
+    "Male": 65.1
+  },
+  {
+    "Rank": 143,
+    "Region": "Djibouti",
+    "Overall": 66.6,
+    "Female": 68.8,
+    "Male": 64.6
+  },
+  {
+    "Rank": 144,
+    "Region": "Ethiopia",
+    "Overall": 66.2,
+    "Female": 68.2,
+    "Male": 64.4
+  },
+  {
+    "Rank": 145,
+    "Region": "Gabon",
+    "Overall": 66.2,
+    "Female": 68.9,
+    "Male": 64.2
+  },
+  {
+    "Rank": 146,
+    "Region": "Yemen",
+    "Overall": 66.1,
+    "Female": 67.8,
+    "Male": 64.4
+  },
+  {
+    "Rank": 147,
+    "Region": "Eritrea",
+    "Overall": 65.9,
+    "Female": 68.2,
+    "Male": 63.8
+  },
+  {
+    "Rank": 148,
+    "Region": "Sudan",
+    "Overall": 65.1,
+    "Female": 66.9,
+    "Male": 63.3
+  },
+  {
+    "Rank": 149,
+    "Region": "Tanzania",
+    "Overall": 65,
+    "Female": 66.8,
+    "Male": 63.2
+  },
+  {
+    "Rank": 150,
+    "Region": "Mauritania",
+    "Overall": 64.7,
+    "Female": 66.3,
+    "Male": 63.1
+  },
+  {
+    "Rank": 151,
+    "Region": "Afghanistan",
+    "Overall": 64.5,
+    "Female": 66,
+    "Male": 63
+  },
+  {
+    "Rank": 152,
+    "Region": "Congo, Republic of",
+    "Overall": 64.3,
+    "Female": 65.7,
+    "Male": 62.8
+  },
+  {
+    "Rank": 153,
+    "Region": "Papua New Guinea",
+    "Overall": 64.3,
+    "Female": 65.6,
+    "Male": 63
+  },
+  {
+    "Rank": 154,
+    "Region": "Comoros",
+    "Overall": 64.1,
+    "Female": 65.9,
+    "Male": 62.4
+  },
+  {
+    "Rank": 155,
+    "Region": "South Africa",
+    "Overall": 63.9,
+    "Female": 67.4,
+    "Male": 60.5
+  },
+  {
+    "Rank": 156,
+    "Region": "Ghana",
+    "Overall": 63.8,
+    "Female": 64.9,
+    "Male": 62.7
+  },
+  {
+    "Rank": 157,
+    "Region": "Malawi",
+    "Overall": 63.8,
+    "Female": 66.9,
+    "Male": 60.7
+  },
+  {
+    "Rank": 158,
+    "Region": "Haiti",
+    "Overall": 63.7,
+    "Female": 65.8,
+    "Male": 61.5
+  },
+  {
+    "Rank": 159,
+    "Region": "Liberia",
+    "Overall": 63.7,
+    "Female": 65.1,
+    "Male": 62.3
+  },
+  {
+    "Rank": 160,
+    "Region": "Zambia",
+    "Overall": 63.5,
+    "Female": 66.4,
+    "Male": 60.5
+  },
+  {
+    "Rank": 161,
+    "Region": "Namibia",
+    "Overall": 63.4,
+    "Female": 66.2,
+    "Male": 60.4
+  },
+  {
+    "Rank": 162,
+    "Region": "Kenya",
+    "Overall": 63.3,
+    "Female": 68.7,
+    "Male": 64
+  },
+  {
+    "Rank": 163,
+    "Region": "Uganda",
+    "Overall": 63,
+    "Female": 65.2,
+    "Male": 60.7
+  },
+  {
+    "Rank": 164,
+    "Region": "Niger",
+    "Overall": 62,
+    "Female": 63.2,
+    "Male": 60.9
+  },
+  {
+    "Rank": 165,
+    "Region": "Gambia",
+    "Overall": 61.7,
+    "Female": 63.2,
+    "Male": 60.4
+  },
+  {
+    "Rank": 166,
+    "Region": "Benin",
+    "Overall": 61.5,
+    "Female": 63,
+    "Male": 59.9
+  },
+  {
+    "Rank": 167,
+    "Region": "Burkina Faso",
+    "Overall": 61.2,
+    "Female": 61.9,
+    "Male": 60.4
+  },
+  {
+    "Rank": 168,
+    "Region": "Burundi",
+    "Overall": 61.2,
+    "Female": 63,
+    "Male": 59.4
+  },
+  {
+    "Rank": 169,
+    "Region": "Guinea",
+    "Overall": 61.2,
+    "Female": 61.7,
+    "Male": 60.5
+  },
+  {
+    "Rank": 170,
+    "Region": "Zimbabwe",
+    "Overall": 61.2,
+    "Female": 62.6,
+    "Male": 59.5
+  },
+  {
+    "Rank": 171,
+    "Region": "Angola",
+    "Overall": 60.8,
+    "Female": 63.7,
+    "Male": 58.1
+  },
+  {
+    "Rank": 172,
+    "Region": "Togo",
+    "Overall": 60.8,
+    "Female": 61.6,
+    "Male": 59.9
+  },
+  {
+    "Rank": 173,
+    "Region": "Congo, Democratic Republic of the",
+    "Overall": 60.4,
+    "Female": 61.9,
+    "Male": 58.9
+  },
+  {
+    "Rank": 174,
+    "Region": "Mozambique",
+    "Overall": 60.2,
+    "Female": 63,
+    "Male": 57.1
+  },
+  {
+    "Rank": 175,
+    "Region": "Eswatini",
+    "Overall": 59.4,
+    "Female": 64,
+    "Male": 55.3
+  },
+  {
+    "Rank": 176,
+    "Region": "Cameroon",
+    "Overall": 58.9,
+    "Female": 60.2,
+    "Male": 57.7
+  },
+  {
+    "Rank": 177,
+    "Region": "Mali",
+    "Overall": 58.9,
+    "Female": 59.6,
+    "Male": 58.1
+  },
+  {
+    "Rank": 178,
+    "Region": "Equatorial Guinea",
+    "Overall": 58.4,
+    "Female": 59.6,
+    "Male": 57.4
+  },
+  {
+    "Rank": 179,
+    "Region": "Guinea-Bissau",
+    "Overall": 58,
+    "Female": 59.9,
+    "Male": 56
+  },
+  {
+    "Rank": 180,
+    "Region": "South Sudan",
+    "Overall": 57.6,
+    "Female": 59.1,
+    "Male": 56.1
+  },
+  {
+    "Rank": 181,
+    "Region": "Côte d'Ivoire",
+    "Overall": 57.4,
+    "Female": 58.7,
+    "Male": 56.3
+  },
+  {
+    "Rank": 182,
+    "Region": "Nigeria",
+    "Overall": 54.3,
+    "Female": 55.2,
+    "Male": 53.5
+  },
+  {
+    "Rank": 183,
+    "Region": "Sierra Leone",
+    "Overall": 54.3,
+    "Female": 55.1,
+    "Male": 53.5
+  },
+  {
+    "Rank": 184,
+    "Region": "Chad",
+    "Overall": 54,
+    "Female": 55.4,
+    "Male": 52.6
+  },
+  {
+    "Rank": 185,
+    "Region": "Lesotho",
+    "Overall": 53.7,
+    "Female": 57,
+    "Male": 50.6
+  },
+  {
+    "Rank": 186,
+    "Region": "Central African Republic",
+    "Overall": 52.8,
+    "Female": 55,
+    "Male": 50.6
+  }
+]

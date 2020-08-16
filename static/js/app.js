@@ -183,7 +183,7 @@ function createMap(is_new, gran_level, e) {
                             i + 1
                         }"><strong><u>Goals/Accomplished</u></strong></label></center>
                         <div id="user-text-${i + 1}" class="smallInput"></div>
-                            <textarea class="form-control invisible" id="what-did-${
+                            <textarea class="form-control invisible" rows="8" id="what-did-${
                                 i + 1
                             }" placeholder="Supports Markdown and copying down previous text!"></textarea>
                         </div>
@@ -386,6 +386,7 @@ function rewriteModal(i) {
             var converter = new showdown.Converter(),
                 text = document.querySelector(`#what-did-${i + 1}`).value,
                 html = converter.makeHtml(text);
+
             localStorage.setItem(
                 `${current_view}-${i + 1}`,
                 document.querySelector(`#what-did-${i + 1}`).value
@@ -395,6 +396,12 @@ function rewriteModal(i) {
         }
 
         document.querySelector(`#user-text-${i + 1}`).innerHTML = html;
+
+        // make all images responsive to width
+        let unresponse_images = document.querySelector(`#user-text-${i + 1}`).getElementsByTagName("img")
+        for (let x = 0; x < unresponse_images.length; x++) {
+            unresponse_images[x].classList.add("img-fluid")
+        }
 
         // clear textarea
         document.querySelector(`#what-did-${i + 1}`).value = "";
@@ -425,5 +432,10 @@ function checkSavedText(i) {
             text = markdown,
             html = converter.makeHtml(text);
         document.querySelector(`#user-text-${i + 1}`).innerHTML = html;
+
+        let unresponse_images = document.querySelector(`#user-text-${i + 1}`).getElementsByTagName("img")
+        for (let x = 0; x < unresponse_images.length; x++) {
+            unresponse_images[x].classList.add("img-fluid")
+        }
     }
 }
