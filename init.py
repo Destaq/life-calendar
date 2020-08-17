@@ -5,23 +5,22 @@ from flask_cors import CORS
 
 # import views
 from views.generate_download import MakeImageView
-from views.pageviews import View, DownloadView
+from views.pageviews import View, DownloadView, SignupView
 from views.apiviews import JSONDataView
 
 # import authentication
-from authentication import authenticate, identity, USERS, username_table, userid_table
+from authentication import authenticate, identity
 from flask_jwt import JWT
 
 
 def load_settings(app: Flask):
     app.config["SECRET_KEY"] = os.getenv("APP_CONFIG_KEY")
-    
+
     JWT(app, authentication_handler=authenticate, identity_handler=identity)
     CORS(app, resources={r"/api/*": {"origins": "*"}})
 
     load_dotenv()
 
-    # TODO: move to own page
 
 
 def form_application() -> Flask:
@@ -39,7 +38,9 @@ def form_application() -> Flask:
 
 def register_views(app):
     # register individual views
-    View.register(app)
-    DownloadView.register(app)
-    JSONDataView.register(app)
+    views = [View, DownloadView, JSONDataView, SignupView]
+    
+    for view in views:
+        view.register(app)
+
     MakeImageView.register(app, route_prefix="/api")
