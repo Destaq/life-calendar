@@ -1,5 +1,3 @@
-import { nothing } from "/static/js/sendEmail.js"
-
 nothing()
 
 const submit_button = document.querySelector("#submit")
