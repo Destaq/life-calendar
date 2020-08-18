@@ -1,2 +1,3 @@
 # hide HTML files from GitHub linguist
+*.html
 *.html linguist-vendored
