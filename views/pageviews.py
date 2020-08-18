@@ -13,7 +13,16 @@ class DownloadView(FlaskView):
     def index(self):
         return render_template("download.html")
 
-# setup form for logging in
+class ContactView(FlaskView):
+    def index(self):
+        return render_template("jinja/contact.jinja")
+
+# thank user for form
+class ThanksView(FlaskView):
+    def index(self):
+        return render_template("jinja/thanks.jinja")
+
+# setup form for signing up
 
 class SignupForm(FlaskForm):
     password = PasswordField("Password", validators=[DataRequired()])
@@ -42,3 +51,25 @@ class SignupView(FlaskView):
 
         else:
             return abort(500)
+
+# form for returning users
+class LoginForm(FlaskForm):
+    email = StringField("Email Address", validators = [DataRequired()])
+    password = PasswordField("Password", validators=[DataRequired()])
+    submit = SubmitField("Submit")
+
+class LoginView(FlaskView):
+    def index(self):
+        form = LoginForm()
+
+        return render_template("jinja/login.jinja", form=form)
+
+    def post(self):
+        form = LoginForm()
+        if form.validate_on_submit():
+            session["email"] = form.email.data
+            session["password"] = form.password.data
+
+            # perform database magic
+
+            return redirect(url_for("View:index"))

@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
-{#  Login/Signup Page - Jinja #}
+{#  Signup Page - Jinja #}
 <body>
     <center><h2>Sign Up</h2></center>
     <p>Welcome to Life Calendar, we're glad you're here! This website was born out of the necessity to have a highly-customizable, free, and cross-platform solution to viewing one's life at a glance. We believe in <em>showing</em>, not <em>telling</em>, to adopt a writing mantra - and so built this application to <em>show</em> users across the globe how they are using their time, what progress they've made in their life, and what they can strive to achieve.</p>
@@ -24,6 +24,6 @@
     <div class="form-group">
         {{ form.submit(class_="form-control", style="background-color: #cccccc") }}
     </div>
-    <script src="/static/js/checkEmail.js"></script>
+    <script type="module" src="/static/js/checkEmail.js"></script>
 </body>
 {% endblock content %}

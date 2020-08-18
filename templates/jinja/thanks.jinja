@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Successfully sent email!</h1>
+<p>{{ request.args.get('name') }}, thanks for reaching out! We've received your emai and will try to respond within a few days.</h1>
+<center><img src="https://media3.giphy.com/media/3otPoOxyDTXjzpMbIY/200.gif" class="" width="700" height="400" alt="thank you gif"></center>
+{% endblock content %}

@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+{#  Login Page - Jinja #}
+<body>
+    <center><h2>Log In</h2></center>
+    <p>Welcome back! Please login below so that you can access all of your historical data!</p>
+    <hr>
+    <form method="POST">
+    <p class="form-text text-muted">New user? You can <a href="/signup">register here</a> instead.</p>
+    <div class="form-group">
+        {{ form.hidden_tag() }}
+        {{ form.email.label(id="emailLabel")}} {{ form.email(class_="form-control") }}
+    </div>
+    <div class="form-group">
+        {{ form.password.label }} {{ form.password(class_="form-control") }}
+    </div>
+    <div class="form-group">
+        {{ form.submit(class_="form-control", style="background-color: #cccccc") }}
+    </div>
+<script type="module" src="/static/js/checkEmail.js"></script>
+</body>
+{% endblock content %}

@@ -5,8 +5,8 @@ from flask_cors import CORS
 
 # import views
 from views.generate_download import MakeImageView
-from views.pageviews import View, DownloadView, SignupView
-from views.apiviews import JSONDataView
+from views.pageviews import View, DownloadView, SignupView, LoginView, ContactView, ThanksView
+from views.apiviews import JSONDataView, ContactSubmitView
 
 # import authentication
 from authentication import authenticate, identity
@@ -20,7 +20,6 @@ def load_settings(app: Flask):
     CORS(app, resources={r"/api/*": {"origins": "*"}})
 
     load_dotenv()
-
 
 
 def form_application() -> Flask:
@@ -38,8 +37,17 @@ def form_application() -> Flask:
 
 def register_views(app):
     # register individual views
-    views = [View, DownloadView, JSONDataView, SignupView]
-    
+    views = [
+        View,
+        DownloadView,
+        JSONDataView,
+        SignupView,
+        LoginView,
+        ContactView,
+        ContactSubmitView,
+        ThanksView
+    ]
+
     for view in views:
         view.register(app)
 
