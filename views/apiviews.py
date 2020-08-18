@@ -1,6 +1,10 @@
 import json
-import smtplib
-from email.message import EmailMessage
+import os
+import yagmail
+from dotenv import load_dotenv
+
+load_dotenv()
+yag = yagmail.SMTP(os.getenv("SEND_FROM_ADDRESS"), os.getenv("SEND_FROM_PASSWORD"))
 
 from flask_jwt import jwt_required
 from flask_classful import FlaskView
@@ -27,15 +31,21 @@ class ContactSubmitView(FlaskView):
         details = [value for key, value in request.form.items()]
         name = details[0]
 
-        msg = EmailMessage()
-        msg.set_content(details)
+        contents = [f"""
+        Hi Simon, you had someone contact you through the automated messaging service on lifecalendar. You can view the details below: 
+        
+        Name: {details[0]}
+                    
+        Email Address: {details[1]}
 
-        msg["Subject"] = "A test message"
-        msg["From"] = "nothinginteresting@test.com"
-        msg["To"] = "simon@simonilincev.com"
+        Subject: {details[2]}
 
-        s = smtplib.SMTP("localhost")
-        s.send_message(msg)
-        s.quit()
+        Message: {details[3]}
+
+        Make sure to get back to them soon!
+                    """]
+
+        yag.send("simon@simonilincev.com", "New Contact Message from Life Calendar", contents)
+
 
         return redirect(url_for("ThanksView:index", name=name))
