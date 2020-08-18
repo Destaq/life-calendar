@@ -5,7 +5,7 @@ from flask_cors import CORS
 
 # import views
 from views.generate_download import MakeImageView
-from views.pageviews import View, DownloadView, SignupView, LoginView, ContactView, ThanksView
+from views.pageviews import View, DownloadView, SignupView, LoginView, ContactView, ThanksView, PrivacyPolicyView
 from views.apiviews import JSONDataView, ContactSubmitView
 
 # import authentication
@@ -45,7 +45,8 @@ def register_views(app):
         LoginView,
         ContactView,
         ContactSubmitView,
-        ThanksView
+        ThanksView,
+        PrivacyPolicyView
     ]
 
     for view in views:

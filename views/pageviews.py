@@ -17,6 +17,12 @@ class ContactView(FlaskView):
     def index(self):
         return render_template("jinja/contact.jinja")
 
+class PrivacyPolicyView(FlaskView):
+    route_base = "/privacy-policy"
+
+    def index(self):
+        return render_template("other/privacypolicy.html")
+
 # thank user for form
 class ThanksView(FlaskView):
     def index(self):
