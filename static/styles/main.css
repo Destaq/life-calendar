@@ -1,7 +1,9 @@
 .year-button {
     width: 80px;
     size: 20px;
-    text-align: center;
+    /* NOTE: doesn't align properly with very large numbers. Shrink text or look into another solution? */
+    text-align: center !important;
+    justify-content: center;
 }
 
 .invisible {

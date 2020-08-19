@@ -8,14 +8,28 @@ const birthdate = document.querySelector("#birthdateInput");
 
 const finished_button = document.querySelector("#finished-input");
 
-const current_view_value = parseInt(document.querySelector(".active-bottom").textContent) - 1;
+const urlParams = new URLSearchParams(location.search);
+
+if (urlParams.get("page") != null) {
+    var current_view_value = parseInt(urlParams.get("page")) - 1;
+    applicableString = `page=${current_view_value + 1}&`;
+} else {
+    current_view_value = 0;
+    applicableString = "";
+}
 
 // reset button (will be moved to their settings)
 document.querySelector("#reset-stuff").addEventListener("click", tryReset);
 
 // whether or not the clipboard button is displayed
 let is_clipboard = false;
-let current_view = "Years";
+var current_view = "Years";
+
+if (urlParams.get("view") != null) {
+    current_view =
+        urlParams.get("view").slice(0, 1).toUpperCase() +
+        urlParams.get("view").slice(1);
+}
 
 // amount
 var amount;
@@ -37,26 +51,51 @@ const granularity_days = document.querySelector("#view-days");
 
 granularity_decades.addEventListener("click", function () {
     current_view = "Decades";
+    window.history.pushState(
+        "",
+        "Life Calendar",
+        `?${applicableString}view=decades`
+    );
     createMap(is_new_user, current_view);
 });
 
 granularity_years.addEventListener("click", function () {
     current_view = "Years";
+    window.history.pushState(
+        "",
+        "Life Calendar",
+        `?${applicableString}view=years`
+    );
     createMap(is_new_user, current_view);
 });
 
 granularity_months.addEventListener("click", function () {
     current_view = "Months";
+    window.history.pushState(
+        "",
+        "Life Calendar",
+        `?${applicableString}view=months`
+    );
     createMap(is_new_user, current_view);
 });
 
 granularity_weeks.addEventListener("click", function () {
     current_view = "Weeks";
+    window.history.pushState(
+        "",
+        "Life Calendar",
+        `?${applicableString}view=weeks`
+    );
     createMap(is_new_user, current_view);
 });
 
 granularity_days.addEventListener("click", function () {
     current_view = "Days";
+    window.history.pushState(
+        "",
+        "Life Calendar",
+        `?${applicableString}view=days`
+    );
     createMap(is_new_user, current_view);
 });
 
@@ -67,8 +106,8 @@ $("body").tooltip({
 
 // generate map from localStorage if not empty, else from blank
 if (localStorage.getItem("age-expectancy") != null) {
-    document.querySelector("#gen-data-info").style.display = "none";
-    // TODO: hide input when loading this...
+    // prevent form from being filled out again
+    document.querySelector("#hideOnFormSubmission").style.display = "none";
     generateUserMap();
 } else {
     finished_button.addEventListener("click", function (e) {
@@ -80,13 +119,15 @@ if (localStorage.getItem("age-expectancy") != null) {
             const error = setTimeout(warningHide, 3000);
             return;
         } else if (Date.parse(birthdate.value) > Date.now()) {
-            warningOutput(e, "Please provide a valid birthdate.")
-            const error = setTimeout(warningHide, 3000)
+            warningOutput(e, "Please provide a valid birthdate.");
+            const error = setTimeout(warningHide, 3000);
         } else if (calculateDays(bdayDate) > expectancy.value * 365) {
-            warningOutput(e, "Please set your life expectancy higher or equal to your age.")
-            const error = setTimeout(warningHide, 3000)
-        }
-        else {
+            warningOutput(
+                e,
+                "Please set your life expectancy higher or equal to your age."
+            );
+            const error = setTimeout(warningHide, 3000);
+        } else {
             createMap(is_new_user, current_view);
             e.preventDefault();
         }
@@ -94,13 +135,13 @@ if (localStorage.getItem("age-expectancy") != null) {
 }
 
 function calculateDays(bday) {
-    const current_day = new Date(Date.now())
-    const diffTime = Math.abs(current_day - bday)
-    return Math.ceil(diffTime / (1000 * 60 * 60 * 24))  
+    const current_day = new Date(Date.now());
+    const diffTime = Math.abs(current_day - bday);
+    return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 }
 
 function tryReset() {
-    console.log("within the func")
+    console.log("within the func");
     const serious = confirm(
         "Are you SURE you want to reset? This action is IRREVERSIBLE!"
     );
@@ -108,12 +149,13 @@ function tryReset() {
         localStorage.clear();
         document.querySelector(".output").innerHTML = "";
         location.reload();
-        document.querySelector("#hideOnFormSubmission").style.display = "inline";
+        document.querySelector("#hideOnFormSubmission").style.display =
+            "inline";
     }
 }
 
 function createMap(is_new, gran_level, e) {
-    console.log(is_new)
+    console.log(is_new);
     try {
         document
             .querySelector(".dontShowAtStart")
@@ -130,7 +172,6 @@ function createMap(is_new, gran_level, e) {
         localStorage.setItem("birthday", birthdate.value);
 
         calculateAmount(birthdate_value);
-
     } else {
         var age_expectancy = localStorage.getItem("age-expectancy");
         var birthdate_value = localStorage.getItem("birthday");
@@ -163,13 +204,29 @@ function createMap(is_new, gran_level, e) {
 
     // for (let i = current_view_value; i < Math.floor(age_expectancy * modifier); i++) {
     let maximal_amount;
-    if ((current_view_value + 1) * 150 > Math.floor(age_expectancy * modifier)) {
-        maximal_amount = Math.floor(age_expectancy * modifier);
+    if (
+        (current_view_value + 1) * 150 >
+        Math.floor(age_expectancy * modifier)
+    ) {
+        if (Math.floor(age_expectancy * modifier) <= 150) {
+            maximal_amount = Math.floor(age_expectancy * modifier);
+        } else {
+            maximal_amount = 150;
+        }
     } else {
-        maximal_amount = (current_view_value + 1) * 150
+        maximal_amount = (current_view_value + 1) * 150;
     }
 
-    for (let i = current_view_value; i < maximal_amount; i++) {
+    let minimal_amount;
+    console.log(current_view_value);
+    if (current_view_value * 150 < maximal_amount) {
+        minimal_amount = current_view_value * 150;
+    } else {
+        minimal_amount = 0;
+    }
+    console.log(minimal_amount);
+
+    for (let i = minimal_amount; i < maximal_amount; i++) {
         const newBtn = document.createElement("button");
         newBtn.setAttribute("id", `${gran_level}-${i + 1}`);
         newBtn.setAttribute("type", "button");
@@ -187,9 +244,10 @@ function createMap(is_new, gran_level, e) {
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">${current_view.slice(start=0, end=current_view.length - 1)} ${
-                            i + 1
-                        }</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">${current_view.slice(
+                            (start = 0),
+                            (end = current_view.length - 1)
+                        )} ${i + 1}</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                         </button>
@@ -230,9 +288,6 @@ function createMap(is_new, gran_level, e) {
         btnContainer.append(newBtnStyling);
     }
 
-    // prevent form from being filled out again
-    document.querySelector("#hideOnFormSubmission").style.display = "none";
-
     // shade buttons based on the person's current journey in life
     shadeButtons(age_expectancy, birthdate_value);
 }
@@ -250,11 +305,11 @@ function warningHide() {
 
 function calculateAmount(birthday) {
     let dob = new Date(birthday);
-    let c_time = new Date(Date.now())
-    
+    let c_time = new Date(Date.now());
+
     function YearDiff(d1, d2) {
         var years;
-        years = d2.getFullYear() - d1.getFullYear()
+        years = d2.getFullYear() - d1.getFullYear();
         return years;
     }
 
@@ -268,7 +323,7 @@ function calculateAmount(birthday) {
 
     switch (current_view) {
         case "Decades":
-            amount = Math.floor((YearDiff(dob, c_time) - 1) / 10)
+            amount = Math.floor((YearDiff(dob, c_time) - 1) / 10);
             break;
 
         case "Years":
@@ -284,9 +339,11 @@ function calculateAmount(birthday) {
             break;
 
         case "Days":
-            amount = Math.ceil(Math.abs(Date.now() - dob) / (60 * 60 * 24 * 1000)) - 1;
+            amount =
+                Math.ceil(Math.abs(Date.now() - dob) / (60 * 60 * 24 * 1000)) -
+                1;
             break;
-    
+
         default:
             amount = 0;
             break;
@@ -295,22 +352,32 @@ function calculateAmount(birthday) {
 
 function shadeButtons(age_expectancy, birthday) {
     // supports custom + bootstrap colors
-    for (let x = ((current_view_value) * 150) + 1; x < ((current_view_value + 1) * 150) + 1; x++) {
+    for (let x = 0; x < (current_view_value + 1) * 150 + 1; x++) {
         // document.querySelector(`#year-${x}`).style.backgroundColor = "#CD5C5C";
         // only if lower than amount...
-        if (x < amount) {
-            document.querySelector(`#${current_view}-${x}`).classList.add("btn-danger");
-        }
-
+        try {
+            if (x < amount) {
+                document
+                    .querySelector(`#${current_view}-${x}`)
+                    .classList.add("btn-danger");
+            }
+        } catch {}
     }
     // happens because we only make the first 150; we need to stop at 150
-    console.log(current_view, amount)
-    document.querySelector(`#${current_view}-${amount}`).classList.add("btn-warning");
-    console.log(document.querySelector(`#${current_view}-${amount}`))
-    // document.querySelector(`#year-${age}`).style.backgroundColor = "yellow";
-    for (let x = amount + 1; x <= age_expectancy * modifier; x++) {
-        // document.querySelector(`#year-${x}`).style.backgroundColor = "#32CD32";
-        document.querySelector(`#${current_view}-${x}`).classList.add("btn-success");
+    if (amount <= (current_view_value + 1) * 150) {
+        try {
+            document
+                .querySelector(`#${current_view}-${amount}`)
+                .classList.add("btn-warning");
+        } catch {}
+        for (let x = amount + 1; x <= age_expectancy * modifier; x++) {
+            // document.querySelector(`#year-${x}`).style.backgroundColor = "#32CD32";
+            try {
+                document
+                    .querySelector(`#${current_view}-${x}`)
+                    .classList.add("btn-success");
+            } catch {}
+        }
     }
 }
 
@@ -420,9 +487,11 @@ function rewriteModal(i) {
         document.querySelector(`#user-text-${i + 1}`).innerHTML = html;
 
         // make all images responsive to width
-        let unresponse_images = document.querySelector(`#user-text-${i + 1}`).getElementsByTagName("img")
+        let unresponse_images = document
+            .querySelector(`#user-text-${i + 1}`)
+            .getElementsByTagName("img");
         for (let x = 0; x < unresponse_images.length; x++) {
-            unresponse_images[x].classList.add("img-fluid")
+            unresponse_images[x].classList.add("img-fluid");
         }
 
         // clear textarea
@@ -455,9 +524,11 @@ function checkSavedText(i) {
             html = converter.makeHtml(text);
         document.querySelector(`#user-text-${i + 1}`).innerHTML = html;
 
-        let unresponse_images = document.querySelector(`#user-text-${i + 1}`).getElementsByTagName("img")
+        let unresponse_images = document
+            .querySelector(`#user-text-${i + 1}`)
+            .getElementsByTagName("img");
         for (let x = 0; x < unresponse_images.length; x++) {
-            unresponse_images[x].classList.add("img-fluid")
+            unresponse_images[x].classList.add("img-fluid");
         }
     }
 }
