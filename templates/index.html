@@ -5,7 +5,7 @@
 <br>
 <p><i>Your days are numbered. Make the most of them.</i></p>
 
-<div class="btn-group dontShowAtStart">
+<div class="btn-group dontShowAtStart resetStartOnClick">
     <button class="btn btn-info mb-4 dropdown-toggle" id="granularity-select" type="button" data-toggle="dropdown"
         aria-haspopup="true" aria-expanded="false">
         Granularity
@@ -21,7 +21,7 @@
 </div>
 <form id="gen-data-info">
     <div class="get-data alert alert-danger d-none"></div>
-    <div class="form-group">
+    <div class="form-group" id="hideOnFormSubmission">
         <form>
             <div class="form-group age-years">
                 <label for="years">Age expectancy</label>

@@ -74,15 +74,29 @@ if (localStorage.getItem("age-expectancy") != null) {
     finished_button.addEventListener("click", function (e) {
         // warn if they filled out the information incorrectly
         // TODO: don't show the Restart and Granularity buttons if this occurs
+        let bdayDate = new Date(birthdate.value);
         if (expectancy.value == "" || birthdate.value == "") {
-            warningOutput(e);
+            warningOutput(e, "Please fill out all data.");
             const error = setTimeout(warningHide, 3000);
             return;
-        } else {
+        } else if (Date.parse(birthdate.value) > Date.now()) {
+            warningOutput(e, "Please provide a valid birthdate.")
+            const error = setTimeout(warningHide, 3000)
+        } else if (calculateDays(bdayDate) > expectancy.value * 365) {
+            warningOutput(e, "Please set your life expectancy higher or equal to your age.")
+            const error = setTimeout(warningHide, 3000)
+        }
+        else {
             createMap(is_new_user, current_view);
             e.preventDefault();
         }
     });
+}
+
+function calculateDays(bday) {
+    const current_day = new Date(Date.now())
+    const diffTime = Math.abs(current_day - bday)
+    return Math.ceil(diffTime / (1000 * 60 * 60 * 24))  
 }
 
 function tryReset() {
@@ -92,7 +106,9 @@ function tryReset() {
     );
     if (serious == true) {
         localStorage.clear();
+        document.querySelector(".output").innerHTML = "";
         location.reload();
+        document.querySelector("#hideOnFormSubmission").style.display = "inline";
     }
 }
 
@@ -214,18 +230,17 @@ function createMap(is_new, gran_level, e) {
         btnContainer.append(newBtnStyling);
     }
 
-    // prevent submit button from being clicked again
-    document.querySelector("#finished-input").style.display = "none";
+    // prevent form from being filled out again
+    document.querySelector("#hideOnFormSubmission").style.display = "none";
 
     // shade buttons based on the person's current journey in life
     shadeButtons(age_expectancy, birthdate_value);
 }
 
 // TODO: move to custom message + custom color
-function warningOutput(e) {
-    let warning = "Please fill out all data!";
+function warningOutput(e, msg) {
     document.querySelector(".get-data").classList.remove("d-none");
-    document.querySelector(".get-data").innerHTML = warning;
+    document.querySelector(".get-data").innerHTML = msg;
     e.preventDefault();
 }
 
