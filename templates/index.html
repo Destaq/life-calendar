@@ -5,7 +5,6 @@
 <br>
 <p><i>Your days are numbered. Make the most of them.</i></p>
 
-
 <div class="btn-group dontShowAtStart">
     <button class="btn btn-info mb-4 dropdown-toggle" id="granularity-select" type="button" data-toggle="dropdown"
         aria-haspopup="true" aria-expanded="false">
@@ -26,7 +25,7 @@
         <form>
             <div class="form-group age-years">
                 <label for="years">Age expectancy</label>
-                <input type="number" class="form-control" id="years" aria-describedby="emailHelp">
+                <input type="number" step="0.1" class="form-control" id="years" aria-describedby="emailHelp">
                 <small>Don't know? Take our 2-question <a href="#" id="setupExpectancyQuiz" data-toggle="modal"
                         data-target="#exampleModal">quiz</a>!</small>
             </div>
@@ -34,16 +33,6 @@
                 <label for="birthDateInput-input">Birthdate</label>
                 <input type="date" class="form-control" id="birthdateInput">
             </div>
-            <div class="form-group form-check email-summary">
-                <input type="checkbox" class="form-check-input" id="send-emails">
-                <label class="form-check-label" for="exampleCheck1">I want to receive email summaries.</label>
-            </div>
-            <label class="invisible" for="exampleInputEmail1" class="emailDialog">Email address</label>
-            <input type="email" class="form-control invisible emailDialog" id="exampleInputEmail1"
-                aria-describedby="emailHelp" placeholder="Enter email">
-            <small id="emailHelp" class="form-text emailDialog text-muted mb-3 invisible">We'll never share your
-                email with anyone
-                else.</small>
             <button type="submit" class="btn btn-primary" id="finished-input">Submit</button>
         </form>
     </div>
@@ -294,9 +283,24 @@
     </div>
 </form>
 
-<div class="output" role="group">
+<div class="output mb-4" role="group">
 
 </div>
+<!-- 150 buttons per page (TODO: move to scalable best on zoom in-out (?)) -->
+<nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
+        <li class="page-item disabled" id="previous-page">
+            <a class="page-link" href="#" tabindex="-1">Previous</a>
+        </li>
+        <li class="page-item active active-bottom" id="page-1"><a class="page-link" href="#">1</a></li>
+        <li class="page-item" id="page-2"><a class="page-link" href="#">2</a></li>
+        <li class="page-item" id="page-3"><a class="page-link" href="#">3</a></li>
+        <li class="page-item" id="next-page">
+            <a class="page-link" href="#">Next</a>
+        </li>
+    </ul>
+</nav>
+
 <script src="/static/js/expectancyQuiz.js"></script>
 <script src="/static/js/simpleHTTP.js"></script>
 <script src="/static/js/app.js"></script>

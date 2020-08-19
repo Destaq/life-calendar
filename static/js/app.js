@@ -1,3 +1,5 @@
+// TODO - move to the sign-up + settings pages, so that this will only display the calendar
+
 const http = new SimpleHTTP();
 
 const expectancy = document.querySelector("#years");
@@ -5,6 +7,11 @@ const expectancy = document.querySelector("#years");
 const birthdate = document.querySelector("#birthdateInput");
 
 const finished_button = document.querySelector("#finished-input");
+
+const current_view_value = parseInt(document.querySelector(".active-bottom").textContent) - 1;
+
+// reset button (will be moved to their settings)
+document.querySelector("#reset-stuff").addEventListener("click", tryReset);
 
 // whether or not the clipboard button is displayed
 let is_clipboard = false;
@@ -78,10 +85,8 @@ if (localStorage.getItem("age-expectancy") != null) {
     });
 }
 
-// reset button (will be moved to their settings)
-document.querySelector("#reset-stuff").addEventListener("click", tryReset);
-
 function tryReset() {
+    console.log("within the func")
     const serious = confirm(
         "Are you SURE you want to reset? This action is IRREVERSIBLE!"
     );
@@ -91,24 +96,8 @@ function tryReset() {
     }
 }
 
-// checkbox for whether or not they want to add their email (again, link to user signup)
-const send_emails = document.querySelector("#send-emails");
-send_emails.addEventListener("click", showEmailDialog);
-function showEmailDialog() {
-    if (send_emails.checked) {
-        let invisibles = document.querySelectorAll(".emailDialog");
-        invisibles.forEach((invisible) => {
-            invisible.classList.remove("invisible");
-        });
-    } else {
-        let invisibles = document.querySelectorAll(".emailDialog");
-        invisibles.forEach((invisible) => {
-            invisible.classList.add("invisible");
-        });
-    }
-}
-
 function createMap(is_new, gran_level, e) {
+    console.log(is_new)
     try {
         document
             .querySelector(".dontShowAtStart")
@@ -118,17 +107,19 @@ function createMap(is_new, gran_level, e) {
         document.querySelector(".output").innerHTML = "";
     }
     if (is_new == true) {
-        const age_expectancy = expectancy.value;
-        const birthdate_value = birthdate.value;
+        var age_expectancy = expectancy.value;
+        var birthdate_value = birthdate.value;
 
         localStorage.setItem("age-expectancy", expectancy.value);
         localStorage.setItem("birthday", birthdate.value);
-    } else {
-        age_expectancy = localStorage.getItem("age-expectancy");
-        birthdate_value = localStorage.getItem("birthday");
-    }
 
-    calculateAmount(birthdate_value);
+        calculateAmount(birthdate_value);
+
+    } else {
+        var age_expectancy = localStorage.getItem("age-expectancy");
+        var birthdate_value = localStorage.getItem("birthday");
+        calculateAmount(birthdate_value);
+    }
 
     const btnContainer = document.querySelector(".output");
 
@@ -152,12 +143,21 @@ function createMap(is_new, gran_level, e) {
             break;
     }
 
-    // create all of the buttons from scratch - FIXME: look into caching HTML
-    for (let i = 0; i < Math.floor(age_expectancy * modifier); i++) {
+    // create all of the buttons from scratch - FIXME: working on only making the first x for pagination...
+
+    // for (let i = current_view_value; i < Math.floor(age_expectancy * modifier); i++) {
+    let maximal_amount;
+    if ((current_view_value + 1) * 150 > Math.floor(age_expectancy * modifier)) {
+        maximal_amount = Math.floor(age_expectancy * modifier);
+    } else {
+        maximal_amount = (current_view_value + 1) * 150
+    }
+
+    for (let i = current_view_value; i < maximal_amount; i++) {
         const newBtn = document.createElement("button");
         newBtn.setAttribute("id", `${gran_level}-${i + 1}`);
         newBtn.setAttribute("type", "button");
-        newBtn.setAttribute("class", "mr-1 mb-1 year-button btn");
+        newBtn.setAttribute("class", "mr-1 mb-1 year-button btn btn-lg");
         newBtn.setAttribute("data-toggle", "modal");
         newBtn.setAttribute("data-target", `#Modal${i + 1}`);
         newBtn.innerHTML = `${i + 1}`;
@@ -280,11 +280,18 @@ function calculateAmount(birthday) {
 
 function shadeButtons(age_expectancy, birthday) {
     // supports custom + bootstrap colors
-    for (let x = 1; x < amount; x++) {
+    for (let x = ((current_view_value) * 150) + 1; x < ((current_view_value + 1) * 150) + 1; x++) {
         // document.querySelector(`#year-${x}`).style.backgroundColor = "#CD5C5C";
-        document.querySelector(`#${current_view}-${x}`).classList.add("btn-danger");
+        // only if lower than amount...
+        if (x < amount) {
+            document.querySelector(`#${current_view}-${x}`).classList.add("btn-danger");
+        }
+
     }
+    // happens because we only make the first 150; we need to stop at 150
+    console.log(current_view, amount)
     document.querySelector(`#${current_view}-${amount}`).classList.add("btn-warning");
+    console.log(document.querySelector(`#${current_view}-${amount}`))
     // document.querySelector(`#year-${age}`).style.backgroundColor = "yellow";
     for (let x = amount + 1; x <= age_expectancy * modifier; x++) {
         // document.querySelector(`#year-${x}`).style.backgroundColor = "#32CD32";

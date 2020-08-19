@@ -2,3 +2,5 @@
 *.env
 *.pyc
 .todo
+data.sqlite
+/migrations

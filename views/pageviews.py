@@ -1,8 +1,9 @@
-from flask_classful import FlaskView, route
-from flask import Flask, render_template, session, redirect, url_for, abort
+from flask_classful import FlaskView
+from flask import render_template, session, redirect, url_for, abort
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, PasswordField, BooleanField
 from wtforms.validators import DataRequired
+from models import db, User, Day, Week, Month, Year, Decade
 
 class View(FlaskView):
     def index(self):
@@ -17,6 +18,9 @@ class ContactView(FlaskView):
     def index(self):
         return render_template("jinja/contact.jinja")
 
+
+### SPECIAL PAGEVIEW FORMS ###
+
 class PrivacyPolicyView(FlaskView):
     route_base = "/privacy-policy"
 
@@ -29,7 +33,6 @@ class ThanksView(FlaskView):
         return render_template("jinja/thanks.jinja")
 
 # setup form for signing up
-
 class SignupForm(FlaskForm):
     password = PasswordField("Password", validators=[DataRequired()])
     subscribe = BooleanField("I want to receive email updates about my progress", validators=[])
@@ -52,6 +55,13 @@ class SignupView(FlaskView):
 
             # perform database magic
             print(session["subscribe"], session["password"], session["email"])
+
+            new_user = User(session["email"], session["password"], subscribe = session["subscribe"])
+            db.session.add(new_user)
+            db.session.commit()
+
+            # let's make sure that it works...
+            print(User.query.all())
 
             return redirect(url_for("View:index"))
 

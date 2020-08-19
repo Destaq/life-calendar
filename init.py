@@ -3,6 +3,10 @@ from dotenv import load_dotenv
 from flask import Flask, render_template
 from flask_cors import CORS
 
+# setup database
+from flask_migrate import Migrate
+from models import db
+
 # import views
 from views.generate_download import MakeImageView
 from views.pageviews import View, DownloadView, SignupView, LoginView, ContactView, ThanksView, PrivacyPolicyView
@@ -14,10 +18,17 @@ from flask_jwt import JWT
 
 
 def load_settings(app: Flask):
+    basedir = os.path.abspath(os.path.dirname(__file__))
+
     app.config["SECRET_KEY"] = os.getenv("APP_CONFIG_KEY")
+    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + os.path.join(basedir, "data.sqlite")
+    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
     JWT(app, authentication_handler=authenticate, identity_handler=identity)
     CORS(app, resources={r"/api/*": {"origins": "*"}})
+
+    db.init_app(app)
+    Migrate(app, db)
 
     load_dotenv()
 
