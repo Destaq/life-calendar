@@ -74,6 +74,24 @@ export function generateBottomBar(age_expectancy, modifier, navbar_view) {
     }
 
 
+    if (navbar_view == Math.floor(age_expectancy * modifier / 150) && continue_checking) {
+        // don't modify anything
+        document.querySelector("#page-5").classList.add("active");
+        document.querySelector("#page-5").classList.add("active-bottom");
+        document.querySelector("#page-3").children[0].textContent = Math.floor(age_expectancy * modifier / 150) - 2
+        document.querySelector("#page-2").classList.add("invisible");
+    }
+
+    else if (navbar_view == Math.floor(age_expectancy * modifier / 150) - 1 && continue_checking) {
+        // don't modify anything
+        document.querySelector("#page-4").classList.add("active");
+        document.querySelector("#page-4").classList.add("active-bottom");
+        document.querySelector("#page-3").children[0].textContent = Math.floor(age_expectancy * modifier / 150) - 2
+        document.querySelector("#page-2").classList.add("invisible");
+    }
+
+
+
     // modify ... for distance
     if (
         continue_checking && navbar_view > 3 &&

@@ -137,6 +137,7 @@ function tryReset() {
     );
     if (serious == true) {
         localStorage.clear();
+        // NOTE: implement removing from DB too - nuke their email
         document.querySelector(".output").innerHTML = "";
         location.href = "/quiz";
         document.querySelector("#hideOnFormSubmission").style.display =
@@ -173,11 +174,10 @@ function createMap(is_new, gran_level, e) {
             modifier = 0.1;
             break;
         default:
+            // NOTE: weeks isn't accurate
             modifier = 52;
             break;
     }
-
-    // create all of the buttons from scratch - FIXME: working on only making the first x for pagination...
 
     // for (let i = current_view_value; i < Math.floor(age_expectancy * modifier); i++) {
     let maximal_amount;
@@ -206,6 +206,17 @@ function createMap(is_new, gran_level, e) {
 
     generateBottomBar(age_expectancy, modifier, navbar_view)
 
+    // make navbar previous + next clickable
+    document.querySelector("#previous-page").children[0].href = `/?view=${current_view.toLowerCase()}&page=${navbar_view - 1}`
+    document.querySelector("#next-page").children[0].href = `/?view=${current_view.toLowerCase()}&page=${navbar_view + 1}`
+
+    // make individual navbar buttons clickable
+    let arr = [].slice.call(document.querySelector(".pagination").children)
+    arr.forEach(nav_item => {
+        if (nav_item.classList.contains("page-number")) {
+            nav_item.children[0].href = `/?view=${current_view.toLowerCase()}&page=${parseInt(nav_item.children[0].textContent)}`
+        }
+    })
 
     for (let i = minimal_amount; i < maximal_amount; i++) {
         const newBtn = document.createElement("button");
