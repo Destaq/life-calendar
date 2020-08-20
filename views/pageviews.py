@@ -18,7 +18,10 @@ class ContactView(FlaskView):
     def index(self):
         return render_template("jinja/contact.jinja")
 
-
+class QuizView(FlaskView):
+    def index(self):
+        return render_template("quiz.html")
+        
 ### SPECIAL PAGEVIEW FORMS ###
 
 class PrivacyPolicyView(FlaskView):

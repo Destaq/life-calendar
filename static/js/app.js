@@ -1,22 +1,11 @@
 // TODO - move to the sign-up + settings pages, so that this will only display the calendar
 
+import { generateBottomBar } from "/static/js/pagination.js";
+
 const http = new SimpleHTTP();
 
-const expectancy = document.querySelector("#years");
-
-const birthdate = document.querySelector("#birthdateInput");
-
-const finished_button = document.querySelector("#finished-input");
-
-const urlParams = new URLSearchParams(location.search);
-
-if (urlParams.get("page") != null) {
-    var current_view_value = parseInt(urlParams.get("page")) - 1;
-    applicableString = `page=${current_view_value + 1}&`;
-} else {
-    current_view_value = 0;
-    applicableString = "";
-}
+var age_expectancy = localStorage.getItem("age-expectancy");
+var birthdate_value = localStorage.getItem("birthday");
 
 // reset button (will be moved to their settings)
 document.querySelector("#reset-stuff").addEventListener("click", tryReset);
@@ -24,12 +13,32 @@ document.querySelector("#reset-stuff").addEventListener("click", tryReset);
 // whether or not the clipboard button is displayed
 let is_clipboard = false;
 var current_view = "Years";
+var current_view_value;
+var applicableString;
 
-if (urlParams.get("view") != null) {
-    current_view =
-        urlParams.get("view").slice(0, 1).toUpperCase() +
-        urlParams.get("view").slice(1);
+function readFromUrl() {
+    const urlParams = new URLSearchParams(location.search);
+
+    if (urlParams.get("page") != null) {
+        current_view_value = parseInt(urlParams.get("page")) - 1;
+        applicableString = `page=${current_view_value + 1}&`;
+    } else {
+        current_view_value = 0;
+        applicableString = "";
+    }
+
+    if (current_view_value < 0) {
+        current_view_value = 0;
+    }
+
+    if (urlParams.get("view") != null) {
+        current_view =
+            urlParams.get("view").slice(0, 1).toUpperCase() +
+            urlParams.get("view").slice(1);
+    }
 }
+
+readFromUrl();
 
 // amount
 var amount;
@@ -38,7 +47,7 @@ var amount;
 let modifier = 50;
 
 // whether or not they are a new user
-let is_new_user = true;
+let is_new_user = false;
 
 // granularity button views
 const granularity_decades = document.querySelector("#view-decades");
@@ -47,7 +56,20 @@ const granularity_months = document.querySelector("#view-months");
 const granularity_weeks = document.querySelector("#view-weeks");
 const granularity_days = document.querySelector("#view-days");
 
-// current view (defaults to years)
+if (age_expectancy == null || birthdate_value == null) {
+    // they need to head over to /quiz to get it quizzed!
+    document.querySelector("#missingData").innerHTML = `
+    <strong>You haven't filled out your data!</strong> Please head over to the <a href="/quiz/">quiz page</a> to submit your life expectancy so that we can generate your life calendar!
+    `;
+} else {
+    // check if regisered user, use data from DB
+
+    // for users from localStorage
+    document
+        .querySelector(".dontShowAtStart")
+        .classList.remove("dontShowAtStart");
+    createMap(is_new_user, current_view);
+}
 
 granularity_decades.addEventListener("click", function () {
     current_view = "Decades";
@@ -56,6 +78,7 @@ granularity_decades.addEventListener("click", function () {
         "Life Calendar",
         `?${applicableString}view=decades`
     );
+    readFromUrl();
     createMap(is_new_user, current_view);
 });
 
@@ -66,6 +89,7 @@ granularity_years.addEventListener("click", function () {
         "Life Calendar",
         `?${applicableString}view=years`
     );
+    readFromUrl();
     createMap(is_new_user, current_view);
 });
 
@@ -76,6 +100,7 @@ granularity_months.addEventListener("click", function () {
         "Life Calendar",
         `?${applicableString}view=months`
     );
+    readFromUrl();
     createMap(is_new_user, current_view);
 });
 
@@ -86,6 +111,7 @@ granularity_weeks.addEventListener("click", function () {
         "Life Calendar",
         `?${applicableString}view=weeks`
     );
+    readFromUrl();
     createMap(is_new_user, current_view);
 });
 
@@ -96,6 +122,7 @@ granularity_days.addEventListener("click", function () {
         "Life Calendar",
         `?${applicableString}view=days`
     );
+    readFromUrl();
     createMap(is_new_user, current_view);
 });
 
@@ -104,58 +131,20 @@ $("body").tooltip({
     selector: ".btn",
 });
 
-// generate map from localStorage if not empty, else from blank
-if (localStorage.getItem("age-expectancy") != null) {
-    // prevent form from being filled out again
-    document.querySelector("#hideOnFormSubmission").style.display = "none";
-    generateUserMap();
-} else {
-    finished_button.addEventListener("click", function (e) {
-        // warn if they filled out the information incorrectly
-        // TODO: don't show the Restart and Granularity buttons if this occurs
-        let bdayDate = new Date(birthdate.value);
-        if (expectancy.value == "" || birthdate.value == "") {
-            warningOutput(e, "Please fill out all data.");
-            const error = setTimeout(warningHide, 3000);
-            return;
-        } else if (Date.parse(birthdate.value) > Date.now()) {
-            warningOutput(e, "Please provide a valid birthdate.");
-            const error = setTimeout(warningHide, 3000);
-        } else if (calculateDays(bdayDate) > expectancy.value * 365) {
-            warningOutput(
-                e,
-                "Please set your life expectancy higher or equal to your age."
-            );
-            const error = setTimeout(warningHide, 3000);
-        } else {
-            createMap(is_new_user, current_view);
-            e.preventDefault();
-        }
-    });
-}
-
-function calculateDays(bday) {
-    const current_day = new Date(Date.now());
-    const diffTime = Math.abs(current_day - bday);
-    return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-}
-
 function tryReset() {
-    console.log("within the func");
     const serious = confirm(
         "Are you SURE you want to reset? This action is IRREVERSIBLE!"
     );
     if (serious == true) {
         localStorage.clear();
         document.querySelector(".output").innerHTML = "";
-        location.reload();
+        location.href = "/quiz";
         document.querySelector("#hideOnFormSubmission").style.display =
             "inline";
     }
 }
 
 function createMap(is_new, gran_level, e) {
-    console.log(is_new);
     try {
         document
             .querySelector(".dontShowAtStart")
@@ -164,19 +153,7 @@ function createMap(is_new, gran_level, e) {
         // this means that they have selected another view
         document.querySelector(".output").innerHTML = "";
     }
-    if (is_new == true) {
-        var age_expectancy = expectancy.value;
-        var birthdate_value = birthdate.value;
-
-        localStorage.setItem("age-expectancy", expectancy.value);
-        localStorage.setItem("birthday", birthdate.value);
-
-        calculateAmount(birthdate_value);
-    } else {
-        var age_expectancy = localStorage.getItem("age-expectancy");
-        var birthdate_value = localStorage.getItem("birthday");
-        calculateAmount(birthdate_value);
-    }
+    calculateAmount(birthdate_value);
 
     const btnContainer = document.querySelector(".output");
 
@@ -204,6 +181,7 @@ function createMap(is_new, gran_level, e) {
 
     // for (let i = current_view_value; i < Math.floor(age_expectancy * modifier); i++) {
     let maximal_amount;
+    let navbar_view = current_view_value + 1;
     if (
         (current_view_value + 1) * 150 >
         Math.floor(age_expectancy * modifier)
@@ -218,13 +196,16 @@ function createMap(is_new, gran_level, e) {
     }
 
     let minimal_amount;
-    console.log(current_view_value);
     if (current_view_value * 150 < maximal_amount) {
         minimal_amount = current_view_value * 150;
     } else {
         minimal_amount = 0;
+        navbar_view = 1;
+        current_view_value = 0;
     }
-    console.log(minimal_amount);
+
+    generateBottomBar(age_expectancy, modifier, navbar_view)
+
 
     for (let i = minimal_amount; i < maximal_amount; i++) {
         const newBtn = document.createElement("button");
@@ -245,8 +226,8 @@ function createMap(is_new, gran_level, e) {
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">${current_view.slice(
-                            (start = 0),
-                            (end = current_view.length - 1)
+                            0,
+                            current_view.length - 1
                         )} ${i + 1}</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -352,7 +333,11 @@ function calculateAmount(birthday) {
 
 function shadeButtons(age_expectancy, birthday) {
     // supports custom + bootstrap colors
-    for (let x = 0; x < (current_view_value + 1) * 150 + 1; x++) {
+    for (
+        let x = current_view_value * 150;
+        x < (current_view_value + 1) * 150 + 1;
+        x++
+    ) {
         // document.querySelector(`#year-${x}`).style.backgroundColor = "#CD5C5C";
         // only if lower than amount...
         try {
@@ -370,7 +355,11 @@ function shadeButtons(age_expectancy, birthday) {
                 .querySelector(`#${current_view}-${amount}`)
                 .classList.add("btn-warning");
         } catch {}
-        for (let x = amount + 1; x <= age_expectancy * modifier; x++) {
+        for (
+            let x = current_view_value * 150;
+            x < (current_view_value + 1) * 150 + 1;
+            x++
+        ) {
             // document.querySelector(`#year-${x}`).style.backgroundColor = "#32CD32";
             try {
                 document
@@ -508,11 +497,6 @@ function rewriteModal(i) {
             .querySelector(`#submit-year-${i + 1}`)
             .removeEventListener("mousedown", generateEditModalBox);
     }
-}
-
-function generateUserMap() {
-    is_new_user = false;
-    createMap(is_new_user, current_view);
 }
 
 // checks if there is saved markdown text in localStorage
