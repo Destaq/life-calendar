@@ -161,8 +161,7 @@ function createMap(is_new, gran_level, e) {
     // find button modifier - used for calculating what "number" a button should have and the number to be generated
     switch (gran_level) {
         case "Days":
-            // TODO - support leap years
-            modifier = 365;
+            modifier = 365.25;
             break;
         case "Months":
             modifier = 12;
@@ -186,26 +185,30 @@ function createMap(is_new, gran_level, e) {
         (current_view_value + 1) * 150 >
         Math.floor(age_expectancy * modifier)
     ) {
-        if (Math.floor(age_expectancy * modifier) <= 150) {
+        if (Math.floor(age_expectancy * modifier) % 150 != 0 && current_view_value == Math.floor(age_expectancy * modifier / 150)) {
             maximal_amount = Math.floor(age_expectancy * modifier);
-        } else {
-            maximal_amount = 150;
         }
     } else {
         maximal_amount = (current_view_value + 1) * 150;
     }
 
-    let minimal_amount; // he smallest number of the button being displayed
+    let minimal_amount; // the smallest number of the button being displayed
     if (current_view_value * 150 < maximal_amount) {
         minimal_amount = current_view_value * 150;
-    } else {
+    } 
+    else {
         minimal_amount = 0;
         navbar_view = 1;
         current_view_value = 0;
     }
 
-    // generate the pagination bar from pagination.js
-    generateBottomBar(age_expectancy, modifier, navbar_view)
+    // generate the pagination bar from pagination.js if applicable
+    console.log(maximal_amount)
+    if (maximal_amount > 149) {
+        generateBottomBar(age_expectancy, modifier, navbar_view)
+    } else {
+        document.querySelector("#bottom-pagination-navbar").classList.add("invisible")
+    }
 
     // make navbar previous + next clickable
     document.querySelector("#previous-page").children[0].href = `/?view=${current_view.toLowerCase()}&page=${navbar_view - 1}`
@@ -218,6 +221,11 @@ function createMap(is_new, gran_level, e) {
             nav_item.children[0].href = `/?view=${current_view.toLowerCase()}&page=${parseInt(nav_item.children[0].textContent)}`
         }
     })
+
+    // lower maximal amount if user incorrectly entered page
+    if (maximal_amount > 150 && minimal_amount == 0) {
+        maximal_amount = 150;
+    }
 
     // create the buttons for that page
     for (let i = minimal_amount; i < maximal_amount; i++) {

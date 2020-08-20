@@ -2,6 +2,7 @@ export function generateBottomBar(age_expectancy, modifier, navbar_view) {
     const bottom_pagination = document.querySelector(
         "#bottom-pagination-navbar"
     );
+
     // set active bar
     try {
         document.querySelector(".active").classList.remove("active");
@@ -13,9 +14,10 @@ export function generateBottomBar(age_expectancy, modifier, navbar_view) {
     // set largest possible view
     document.querySelector(
         "#page-5"
-    ).innerHTML = `<a class="page-link" href="#">${Math.floor(
+    ).innerHTML = `<a class="page-link" href="#">${Math.ceil(
         (age_expectancy * modifier) / 150
     )}</a>`;
+
 
     // enable previous clicking if not at 1
     if (navbar_view != 1) {
@@ -25,7 +27,7 @@ export function generateBottomBar(age_expectancy, modifier, navbar_view) {
     }
 
     // enable next clicking if not at end
-    if (navbar_view != Math.floor((age_expectancy * modifier) / 150)) {
+    if (navbar_view != Math.ceil((age_expectancy * modifier) / 150)) {
         document.querySelector("#next-page").classList.remove("disabled");
     } else {
         document.querySelector("#next-page").classList.add("disabled");
@@ -36,7 +38,7 @@ export function generateBottomBar(age_expectancy, modifier, navbar_view) {
     }
 
     let continue_checking = true; // whether or not they should continue with making the navbar
-    if (Math.floor(age_expectancy * modifier) / 150 <= 6) {
+    if (Math.ceil(age_expectancy * modifier) / 150 <= 5) {
         continue_checking = false;
         document.querySelector("#page-1-5").classList.add("invisible"); // the ... at the beginning
         document.querySelector("#page-4-5").classList.add("invisible"); // the ... at the end
@@ -44,6 +46,7 @@ export function generateBottomBar(age_expectancy, modifier, navbar_view) {
         for (let i = 0; i < 5; i++) {
             document.querySelector(`#page-${i + 1}`).classList.add("invisible");
         }
+
 
         for (
             let i = 0;
@@ -81,29 +84,29 @@ export function generateBottomBar(age_expectancy, modifier, navbar_view) {
         document.querySelector("#page-4-5").classList.remove("invisible");
     }
     if (
-        navbar_view == Math.floor((age_expectancy * modifier) / 150) &&
+        navbar_view == Math.ceil((age_expectancy * modifier) / 150) &&
         continue_checking
     ) {
         document.querySelector("#page-5").classList.add("active");
         document.querySelector("#page-5").classList.add("active-bottom");
         document.querySelector("#page-3").children[0].textContent =
-            Math.floor((age_expectancy * modifier) / 150) - 2;
+            Math.ceil((age_expectancy * modifier) / 150) - 2;
         document.querySelector("#page-2").classList.add("invisible");
     } else if (
-        navbar_view == Math.floor((age_expectancy * modifier) / 150) - 1 &&
+        navbar_view == Math.ceil((age_expectancy * modifier) / 150) - 1 &&
         continue_checking
     ) {
         document.querySelector("#page-4").classList.add("active");
         document.querySelector("#page-4").classList.add("active-bottom");
         document.querySelector("#page-3").children[0].textContent =
-            Math.floor((age_expectancy * modifier) / 150) - 2;
+            Math.ceil((age_expectancy * modifier) / 150) - 2;
         document.querySelector("#page-2").classList.add("invisible");
     }
 
     if (
         continue_checking &&
         navbar_view > 3 &&
-        Math.floor((age_expectancy * modifier) / 150) - navbar_view >= 3
+        Math.ceil((age_expectancy * modifier) / 150) - navbar_view >= 3
     ) {
         // modify ... if suitably far away
         document.querySelector("#page-1-5").classList.remove("invisible");
@@ -125,16 +128,15 @@ export function generateBottomBar(age_expectancy, modifier, navbar_view) {
     } else if (
         continue_checking &&
         navbar_view > 3 &&
-        Math.floor((age_expectancy * modifier) / 150) - navbar_view < 3
+        Math.ceil((age_expectancy * modifier) / 150) - navbar_view < 3
     ) {
         document.querySelector("#page-1-5").classList.remove("invisible");
         document.querySelector("#page-4-5").classList.add("invisible");
-
         document
             .querySelector(
                 `#page-${
                     5 -
-                    (Math.floor((age_expectancy * modifier) / 150) -
+                    (Math.ceil((age_expectancy * modifier) / 150) -
                         navbar_view)
                 }`
             )
@@ -143,7 +145,7 @@ export function generateBottomBar(age_expectancy, modifier, navbar_view) {
             .querySelector(
                 `#page-${
                     5 -
-                    (Math.floor((age_expectancy * modifier) / 150) -
+                    (Math.ceil((age_expectancy * modifier) / 150) -
                         navbar_view)
                 }`
             )
@@ -152,21 +154,21 @@ export function generateBottomBar(age_expectancy, modifier, navbar_view) {
         document.querySelector(
             `#page-${
                 5 -
-                (Math.floor((age_expectancy * modifier) / 150) - navbar_view) -
+                (Math.ceil((age_expectancy * modifier) / 150) - navbar_view) -
                 1
             }`
         ).children[0].textContent = navbar_view - 1;
         document.querySelector(
             `#page-${
                 5 -
-                (Math.floor((age_expectancy * modifier) / 150) - navbar_view)
+                (Math.ceil((age_expectancy * modifier) / 150) - navbar_view)
             }`
         ).children[0].textContent = navbar_view;
         try {
             document.querySelector(
                 `#page-${
                     5 -
-                    (Math.floor((age_expectancy * modifier) / 150) -
+                    (Math.ceil((age_expectancy * modifier) / 150) -
                         navbar_view) +
                     1
                 }`
@@ -175,7 +177,7 @@ export function generateBottomBar(age_expectancy, modifier, navbar_view) {
     }
 
     // don't show the navbar if there is only one page
-    if (Math.floor((age_expectancy * modifier) / 150) != 0) {
+    if (Math.ceil((age_expectancy * modifier) / 150) != 0) {
         bottom_pagination.classList.remove("invisible");
     } else {
         bottom_pagination.classList.add("invisible");
