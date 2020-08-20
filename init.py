@@ -5,7 +5,7 @@ from flask_cors import CORS
 
 # setup database
 from flask_migrate import Migrate
-from models import db
+from models.models import db
 
 # import views
 from views.generate_download import MakeImageView

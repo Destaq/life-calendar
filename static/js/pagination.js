@@ -4,8 +4,10 @@ export function generateBottomBar(age_expectancy, modifier, navbar_view) {
     );
     // set active bar
     try {
-    document.querySelector(".active").classList.remove("active");
-    document.querySelector(".active-bottom").classList.remove("active-bottom");
+        document.querySelector(".active").classList.remove("active");
+        document
+            .querySelector(".active-bottom")
+            .classList.remove("active-bottom");
     } catch {}
 
     // set largest possible view
@@ -30,73 +32,80 @@ export function generateBottomBar(age_expectancy, modifier, navbar_view) {
     }
 
     for (let i = 0; i < 5; i++) {
-        document.querySelector(`#page-${i + 1}`).classList.remove("invisible")
+        document.querySelector(`#page-${i + 1}`).classList.remove("invisible");
     }
 
-    let continue_checking = true;
+    let continue_checking = true; // whether or not they should continue with making the navbar
     if (Math.floor(age_expectancy * modifier) / 150 <= 6) {
         continue_checking = false;
-        document.querySelector("#page-1-5").classList.add("invisible")
-        document.querySelector("#page-4-5").classList.add("invisible")
+        document.querySelector("#page-1-5").classList.add("invisible"); // the ... at the beginning
+        document.querySelector("#page-4-5").classList.add("invisible"); // the ... at the end
 
         for (let i = 0; i < 5; i++) {
-            document.querySelector(`#page-${i + 1}`).classList.add("invisible")
+            document.querySelector(`#page-${i + 1}`).classList.add("invisible");
         }
 
-        for (let i = 0; i < Math.floor(age_expectancy * modifier / 150); i++) {
-            document.querySelector(`#page-${i + 1}`).classList.remove("invisible")
-            document.querySelector(`#page-${i + 1}`).children[0].textContent = i + 1;
+        for (
+            let i = 0;
+            i < Math.floor((age_expectancy * modifier) / 150);
+            i++
+        ) {
+            document
+                .querySelector(`#page-${i + 1}`)
+                .classList.remove("invisible");
+            document.querySelector(`#page-${i + 1}`).children[0].textContent =
+                i + 1;
         }
 
-        document.querySelector(`#page-${navbar_view}`).classList.add("active")
-        document.querySelector(`#page-${navbar_view}`).classList.add("active-bottom")
+        document.querySelector(`#page-${navbar_view}`).classList.add("active");
+        document
+            .querySelector(`#page-${navbar_view}`)
+            .classList.add("active-bottom");
     }
 
-    // if (Math.floor(age_expectancy * modifier / 150) < )
+    // special cases below for if too close to beginning/end of navbar pagination
     if (navbar_view == 1 && continue_checking) {
-        // don't modify anything
         document.querySelector("#page-1").classList.add("active");
         document.querySelector("#page-1").classList.add("active-bottom");
         document.querySelector("#page-4-5").classList.remove("invisible");
         document.querySelector("#page-4").classList.add("invisible");
     } else if (navbar_view == 2 && continue_checking) {
-        // don't modify anything
         document.querySelector("#page-2").classList.add("active");
         document.querySelector("#page-2").classList.add("active-bottom");
         document.querySelector("#page-4-5").classList.remove("invisible");
         document.querySelector("#page-4").classList.add("invisible");
     }
     if (navbar_view == 3 && continue_checking) {
-        // don't modify anything
         document.querySelector("#page-3").classList.add("active");
         document.querySelector("#page-3").classList.add("active-bottom");
         document.querySelector("#page-4-5").classList.remove("invisible");
     }
-
-
-    if (navbar_view == Math.floor(age_expectancy * modifier / 150) && continue_checking) {
-        // don't modify anything
+    if (
+        navbar_view == Math.floor((age_expectancy * modifier) / 150) &&
+        continue_checking
+    ) {
         document.querySelector("#page-5").classList.add("active");
         document.querySelector("#page-5").classList.add("active-bottom");
-        document.querySelector("#page-3").children[0].textContent = Math.floor(age_expectancy * modifier / 150) - 2
+        document.querySelector("#page-3").children[0].textContent =
+            Math.floor((age_expectancy * modifier) / 150) - 2;
         document.querySelector("#page-2").classList.add("invisible");
-    }
-
-    else if (navbar_view == Math.floor(age_expectancy * modifier / 150) - 1 && continue_checking) {
-        // don't modify anything
+    } else if (
+        navbar_view == Math.floor((age_expectancy * modifier) / 150) - 1 &&
+        continue_checking
+    ) {
         document.querySelector("#page-4").classList.add("active");
         document.querySelector("#page-4").classList.add("active-bottom");
-        document.querySelector("#page-3").children[0].textContent = Math.floor(age_expectancy * modifier / 150) - 2
+        document.querySelector("#page-3").children[0].textContent =
+            Math.floor((age_expectancy * modifier) / 150) - 2;
         document.querySelector("#page-2").classList.add("invisible");
     }
 
-
-
-    // modify ... for distance
     if (
-        continue_checking && navbar_view > 3 &&
+        continue_checking &&
+        navbar_view > 3 &&
         Math.floor((age_expectancy * modifier) / 150) - navbar_view >= 3
     ) {
+        // modify ... if suitably far away
         document.querySelector("#page-1-5").classList.remove("invisible");
 
         document.querySelector("#page-4-5").classList.remove("invisible");
@@ -111,8 +120,11 @@ export function generateBottomBar(age_expectancy, modifier, navbar_view) {
         // set active state for current button
         document.querySelector("#page-3").classList.add("active");
         document.querySelector("#page-3").classList.add("active-bottom");
+
+    // case for a large navbar, but close to the right edge
     } else if (
-        (continue_checking && navbar_view > 3) &&
+        continue_checking &&
+        navbar_view > 3 &&
         Math.floor((age_expectancy * modifier) / 150) - navbar_view < 3
     ) {
         document.querySelector("#page-1-5").classList.remove("invisible");
@@ -162,10 +174,7 @@ export function generateBottomBar(age_expectancy, modifier, navbar_view) {
         } catch {}
     }
 
-    // if () {
-    //     document.querySelector("#page-1-5").classList.add("invisible");
-    // }
-
+    // don't show the navbar if there is only one page
     if (Math.floor((age_expectancy * modifier) / 150) != 0) {
         bottom_pagination.classList.remove("invisible");
     } else {

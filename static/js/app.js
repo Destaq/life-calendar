@@ -1,5 +1,3 @@
-// TODO - move to the sign-up + settings pages, so that this will only display the calendar
-
 import { generateBottomBar } from "/static/js/pagination.js";
 
 const http = new SimpleHTTP();
@@ -16,6 +14,7 @@ var current_view = "Years";
 var current_view_value;
 var applicableString;
 
+// read the current view (months, weeks, years, etc.) and the current page (for pagination) - from the URL
 function readFromUrl() {
     const urlParams = new URLSearchParams(location.search);
 
@@ -27,6 +26,7 @@ function readFromUrl() {
         applicableString = "";
     }
 
+    // make sure that a negative number was not provided
     if (current_view_value < 0) {
         current_view_value = 0;
     }
@@ -40,11 +40,11 @@ function readFromUrl() {
 
 readFromUrl();
 
-// amount
+
 var amount;
 
-// default modification
-let modifier = 50;
+// default modifier, used for calculations
+let modifier = 12;
 
 // whether or not they are a new user
 let is_new_user = false;
@@ -57,19 +57,21 @@ const granularity_weeks = document.querySelector("#view-weeks");
 const granularity_days = document.querySelector("#view-days");
 
 if (age_expectancy == null || birthdate_value == null) {
-    // they need to head over to /quiz to get it quizzed!
+    // they need to head over to /quiz to find out!
     document.querySelector("#missingData").innerHTML = `
     <strong>You haven't filled out your data!</strong> Please head over to the <a href="/quiz/">quiz page</a> to submit your life expectancy so that we can generate your life calendar!
     `;
 } else {
-    // check if regisered user, use data from DB
+    // TODO: check if regisered user, use data from DB
 
-    // for users from localStorage
+    // show the granularity + restart buttons
     document
         .querySelector(".dontShowAtStart")
         .classList.remove("dontShowAtStart");
     createMap(is_new_user, current_view);
 }
+
+// EVENT LISTENERS FOR GRANULARITIES
 
 granularity_decades.addEventListener("click", function () {
     current_view = "Decades";
@@ -126,11 +128,7 @@ granularity_days.addEventListener("click", function () {
     createMap(is_new_user, current_view);
 });
 
-// set up the tooltip
-$("body").tooltip({
-    selector: ".btn",
-});
-
+// if the user chooses to restart entirely
 function tryReset() {
     const serious = confirm(
         "Are you SURE you want to reset? This action is IRREVERSIBLE!"
@@ -145,23 +143,25 @@ function tryReset() {
     }
 }
 
+// main function that creates all of the buttons + markdown for that view
 function createMap(is_new, gran_level, e) {
     try {
         document
             .querySelector(".dontShowAtStart")
             .classList.remove("dontShowAtStart");
     } catch (e) {
-        // this means that they have selected another view
+        // this means that they have selected another view - reset the innerHTML while we load the new buttons
         document.querySelector(".output").innerHTML = "";
     }
+
     calculateAmount(birthdate_value);
 
     const btnContainer = document.querySelector(".output");
 
-    // find button modifier
+    // find button modifier - used for calculating what "number" a button should have and the number to be generated
     switch (gran_level) {
         case "Days":
-            // todo - support leap years
+            // TODO - support leap years
             modifier = 365;
             break;
         case "Months":
@@ -179,9 +179,9 @@ function createMap(is_new, gran_level, e) {
             break;
     }
 
-    // for (let i = current_view_value; i < Math.floor(age_expectancy * modifier); i++) {
-    let maximal_amount;
-    let navbar_view = current_view_value + 1;
+
+    let maximal_amount; // the highest number of the button to be displayed
+    let navbar_view = current_view_value + 1; // the active button for the pagination navigation bar
     if (
         (current_view_value + 1) * 150 >
         Math.floor(age_expectancy * modifier)
@@ -195,7 +195,7 @@ function createMap(is_new, gran_level, e) {
         maximal_amount = (current_view_value + 1) * 150;
     }
 
-    let minimal_amount;
+    let minimal_amount; // he smallest number of the button being displayed
     if (current_view_value * 150 < maximal_amount) {
         minimal_amount = current_view_value * 150;
     } else {
@@ -204,6 +204,7 @@ function createMap(is_new, gran_level, e) {
         current_view_value = 0;
     }
 
+    // generate the pagination bar from pagination.js
     generateBottomBar(age_expectancy, modifier, navbar_view)
 
     // make navbar previous + next clickable
@@ -218,6 +219,7 @@ function createMap(is_new, gran_level, e) {
         }
     })
 
+    // create the buttons for that page
     for (let i = minimal_amount; i < maximal_amount; i++) {
         const newBtn = document.createElement("button");
         newBtn.setAttribute("id", `${gran_level}-${i + 1}`);
@@ -270,31 +272,21 @@ function createMap(is_new, gran_level, e) {
                 .children[1];
 
         saveChanges.addEventListener("mousedown", () => {
-            rewriteModal(i);
+            rewriteModal(i); // edit the modal box
         });
         newBtn.addEventListener("click", () => {
-            checkSavedText(i);
+            checkSavedText(i); // check if the user already has written text there
         });
 
         btnContainer.append(newBtn);
         btnContainer.append(newBtnStyling);
     }
 
-    // shade buttons based on the person's current journey in life
+    // shade buttons based on the person's current position in life
     shadeButtons(age_expectancy, birthdate_value);
 }
 
-// TODO: move to custom message + custom color
-function warningOutput(e, msg) {
-    document.querySelector(".get-data").classList.remove("d-none");
-    document.querySelector(".get-data").innerHTML = msg;
-    e.preventDefault();
-}
-
-function warningHide() {
-    document.querySelector(".get-data").classList.add("d-none");
-}
-
+// calculates the amount of units in time the user has left until the end of their (assumed) life
 function calculateAmount(birthday) {
     let dob = new Date(birthday);
     let c_time = new Date(Date.now());
@@ -337,20 +329,19 @@ function calculateAmount(birthday) {
             break;
 
         default:
-            amount = 0;
+            amount = 0; // TODO: will cause the code to break;
             break;
     }
 }
 
 function shadeButtons(age_expectancy, birthday) {
-    // supports custom + bootstrap colors
+    // for the current 150 buttons
     for (
         let x = current_view_value * 150;
         x < (current_view_value + 1) * 150 + 1;
         x++
     ) {
-        // document.querySelector(`#year-${x}`).style.backgroundColor = "#CD5C5C";
-        // only if lower than amount...
+        // only if lower than the amount of x units left till end of life...
         try {
             if (x < amount) {
                 document
@@ -359,29 +350,28 @@ function shadeButtons(age_expectancy, birthday) {
             }
         } catch {}
     }
-    // happens because we only make the first 150; we need to stop at 150
+
     if (amount <= (current_view_value + 1) * 150) {
         try {
             document
                 .querySelector(`#${current_view}-${amount}`)
-                .classList.add("btn-warning");
+                .classList.add("btn-warning"); // current point in life
         } catch {}
         for (
             let x = current_view_value * 150;
             x < (current_view_value + 1) * 150 + 1;
             x++
         ) {
-            // document.querySelector(`#year-${x}`).style.backgroundColor = "#32CD32";
             try {
                 document
                     .querySelector(`#${current_view}-${x}`)
-                    .classList.add("btn-success");
+                    .classList.add("btn-success"); // units left/unused
             } catch {}
         }
     }
 }
 
-function rewriteModal(i) {
+function rewriteModal(i) { // rewrites the Markdown modal box
     // change button name
     document.querySelector(`#submit-year-${i + 1}`).textContent =
         "Save changes";
@@ -401,6 +391,7 @@ function rewriteModal(i) {
     </svg>
     `;
 
+    // copy the current text down to the text being edited
     clipboard_button.addEventListener("click", function () {
         copyAboveToTextarea(i + 1);
     });
@@ -419,7 +410,7 @@ function rewriteModal(i) {
     // allow markdown input + remove invisible class
     document.querySelector(`#what-did-${i + 1}`).classList.remove("invisible");
 
-    // fill textarea with data from localStorage if there
+    // fill textarea with data from localStorage if there - TODO: from DB if registered
     function copyAboveToTextarea(i) {
         if (localStorage.getItem(`${current_view}-${i}`) != null) {
             document.querySelector(
@@ -433,7 +424,7 @@ function rewriteModal(i) {
             copy_success.setAttribute("role", "alert");
             copy_success.innerHTML = "Copied down!";
 
-            // show copy success
+            // show copy success for 2 secs
             document
                 .querySelector(`#what-did-${i + 1}`)
                 .parentElement.insertBefore(
@@ -476,6 +467,7 @@ function rewriteModal(i) {
                 text = document.querySelector(`#what-did-${i + 1}`).value,
                 html = converter.makeHtml(text);
 
+            // NOTE - implement DB storage for users...
             localStorage.setItem(
                 `${current_view}-${i + 1}`,
                 document.querySelector(`#what-did-${i + 1}`).value
@@ -519,6 +511,7 @@ function checkSavedText(i) {
             html = converter.makeHtml(text);
         document.querySelector(`#user-text-${i + 1}`).innerHTML = html;
 
+        // resize images so that they fit in the bootstrap modal
         let unresponse_images = document
             .querySelector(`#user-text-${i + 1}`)
             .getElementsByTagName("img");
