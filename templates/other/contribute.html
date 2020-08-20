@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="jumbotron">
+    <center><h1>Contributing to Life Calendar</h1></center>
+    <hr>
+    <p>Building a website like this is a lot of work, but we believe that the end result is worth it. However, this site is currently being primarily maintained and built by one person - Simon Ilincev - who'd appreciate co-contributors. It's easy to help with the publicy available <a href="#">todo list</a> and <a href="#">roadmap</a>, with many of the individual todos or fixes implementable within a few hours or less.</p>
+    <p>This site is built with Python and the Flask library and vanilla JavaScript with ES6 standards. Both the backend and the frontend are open to contributions, and you can easily open a pull request or fork the project on GitHub <a href="https://github.com/Destaq/life-calendar">here</a>.</p>
+    <p>If you aren't well-versed with programming, but would still like to help keep the site running, you can support it financially. <strong>This site has no advertisements, premium subscription, and doesn't sell data.</strong> While that makes it the best it can be for its users - which is and always has been the goal - it also means that there's no generated source of money for site + database hosting and the domain name.</p>
+    <p>Thus, voluntary donations and financial contributions are welcome in order to keep the site up and free. You can donate through PayPal <a href="#">here</a>, <a href="#">sponsor</a> the project on GitHub, and find more details about donation on our dedicated <a href="/donate">donation page</a>.</p>
+    <hr>
+    Below is a list of all contributors to this project, with their names and GitHub profiles, in no particular order.
+    <br>
+    <br>
+
+    <ul class="list-group"></ul>
+    {% for contributor_nick, contributor_details in contributors.items() %}
+        <li class="list-group-item">{{ contributor_details[0] }} - <a href="{{ contributor_details[1] }}">{{ contributor_nick }}</a></li>
+    {% endfor %}
+    
+</div>
+{% endblock %}

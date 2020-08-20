@@ -9,7 +9,7 @@ from models.models import db
 
 # import views
 from views.generate_download import MakeImageView
-from views.pageviews import View, DownloadView, SignupView, LoginView, ContactView, ThanksView, PrivacyPolicyView, QuizView
+from views.pageviews import View, DownloadView, SignupView, LoginView, ContactView, ThanksView, PrivacyPolicyView, QuizView, ContributeView, DonateView
 from views.apiviews import JSONDataView, ContactSubmitView
 
 # import authentication
@@ -58,7 +58,9 @@ def register_views(app):
         ContactSubmitView,
         ThanksView,
         PrivacyPolicyView,
-        QuizView
+        QuizView,
+        ContributeView,
+        DonateView
     ]
 
     for view in views:

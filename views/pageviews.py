@@ -24,6 +24,16 @@ class QuizView(FlaskView):
         
 ### SPECIAL PAGEVIEW FORMS ###
 
+class ContributeView(FlaskView):
+    contributors = {"Destaq": ["Simon Ilincev", "https://github.com/Destaq"]}
+    def index(self):
+        return render_template("other/contribute.html", contributors = self.contributors)
+
+class DonateView(FlaskView):
+    donators = {}
+    def index(self):
+        return render_template("other/donate.html", donators = self.donators)
+
 class PrivacyPolicyView(FlaskView):
     route_base = "/privacy-policy"
 

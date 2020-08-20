@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="jumbotron">
+    <center><h1>Donation</h1></center>
+    <p>Because we keep the site absolutely free, there are some overhead costs that cannot be covered by the application
+        itself. Hosting, the domain name, and all the other technical magic that keeps this site online and catering to
+        its users doesn't pay for itself, so donations are very welcome. <strong>If you enjoy using the site, please
+            consider giving back here. </strong></p>
+    <p>If you'd like to financially help this project, there are several ways in which you can do so. First of all, as
+        this project is open-source and freely available on GitHub, you can head over to the GitHub page and sponsor the
+        project <a href="#">there</a>. You can also directly PayPal the site maintainer <a href="#">here</a>.</p>
+    <p>We'll be transparent. The costs are outlined below: </p>
+    <ol>
+        <li>Heroku hosting - the app runs remotely on a Heroku dyno, 24/7</li>
+        <li>Heroku Postgres database - we go one step beyond by implementing user functionality and cross-devices logins. Running a Heroku database of the size needed for all the user info costs money</li>
+        <li>Domain name - domain names are cheap, but not free. We have a custom domain name to help reach more people and change their time-planning lives</li>
+    </ol>
+    <p>If you, or an entity, chooses to donate, you will also have your name below and on the repository as a small means of thanks.</p>
+    {# list of donators #}
+    <ul class="list-group">
+        {% for donator in donators %}
+        <li class="list-group-item">{{ donator }}</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

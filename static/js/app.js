@@ -62,13 +62,16 @@ if (age_expectancy == null || birthdate_value == null) {
     <strong>You haven't filled out your data!</strong> Please head over to the <a href="/quiz/">quiz page</a> to submit your life expectancy so that we can generate your life calendar!
     `;
 } else {
-    // TODO: check if regisered user, use data from DB
+    // TODO: if registered user, use XOR with data from DB
+
+    createMap(is_new_user, current_view);
 
     // show the granularity + restart buttons
+    try {
     document
         .querySelector(".dontShowAtStart")
         .classList.remove("dontShowAtStart");
-    createMap(is_new_user, current_view);
+    } catch {}
 }
 
 // EVENT LISTENERS FOR GRANULARITIES

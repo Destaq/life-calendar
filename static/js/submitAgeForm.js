@@ -29,7 +29,7 @@ finished_button.addEventListener("click", function (e) {
         // TODO: move to DB for users
         localStorage.setItem("age-expectancy", expectancy.value);
         localStorage.setItem("birthday", birthdate.value);
-        location.href = "/"
+        location.href = "/?view=months&page=1"
         e.preventDefault()
     }
 });
