@@ -1,4 +1,5 @@
 import { generateBottomBar } from "/static/js/pagination.js";
+outlineimport { execFancy, execSimple } from "/static/js/userInput.js";
 
 const http = new SimpleHTTP();
 
@@ -40,7 +41,6 @@ function readFromUrl() {
 
 readFromUrl();
 
-
 var amount;
 
 // default modifier, used for calculations
@@ -68,9 +68,9 @@ if (age_expectancy == null || birthdate_value == null) {
 
     // show the granularity + restart buttons
     try {
-    document
-        .querySelector(".dontShowAtStart")
-        .classList.remove("dontShowAtStart");
+        document
+            .querySelector(".dontShowAtStart")
+            .classList.remove("dontShowAtStart");
     } catch {}
 }
 
@@ -181,14 +181,16 @@ function createMap(is_new, gran_level, e) {
             break;
     }
 
-
     let maximal_amount; // the highest number of the button to be displayed
     let navbar_view = current_view_value + 1; // the active button for the pagination navigation bar
     if (
         (current_view_value + 1) * 150 >
         Math.floor(age_expectancy * modifier)
     ) {
-        if (Math.floor(age_expectancy * modifier) % 150 != 0 && current_view_value == Math.floor(age_expectancy * modifier / 150)) {
+        if (
+            Math.floor(age_expectancy * modifier) % 150 != 0 &&
+            current_view_value == Math.floor((age_expectancy * modifier) / 150)
+        ) {
             maximal_amount = Math.floor(age_expectancy * modifier);
         }
     } else {
@@ -198,32 +200,43 @@ function createMap(is_new, gran_level, e) {
     let minimal_amount; // the smallest number of the button being displayed
     if (current_view_value * 150 < maximal_amount) {
         minimal_amount = current_view_value * 150;
-    } 
-    else {
+    } else {
         minimal_amount = 0;
         navbar_view = 1;
         current_view_value = 0;
     }
 
     // generate the pagination bar from pagination.js if applicable
-    console.log(maximal_amount)
+    console.log(maximal_amount);
     if (maximal_amount > 149) {
-        generateBottomBar(age_expectancy, modifier, navbar_view)
+        generateBottomBar(age_expectancy, modifier, navbar_view);
     } else {
-        document.querySelector("#bottom-pagination-navbar").classList.add("invisible")
+        document
+            .querySelector("#bottom-pagination-navbar")
+            .classList.add("invisible");
     }
 
     // make navbar previous + next clickable
-    document.querySelector("#previous-page").children[0].href = `/?view=${current_view.toLowerCase()}&page=${navbar_view - 1}`
-    document.querySelector("#next-page").children[0].href = `/?view=${current_view.toLowerCase()}&page=${navbar_view + 1}`
+    document.querySelector(
+        "#previous-page"
+    ).children[0].href = `/?view=${current_view.toLowerCase()}&page=${
+        navbar_view - 1
+    }`;
+    document.querySelector(
+        "#next-page"
+    ).children[0].href = `/?view=${current_view.toLowerCase()}&page=${
+        navbar_view + 1
+    }`;
 
     // make individual navbar buttons clickable
-    let arr = [].slice.call(document.querySelector(".pagination").children)
-    arr.forEach(nav_item => {
+    let arr = [].slice.call(document.querySelector(".pagination").children);
+    arr.forEach((nav_item) => {
         if (nav_item.classList.contains("page-number")) {
-            nav_item.children[0].href = `/?view=${current_view.toLowerCase()}&page=${parseInt(nav_item.children[0].textContent)}`
+            nav_item.children[0].href = `/?view=${current_view.toLowerCase()}&page=${parseInt(
+                nav_item.children[0].textContent
+            )}`;
         }
-    })
+    });
 
     // lower maximal amount if user incorrectly entered page
     if (maximal_amount > 150 && minimal_amount == 0) {
@@ -264,8 +277,15 @@ function createMap(is_new, gran_level, e) {
                         <div id="user-text-${i + 1}" class="smallInput"></div>
                             <textarea class="form-control invisible" rows="8" id="what-did-${
                                 i + 1
-                            }" placeholder="Supports Markdown and copying down previous text!"></textarea>
+                            }-markdown" placeholder="Supports Markdown and copying down previous text!"></textarea>
+
+                        <textarea class="form-control invisible" rows="10" id="what-did-${
+                            i + 1
+                        }">Heyyy World!</textarea>
+
+                        <p class="font-weight-light" id="hideBeforeLoad">Switch to <a href="#" id="currentMode">Markdown Mode</a>.</p>
                         </div>
+
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                             <button type="button" class="btn btn-primary edit" id="submit-year-${
@@ -283,6 +303,7 @@ function createMap(is_new, gran_level, e) {
                 .children[1];
 
         saveChanges.addEventListener("mousedown", () => {
+            console.log("going to rewrite...")
             rewriteModal(i); // edit the modal box
         });
         newBtn.addEventListener("click", () => {
@@ -402,6 +423,15 @@ function rewriteModal(i) { // rewrites the Markdown modal box
     </svg>
     `;
 
+    // setup Fancy Pants mode by default for editing
+    // console.log("creating fancy mode...")
+    // execFancy(i);
+    // var editingType = "fancy";
+
+    console.log("creating simple mode")
+    execSimple(i)
+    var editingType = "simple";
+
     // copy the current text down to the text being edited
     clipboard_button.addEventListener("click", function () {
         copyAboveToTextarea(i + 1);
@@ -416,18 +446,33 @@ function rewriteModal(i) { // rewrites the Markdown modal box
                 document.querySelector(`#submit-year-${i + 1}`).parentElement
                     .children[1]
             );
-    }
+    
 
     // allow markdown input + remove invisible class
-    document.querySelector(`#what-did-${i + 1}`).classList.remove("invisible");
+    if (editingType == "simple") {
+        document.querySelector(`#what-did-${i + 1}-markdown`).classList.remove("invisible");
+    }
+
+
+    // check for save button click
+    document
+        .querySelector(`#submit-year-${i + 1}`)
+        .addEventListener("mousedown", generateEditModalBox);
+}
 
     // fill textarea with data from localStorage if there - TODO: from DB if registered
     function copyAboveToTextarea(i) {
         if (localStorage.getItem(`${current_view}-${i}`) != null) {
-            document.querySelector(
-                `#what-did-${i}`
-            ).value = localStorage.getItem(`${current_view}-${i}`);
-            document.querySelector(`#what-did-${i}`).value;
+            if (editingType == "simple") {
+                document.querySelector(
+                    `#what-did-${i}-markdown`
+                ).value = localStorage.getItem(`${current_view}-${i}`);
+                document.querySelector(`#what-did-${i}-markdown`).value;
+            } else {
+                // set content with tinymce
+
+
+            }
 
             const copy_success = document.createElement("div");
             copy_success.classList.add("alert");
@@ -436,13 +481,23 @@ function rewriteModal(i) { // rewrites the Markdown modal box
             copy_success.innerHTML = "Copied down!";
 
             // show copy success for 2 secs
-            document
-                .querySelector(`#what-did-${i + 1}`)
-                .parentElement.insertBefore(
-                    copy_success,
-                    document.querySelector(`#what-did-${i + 1}`).parentElement
-                        .children[0]
-                );
+            if (editingType == "simple") {
+                document
+                    .querySelector(`#what-did-${i + 1}-markdown`)
+                    .parentElement.insertBefore(
+                        copy_success,
+                        document.querySelector(`#what-did-${i + 1}-markdown`)
+                            .parentElement.children[0]
+                    );
+            } else {
+                document
+                    .querySelector(`#what-did-${i + 1}`)
+                    .parentElement.insertBefore(
+                        copy_success,
+                        document.querySelector("#what-did-18").parentElement
+                            .children[0]
+                    );
+            }
 
             setTimeout(function () {
                 copy_success.remove();
@@ -450,55 +505,71 @@ function rewriteModal(i) { // rewrites the Markdown modal box
         }
     }
 
-    // check for save button click
-    document
-        .querySelector(`#submit-year-${i + 1}`)
-        .addEventListener("mousedown", generateEditModalBox);
-
     function editModalBox(i) {
         // remove clipboard button
         if (is_clipboard == true) {
+            try {
             document
                 .querySelector(`#submit-year-${i + 1}`)
                 .parentElement.removeChild(clipboard_button);
-            is_clipboard = false;
+                is_clipboard = false;
+            } catch (e) {console.log(e)}
         }
 
         // change back to edit
         document.querySelector(`#submit-year-${i + 1}`).textContent = "Edit";
 
         // display changes
-        document.querySelector(`#what-did-${i + 1}`).classList.add("invisible");
-        if (
-            document.querySelector(`#user-text-${i + 1}`).innerHTML[0] != "<" ||
-            document.querySelector(`#what-did-${i + 1}`).value != ""
-        ) {
-            // converts markdown to HTML
-            var converter = new showdown.Converter(),
-                text = document.querySelector(`#what-did-${i + 1}`).value,
-                html = converter.makeHtml(text);
+        if (editingType == "simple") {
+            console.log("simple editing is active...")
+            document
+                .querySelector(`#what-did-${i + 1}-markdown`)
+                .classList.add("invisible");
 
-            // NOTE - implement DB storage for users...
-            localStorage.setItem(
-                `${current_view}-${i + 1}`,
-                document.querySelector(`#what-did-${i + 1}`).value
-            );
+            // setting value of the above
+            if (
+                document.querySelector(`#user-text-${i + 1}`).innerHTML[0] !=
+                    "<" ||
+                document.querySelector(`#what-did-${i + 1}-markdown`).value != ""
+            ) {
+                // converts markdown to HTML
+                var converter = new showdown.Converter(),
+                    text = document.querySelector(`#what-did-${i + 1}-markdown`).value,
+                    html = converter.makeHtml(text);
+
+                // NOTE - implement DB storage for users...
+                localStorage.setItem(
+                    `${current_view}-${i + 1}`,
+                    document.querySelector(`#what-did-${i + 1}-markdown`).value
+                );
+            } else {
+                html = document.querySelector(`#user-text-${i + 1}`).innerHTML;
+            }
+
+            document.querySelector(`#user-text-${i + 1}`).innerHTML = html;
+
+            // make all images responsive to width
+            let unresponse_images = document
+                .querySelector(`#user-text-${i + 1}`)
+                .getElementsByTagName("img");
+            for (let x = 0; x < unresponse_images.length; x++) {
+                unresponse_images[x].classList.add("img-fluid");
+            }
+
+            // clear textarea
+            document.querySelector(`#what-did-${i + 1}-markdown`).value = "";
+
         } else {
-            html = document.querySelector(`#user-text-${i + 1}`).innerHTML;
+            console.log("deleting")
+            // document
+            //     .querySelector(`#what-did-${i + 1}`)
+            //     .classList.add("invisible");
+            document
+                .querySelector(".tox-tinymce")
+                .remove();
         }
 
-        document.querySelector(`#user-text-${i + 1}`).innerHTML = html;
 
-        // make all images responsive to width
-        let unresponse_images = document
-            .querySelector(`#user-text-${i + 1}`)
-            .getElementsByTagName("img");
-        for (let x = 0; x < unresponse_images.length; x++) {
-            unresponse_images[x].classList.add("img-fluid");
-        }
-
-        // clear textarea
-        document.querySelector(`#what-did-${i + 1}`).value = "";
 
         document
             .querySelector(`#submit-year-${i + 1}`)

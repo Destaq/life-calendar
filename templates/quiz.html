@@ -2,6 +2,12 @@
 
 {% block content %}
 
+<div class="jumbotron">
+<center><h1>The Quiz</h1></center>
+<p>Welcome to the quiz! This is where you fill out your life expectancy, and current age, so that we can generate your customized life calendar for you! If you haven't submitted the quiz, please do so now - the site won't work without it!</p>
+<p>If you are unsure about what your life expectancy is, you can take our ten second quiz below or go to a dedicated site for a more in-depth analysis. But don't worry - if you are a registered user, you can always change this later in the settings.</p>
+<hr>
+
 <form id="gen-data-info">
     <div class="get-data alert alert-danger d-none"></div>
     <div class="form-group" id="hideOnFormSubmission">
@@ -264,6 +270,7 @@
         </div>
     </div>
 </form>
+</div>
 <script src="/static/js/expectancyQuiz.js"></script>
 <script src="/static/js/submitAgeForm.js"></script>
 {% endblock %}

@@ -3,7 +3,8 @@ from flask import render_template, session, redirect, url_for, abort
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, PasswordField, BooleanField
 from wtforms.validators import DataRequired
-from models.models import db, User, Day, Week, Month, Year, Decade
+from models.user import db, User
+from models.text import Day, Week, Month, Year, Decade
 
 class View(FlaskView):
     def index(self):
