@@ -1,5 +1,5 @@
 import { generateBottomBar } from "/static/js/pagination.js";
-outlineimport { execFancy, execSimple } from "/static/js/userInput.js";
+import { execFancy, execSimple } from "/static/js/userInput.js";
 
 const http = new SimpleHTTP();
 
