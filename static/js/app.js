@@ -274,20 +274,20 @@ function createMap(is_new, gran_level, e) {
                         <center><label for="what-did-${
                             i + 1
                         }"><strong><u>Goals/Accomplished</u></strong></label></center>
-                        <div id="user-text-${i + 1}" class="smallInput"></div>
+                        
                             <textarea class="form-control invisible" rows="8" id="what-did-${
                                 i + 1
                             }-markdown" placeholder="Supports Markdown and copying down previous text!"></textarea>
 
                         <textarea class="form-control invisible" rows="10" id="what-did-${
                             i + 1
-                        }">Heyyy World!</textarea>
-
-                        <p class="font-weight-light" id="hideBeforeLoad">Switch to <a href="#" id="currentMode">Markdown Mode</a>.</p>
+                        }">What happened? What are you planning to achieve?</textarea>
                         </div>
 
                         <div class="modal-footer">
+
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
                             <button type="button" class="btn btn-primary edit" id="submit-year-${
                                 i + 1
                             }">Edit</button>
@@ -303,7 +303,7 @@ function createMap(is_new, gran_level, e) {
                 .children[1];
 
         saveChanges.addEventListener("mousedown", () => {
-            console.log("going to rewrite...")
+            console.log("going to rewrite...");
             rewriteModal(i); // edit the modal box
         });
         newBtn.addEventListener("click", () => {
@@ -403,7 +403,8 @@ function shadeButtons(age_expectancy, birthday) {
     }
 }
 
-function rewriteModal(i) { // rewrites the Markdown modal box
+async function rewriteModal(i) {
+    // rewrites the Markdown modal box
     // change button name
     document.querySelector(`#submit-year-${i + 1}`).textContent =
         "Save changes";
@@ -424,13 +425,6 @@ function rewriteModal(i) { // rewrites the Markdown modal box
     `;
 
     // setup Fancy Pants mode by default for editing
-    // console.log("creating fancy mode...")
-    // execFancy(i);
-    // var editingType = "fancy";
-
-    console.log("creating simple mode")
-    execSimple(i)
-    var editingType = "simple";
 
     // copy the current text down to the text being edited
     clipboard_button.addEventListener("click", function () {
@@ -446,19 +440,29 @@ function rewriteModal(i) { // rewrites the Markdown modal box
                 document.querySelector(`#submit-year-${i + 1}`).parentElement
                     .children[1]
             );
-    
 
-    // allow markdown input + remove invisible class
-    if (editingType == "simple") {
-        document.querySelector(`#what-did-${i + 1}-markdown`).classList.remove("invisible");
+        // NOTE: called on link click...
+        console.log("creating complex mode");
+        var editingType = "fancy";
+
+        // allow markdown input + remove invisible class
+        if (editingType == "simple") {
+            document
+                .querySelector(`#what-did-${i + 1}-markdown`)
+                .classList.remove("invisible");
+            execSimple(i);
+        } else {
+            document
+                .querySelector(`#what-did-${i + 1}`)
+                .classList.remove("invisible");
+            await execFancy(i);
+        }
+
+        // check for save button click
+        document
+            .querySelector(`#submit-year-${i + 1}`)
+            .addEventListener("mousedown", generateEditModalBox);
     }
-
-
-    // check for save button click
-    document
-        .querySelector(`#submit-year-${i + 1}`)
-        .addEventListener("mousedown", generateEditModalBox);
-}
 
     // fill textarea with data from localStorage if there - TODO: from DB if registered
     function copyAboveToTextarea(i) {
@@ -470,8 +474,6 @@ function rewriteModal(i) { // rewrites the Markdown modal box
                 document.querySelector(`#what-did-${i}-markdown`).value;
             } else {
                 // set content with tinymce
-
-
             }
 
             const copy_success = document.createElement("div");
@@ -509,19 +511,22 @@ function rewriteModal(i) { // rewrites the Markdown modal box
         // remove clipboard button
         if (is_clipboard == true) {
             try {
-            document
-                .querySelector(`#submit-year-${i + 1}`)
-                .parentElement.removeChild(clipboard_button);
+                document
+                    .querySelector(`#submit-year-${i + 1}`)
+                    .parentElement.removeChild(clipboard_button);
                 is_clipboard = false;
-            } catch (e) {console.log(e)}
+            } catch (e) {
+                console.log(e);
+            }
         }
 
         // change back to edit
         document.querySelector(`#submit-year-${i + 1}`).textContent = "Edit";
 
+
         // display changes
         if (editingType == "simple") {
-            console.log("simple editing is active...")
+            console.log("simple editing has been deactivated...");
             document
                 .querySelector(`#what-did-${i + 1}-markdown`)
                 .classList.add("invisible");
@@ -530,11 +535,13 @@ function rewriteModal(i) { // rewrites the Markdown modal box
             if (
                 document.querySelector(`#user-text-${i + 1}`).innerHTML[0] !=
                     "<" ||
-                document.querySelector(`#what-did-${i + 1}-markdown`).value != ""
+                document.querySelector(`#what-did-${i + 1}-markdown`).value !=
+                    ""
             ) {
                 // converts markdown to HTML
                 var converter = new showdown.Converter(),
-                    text = document.querySelector(`#what-did-${i + 1}-markdown`).value,
+                    text = document.querySelector(`#what-did-${i + 1}-markdown`)
+                        .value,
                     html = converter.makeHtml(text);
 
                 // NOTE - implement DB storage for users...
@@ -558,18 +565,13 @@ function rewriteModal(i) { // rewrites the Markdown modal box
 
             // clear textarea
             document.querySelector(`#what-did-${i + 1}-markdown`).value = "";
-
         } else {
-            console.log("deleting")
-            // document
-            //     .querySelector(`#what-did-${i + 1}`)
-            //     .classList.add("invisible");
+            console.log("deleting, complex has been deactivated!");
+            document.querySelector(".tox-tinymce").remove();
             document
-                .querySelector(".tox-tinymce")
-                .remove();
+                .querySelector(`#what-did-${i + 1}`)
+                .classList.add("invisible");
         }
-
-
 
         document
             .querySelector(`#submit-year-${i + 1}`)
