@@ -15,6 +15,16 @@ var current_view = "Years";
 var current_view_value;
 var applicableString;
 
+// setup fancy mode for editing by default
+var editingType = "fancy";
+
+// Prevent bootstrap dialog from blocking focusin
+$(document).on('focusin', function(e) {
+    if ($(e.target).closest(".tox-tinymce-aux, .moxman-window, .tam-assetmanager-root").length) {
+		e.stopImmediatePropagation();
+	}
+});
+
 // read the current view (months, weeks, years, etc.) and the current page (for pagination) - from the URL
 function readFromUrl() {
     const urlParams = new URLSearchParams(location.search);
@@ -274,14 +284,16 @@ function createMap(is_new, gran_level, e) {
                         <center><label for="what-did-${
                             i + 1
                         }"><strong><u>Goals/Accomplished</u></strong></label></center>
+                        <div id="switchInputType-${i + 1}"></div>
+                        <div id="user-text-${i + 1}" class="smallInput"></div>
                         
-                            <textarea class="form-control invisible" rows="8" id="what-did-${
+                            <textarea class="form-control invisible" rows="10" id="what-did-${
                                 i + 1
                             }-markdown" placeholder="Supports Markdown and copying down previous text!"></textarea>
 
                         <textarea class="form-control invisible" rows="10" id="what-did-${
                             i + 1
-                        }">What happened? What are you planning to achieve?</textarea>
+                        }" placeholder="What happened? What are you planning to achieve?"></textarea>
                         </div>
 
                         <div class="modal-footer">
@@ -409,6 +421,19 @@ async function rewriteModal(i) {
     document.querySelector(`#submit-year-${i + 1}`).textContent =
         "Save changes";
 
+    // hides clipboard when modal is closed
+
+    $(`#Modal${i + 1}`).on('hide.bs.modal', function() {
+        console.log("modal was closed...")
+        console.log("clipboard is ", is_clipboard)
+
+        if (is_clipboard === true) {
+            editModalBox(i);
+        }
+
+        console.log("clipboard is now", is_clipboard)
+    })
+
     // add clipboard button (although slightly misleading)
     const clipboard_button = document.createElement("button");
     clipboard_button.classList.add("btn");
@@ -423,8 +448,6 @@ async function rewriteModal(i) {
         <path fill-rule="evenodd" d="M9.5 1h-3a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
     </svg>
     `;
-
-    // setup Fancy Pants mode by default for editing
 
     // copy the current text down to the text being edited
     clipboard_button.addEventListener("click", function () {
@@ -441,9 +464,20 @@ async function rewriteModal(i) {
                     .children[1]
             );
 
-        // NOTE: called on link click...
-        console.log("creating complex mode");
-        var editingType = "fancy";
+        // BUG: won't actually *change* the editor until it is closed and opened again
+        if (editingType == "fancy") {
+            try {
+                document.querySelector(`#switchInputType-${i + 1}`).removeEventListener("click", switchFancy)
+            } catch {}
+            document.querySelector(`#switchInputType-${i + 1}`).innerHTML = "<p>Switch to <a href='#'>Markdown Mode</a>.</p>"
+            document.querySelector(`#switchInputType-${i + 1}`).addEventListener("click", switchMarkdown)
+        } else {
+            try {
+                document.querySelector(`#switchInputType-${i + 1}`).removeEventListener("click", switchFancy)
+            } catch {}
+            document.querySelector(`#switchInputType-${i + 1}`).innerHTML = "<p>Switch to <a href='#'>Fancy Mode</a>.</p>"
+            document.querySelector(`#switchInputType-${i + 1}`).addEventListener("click", switchFancy)
+        }
 
         // allow markdown input + remove invisible class
         if (editingType == "simple") {
@@ -467,13 +501,13 @@ async function rewriteModal(i) {
     // fill textarea with data from localStorage if there - TODO: from DB if registered
     function copyAboveToTextarea(i) {
         if (localStorage.getItem(`${current_view}-${i}`) != null) {
+            const oldUserText = localStorage.getItem(`${current_view}-${i}`)
             if (editingType == "simple") {
                 document.querySelector(
                     `#what-did-${i}-markdown`
-                ).value = localStorage.getItem(`${current_view}-${i}`);
-                document.querySelector(`#what-did-${i}-markdown`).value;
+                ).value = oldUserText;
             } else {
-                // set content with tinymce
+                tinymce.get(`what-did-${i}`).setContent(oldUserText)
             }
 
             const copy_success = document.createElement("div");
@@ -496,7 +530,7 @@ async function rewriteModal(i) {
                     .querySelector(`#what-did-${i + 1}`)
                     .parentElement.insertBefore(
                         copy_success,
-                        document.querySelector("#what-did-18").parentElement
+                        document.querySelector(`#what-did-${i + 1}`).parentElement
                             .children[0]
                     );
             }
@@ -555,23 +589,35 @@ async function rewriteModal(i) {
 
             document.querySelector(`#user-text-${i + 1}`).innerHTML = html;
 
-            // make all images responsive to width
-            let unresponse_images = document
-                .querySelector(`#user-text-${i + 1}`)
-                .getElementsByTagName("img");
-            for (let x = 0; x < unresponse_images.length; x++) {
-                unresponse_images[x].classList.add("img-fluid");
-            }
-
             // clear textarea
             document.querySelector(`#what-did-${i + 1}-markdown`).value = "";
+
         } else {
-            console.log("deleting, complex has been deactivated!");
+            // set tinyMCE content to local Storage
+            // TODO - to DB too
+            let myContent = tinymce.get(`what-did-${i + 1}`).getContent()
+
+            document.querySelector(`#user-text-${i + 1}`).innerHTML = myContent
+
+            localStorage.setItem(`${current_view}-${i + 1}`, myContent);
+
             document.querySelector(".tox-tinymce").remove();
+            tinymce.get(`what-did-${i + 1}`).remove();
             document
                 .querySelector(`#what-did-${i + 1}`)
                 .classList.add("invisible");
+
+            document.querySelector(`#what-did-${i + 1}`).value = "";
         }
+
+        // make all images responsive to width
+        let unresponse_images = document
+            .querySelector(`#user-text-${i + 1}`)
+            .getElementsByTagName("img");
+
+        for (let x = 0; x < unresponse_images.length; x++) {
+            unresponse_images[x].classList.add("img-fluid");
+    }
 
         document
             .querySelector(`#submit-year-${i + 1}`)
@@ -603,4 +649,14 @@ function checkSavedText(i) {
             unresponse_images[x].classList.add("img-fluid");
         }
     }
+}
+
+function switchMarkdown() {
+    console.log("editing type: Markdown")
+    editingType = "simple"
+}
+
+function switchFancy() {
+    console.log("editing type: RT Editor")
+    editingType = "fancy"
 }
