@@ -15,6 +15,8 @@ export function execFancy(i) {
                         "style",
                         `visibility: hidden; height: ${modifiedFormHeight};`
                     );
+
+                    document.querySelector(`#fancyLoadingSpinner-${i + 1}`).classList.add("invisible")
                 });
             },
         });

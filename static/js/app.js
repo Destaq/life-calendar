@@ -286,6 +286,12 @@ function createMap(is_new, gran_level, e) {
                         }"><strong><u>Goals/Accomplished</u></strong></label></center>
                         <div id="switchInputType-${i + 1}"></div>
                         <div id="user-text-${i + 1}" class="smallInput"></div>
+
+                        <div class="d-flex justify-content-center">
+                            <div class="spinner-border invisible mt-5" id="fancyLoadingSpinner-${i + 1}" role="status" style="width: 3rem; height: 3rem;">
+                            <span class="sr-only">Loading...</span>
+                            </div>
+                        </div>
                         
                             <textarea class="form-control invisible" rows="10" id="what-did-${
                                 i + 1
@@ -489,6 +495,7 @@ async function rewriteModal(i) {
             document
                 .querySelector(`#what-did-${i + 1}`)
                 .classList.remove("invisible");
+            document.querySelector(`#fancyLoadingSpinner-${i + 1}`).classList.remove("invisible")
             await execFancy(i);
         }
 
