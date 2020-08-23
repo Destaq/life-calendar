@@ -292,11 +292,11 @@ function createMap(is_new, gran_level, e) {
                             </div>
                         </div>
                         
-                            <textarea class="form-control invisible" rows="10" id="what-did-${
+                            <textarea class="form-control invisible pt-2" rows="10" id="what-did-${
                                 i + 1
                             }-markdown" placeholder="Supports Markdown and copying down previous text!"></textarea>
 
-                        <textarea class="form-control invisible" rows="10" id="what-did-${
+                        <textarea class="form-control invisible pt-2" rows="10" id="what-did-${
                             i + 1
                         }" placeholder="What happened? What are you planning to achieve?"></textarea>
                         </div>
@@ -529,9 +529,25 @@ async function rewriteModal(i) {
         if (localStorage.getItem(`${current_view}-${i}`) != null) {
             const oldUserText = localStorage.getItem(`${current_view}-${i}`)
             if (editingType == "simple") {
-                document.querySelector(
-                    `#what-did-${i}-markdown`
-                ).value = oldUserText;
+
+
+                if (oldUserText.slice(0, 1) != "<") {
+                    document.querySelector(
+                        `#what-did-${i}-markdown`
+                    ).value = oldUserText;
+                } else {
+                    var converter = new showdown.Converter(),
+                    htmlText = document.querySelector(`#user-text-${i}`)
+                        .innerHTML,
+                    markdown = converter.makeMarkdown(htmlText);
+
+                    document.querySelector(
+                        `#what-did-${i}-markdown`
+                    ).value = markdown;
+                }
+
+
+
             } else {
                 tinymce.get(`what-did-${i}`).setContent(oldUserText)
             }
@@ -598,7 +614,7 @@ async function rewriteModal(i) {
                     ""
             ) {
                 // converts markdown to HTML
-                var converter = new showdown.Converter(),
+                var converter = new showdown.Converter({tables: true, strikethrough: true, tasklists: true, simpleLineBreaks: true, emoji: true}),
                     text = document.querySelector(`#what-did-${i + 1}-markdown`)
                         .value,
                     html = converter.makeHtml(text);
@@ -610,6 +626,7 @@ async function rewriteModal(i) {
                 );
             } else {
                 html = document.querySelector(`#user-text-${i + 1}`).innerHTML;
+                console.log("HTML detected... it is: ", html)
             }
 
             document.querySelector(`#user-text-${i + 1}`).innerHTML = html;
@@ -620,14 +637,14 @@ async function rewriteModal(i) {
         } else {
             // set tinyMCE content to local Storage
             // TODO - to DB too
-            
+
             try {
-            let myContent = tinymce.get(`what-did-${i + 1}`).getContent()
+                let myContent = tinymce.get(`what-did-${i + 1}`).getContent()
 
-            if (myContent != "") {
-                document.querySelector(`#user-text-${i + 1}`).innerHTML = myContent
+                if (myContent != "") {
+                    document.querySelector(`#user-text-${i + 1}`).innerHTML = myContent
 
-                localStorage.setItem(`${current_view}-${i + 1}`, myContent);
+                    localStorage.setItem(`${current_view}-${i + 1}`, myContent);
             }
 
             document.querySelector(".tox-tinymce").remove();
