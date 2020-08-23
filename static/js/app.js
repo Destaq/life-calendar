@@ -199,7 +199,7 @@ function createMap(is_new, gran_level, e) {
     ) {
         if (
             Math.floor(age_expectancy * modifier) % 150 != 0 &&
-            current_view_value == Math.floor((age_expectancy * modifier) / 150)
+            current_view_value >= Math.floor((age_expectancy * modifier) / 150)
         ) {
             maximal_amount = Math.floor(age_expectancy * modifier);
         }
