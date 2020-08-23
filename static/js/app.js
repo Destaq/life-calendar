@@ -217,7 +217,6 @@ function createMap(is_new, gran_level, e) {
     }
 
     // generate the pagination bar from pagination.js if applicable
-    console.log(maximal_amount);
     if (maximal_amount > 149) {
         generateBottomBar(age_expectancy, modifier, navbar_view);
     } else {
@@ -321,7 +320,6 @@ function createMap(is_new, gran_level, e) {
                 .children[1];
 
         saveChanges.addEventListener("mousedown", () => {
-            console.log("going to rewrite...");
             rewriteModal(i); // edit the modal box
         });
         newBtn.addEventListener("click", () => {
@@ -430,14 +428,11 @@ async function rewriteModal(i) {
     // hides clipboard when modal is closed
 
     $(`#Modal${i + 1}`).on('hide.bs.modal', function() {
-        console.log("modal was closed...")
-        console.log("clipboard is ", is_clipboard)
 
         if (is_clipboard === true) {
             editModalBox(i);
         }
 
-        console.log("clipboard is now", is_clipboard)
     })
 
     // add clipboard button (although slightly misleading)
@@ -473,16 +468,40 @@ async function rewriteModal(i) {
         // BUG: won't actually *change* the editor until it is closed and opened again
         if (editingType == "fancy") {
             try {
-                document.querySelector(`#switchInputType-${i + 1}`).removeEventListener("click", switchFancy)
+                document.querySelector(`#switchInputType-${i + 1}`).removeEventListener("click", function(e) {
+                    is_clipboard = true;
+                    generateEditModalBox();
+                    editingType = "simple";
+                    rewriteModal(i);
+                    e.preventDefault();
+                })
             } catch {}
-            document.querySelector(`#switchInputType-${i + 1}`).innerHTML = "<p>Switch to <a href='#'>Markdown Mode</a>.</p>"
-            document.querySelector(`#switchInputType-${i + 1}`).addEventListener("click", switchMarkdown)
+            document.querySelector(`#switchInputType-${i + 1}`).innerHTML = "<p><hr>Switch to <a href='#'>Markdown Mode</a>.</p>"
+            document.querySelector(`#switchInputType-${i + 1}`).addEventListener("click", function(e) {
+                is_clipboard = true;
+                generateEditModalBox();
+                editingType = "simple";
+                rewriteModal(i);
+                e.preventDefault();
+            })
         } else {
             try {
-                document.querySelector(`#switchInputType-${i + 1}`).removeEventListener("click", switchFancy)
+                document.querySelector(`#switchInputType-${i + 1}`).removeEventListener("click", function(e) {
+                    is_clipboard = true;
+                    generateEditModalBox();
+                    editingType = "fancy";
+                    rewriteModal(i);
+                    e.preventDefault();
+                })
             } catch {}
-            document.querySelector(`#switchInputType-${i + 1}`).innerHTML = "<p>Switch to <a href='#'>Fancy Mode</a>.</p>"
-            document.querySelector(`#switchInputType-${i + 1}`).addEventListener("click", switchFancy)
+            document.querySelector(`#switchInputType-${i + 1}`).innerHTML = "<p><hr>Switch to <a href='#'>Fancy Mode</a>.</p>"
+            document.querySelector(`#switchInputType-${i + 1}`).addEventListener("click", function(e) {
+                is_clipboard = true;
+                generateEditModalBox();
+                editingType = "fancy";
+                rewriteModal(i);
+                e.preventDefault();
+            })
         }
 
         // allow markdown input + remove invisible class
@@ -496,7 +515,7 @@ async function rewriteModal(i) {
                 .querySelector(`#what-did-${i + 1}`)
                 .classList.remove("invisible");
             document.querySelector(`#fancyLoadingSpinner-${i + 1}`).classList.remove("invisible")
-            await execFancy(i);
+            execFancy(i);
         }
 
         // check for save button click
@@ -557,7 +576,7 @@ async function rewriteModal(i) {
                     .parentElement.removeChild(clipboard_button);
                 is_clipboard = false;
             } catch (e) {
-                console.log(e);
+                // happens due to too much/quick switching
             }
         }
 
@@ -567,7 +586,6 @@ async function rewriteModal(i) {
 
         // display changes
         if (editingType == "simple") {
-            console.log("simple editing has been deactivated...");
             document
                 .querySelector(`#what-did-${i + 1}-markdown`)
                 .classList.add("invisible");
@@ -602,11 +620,15 @@ async function rewriteModal(i) {
         } else {
             // set tinyMCE content to local Storage
             // TODO - to DB too
+            
+            try {
             let myContent = tinymce.get(`what-did-${i + 1}`).getContent()
 
-            document.querySelector(`#user-text-${i + 1}`).innerHTML = myContent
+            if (myContent != "") {
+                document.querySelector(`#user-text-${i + 1}`).innerHTML = myContent
 
-            localStorage.setItem(`${current_view}-${i + 1}`, myContent);
+                localStorage.setItem(`${current_view}-${i + 1}`, myContent);
+            }
 
             document.querySelector(".tox-tinymce").remove();
             tinymce.get(`what-did-${i + 1}`).remove();
@@ -615,6 +637,9 @@ async function rewriteModal(i) {
                 .classList.add("invisible");
 
             document.querySelector(`#what-did-${i + 1}`).value = "";
+            } catch {
+                // switched too many times, too quickly. have nothing happen
+            }
         }
 
         // make all images responsive to width
@@ -656,14 +681,4 @@ function checkSavedText(i) {
             unresponse_images[x].classList.add("img-fluid");
         }
     }
-}
-
-function switchMarkdown() {
-    console.log("editing type: Markdown")
-    editingType = "simple"
-}
-
-function switchFancy() {
-    console.log("editing type: RT Editor")
-    editingType = "fancy"
 }
