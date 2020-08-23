@@ -21,7 +21,8 @@ document
             mapType = "blank";
         }
 
-        const url = `http://localhost:5000/api/makeimage?username=null&auth=nothing&map_type=${mapType}&interval=${interval}`;
+        // TODO: take from DB for registered
+        const url = `http://localhost:5000/api/makeimage?bday=${localStorage.getItem("birthday")}&expectancy=${localStorage.getItem("age-expectancy")}&auth=nothing&map_type=${mapType}&interval=${interval}`;
 
         http.get(url)
             .then((data) => {

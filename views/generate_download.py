@@ -301,19 +301,20 @@ class MakeImageView(FlaskView):
 
     def get(self):
         args = request.args
-        username = args["username"]
+        bday = args["bday"]
+        expectancy = int(args["expectancy"])
         auth = args["auth"]
         map_type = args["map_type"]
         map_form = args["interval"]
 
-        # TODO: modify for users
-        # used for images with actual user data
+        bday = bday[8:10] + bday[4:8] + bday[0:4]
+
         if map_type != "blank":
-            Map("01-12-1980", 78, map_form)
+            Map(bday, expectancy, map_form)
 
         else:
             # used only for life expectancy
-            EmptyMap(79, map_form)
+            EmptyMap(expectancy, map_form)
 
         return {"result": image_to_bytes("poster.png")}
 
