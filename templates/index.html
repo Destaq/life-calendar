@@ -3,7 +3,12 @@
 {% block content %}
 {# move to jumbotron or something similar #}
 <script src='https://cdn.tiny.cloud/1/vfjsiz6uj20egqo3tz4aqu8yyhh9428kn7nb4emhd9rmuj7j/tinymce/5/tinymce.min.js'
-referrerpolicy="origin"></script>
+    referrerpolicy="origin"></script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/themes/classic.min.css" />
+<!-- 'classic' theme -->
+
+<script src="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/pickr.min.js"></script>
 
 </script>
 <h1>Life Calendar</h1>
@@ -25,6 +30,11 @@ referrerpolicy="origin"></script>
         <button id="view-days" class="dropdown-item">Days</button>
     </div>
     <button class="btn btn-warning mb-4 ml-2" type="button" id="reset-stuff">Restart</button>
+    <!-- Pick the color, for shading buttons -->
+    <div class="theme-container"></div>
+    <div class="pickr-container"></div>
+    <input class="form-control" type="submit" value="Submit" id="shadeButtonConfirm">
+    <script src="/static/js/colorpicker.js"></script>
 </div>
 
 <div class="output mb-4" role="group">

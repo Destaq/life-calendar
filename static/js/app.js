@@ -262,6 +262,11 @@ function createMap(is_new, gran_level, e) {
         newBtn.setAttribute("data-target", `#Modal${i + 1}`);
         newBtn.innerHTML = `${i + 1}`;
 
+        // shrink text size if text too big
+        if ((i + 1).toString().length == 5) {
+            newBtn.innerHTML = `<span style="font-size:smaller;">${i + 1}</span>`
+        }
+        
         const newBtnStyling = document.createElement("span");
 
         newBtnStyling.innerHTML += `
@@ -392,9 +397,13 @@ function shadeButtons(age_expectancy, birthday) {
         // only if lower than the amount of x units left till end of life...
         try {
             if (x < amount) {
-                document
+                // document
+                    // .querySelector(`#${current_view}-${x}`)
+                    // .classList.add("btn-danger");
+
+                    document
                     .querySelector(`#${current_view}-${x}`)
-                    .classList.add("btn-danger");
+                    .style.background = "repeating-linear-gradient(45deg, #dc3545, #dc3545 10px)"
             }
         } catch {}
     }
@@ -403,7 +412,7 @@ function shadeButtons(age_expectancy, birthday) {
         try {
             document
                 .querySelector(`#${current_view}-${amount}`)
-                .classList.add("btn-warning"); // current point in life
+                .style.background = "repeating-linear-gradient(45deg, #ffc107, #ffc107 10px)"; // current point in life
         } catch {}
         for (
             let x = current_view_value * 150;
@@ -411,9 +420,14 @@ function shadeButtons(age_expectancy, birthday) {
             x++
         ) {
             try {
-                document
+
+                if (document
                     .querySelector(`#${current_view}-${x}`)
-                    .classList.add("btn-success"); // units left/unused
+                    .style.background == "") {
+                document
+                .querySelector(`#${current_view}-${x}`)
+                .style.background = "repeating-linear-gradient(45deg, #28a745, #28a745 10px)"
+                }
             } catch {}
         }
     }

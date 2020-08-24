@@ -4,6 +4,7 @@
     /* NOTE: doesn't align properly with very large numbers. Shrink text or look into another solution? */
     text-align: center !important;
     justify-content: center;
+    color: white;
 }
 
 .invisible {
