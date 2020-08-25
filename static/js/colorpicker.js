@@ -100,6 +100,13 @@ for (const [theme, config] of themes) {
                         document
                             .querySelector("#shadeButtonConfirm")
                             .replaceWith(clone);
+
+                        var clone2 = document
+                            .querySelector("#unshadeButtonConfirm")
+                            .cloneNode(true);
+                        document
+                            .querySelector("#unshadeButtonConfirm")
+                            .replaceWith(clone2);
                     } catch (e) {
                         console.log(e);
                     }
@@ -113,10 +120,21 @@ for (const [theme, config] of themes) {
                         .querySelector("#shadeButtonConfirm")
                         .addEventListener("click", setupInnerShading);
 
+                    document
+                        .querySelector("#unshadeButtonConfirm")
+                        .removeEventListener("click", setupInnerUnshading);
+                    document
+                        .querySelector("#unshadeButtonConfirm")
+                        .addEventListener("click", setupInnerUnshading);
+
                     addedCustom = true;
 
                     function setupInnerShading() {
-                        shadeCustomizedButton(rgba);
+                        shadeCustomizedButton(rgba, true);
+                    }
+
+                    function setupInnerUnshading() {
+                        shadeCustomizedButton(rgba, false);
                     }
                 });
         }
@@ -132,11 +150,19 @@ document
     .querySelector("#shadeButtonConfirm")
     .addEventListener("click", setupShading);
 
+document
+    .querySelector("#unshadeButtonConfirm")
+    .addEventListener("click", setupUnshading);
+
 function setupShading() {
-    shadeCustomizedButton("#42445a");
+    shadeCustomizedButton("rgb(66, 68, 90)", true);
 }
 
-function shadeCustomizedButton(rgba) {
+function setupUnshading() {
+    shadeCustomizedButton("rgb(66, 68, 90)", false);
+}
+
+function shadeCustomizedButton(rgba, shade) {
     const buttonToShadeValue = document.querySelector("#shadeDropdown").value;
 
     // get current view
@@ -165,13 +191,43 @@ function shadeCustomizedButton(rgba) {
         )
     );
 
-
     let customStr = currentStyle;
-    customStr += `, ${rgba} ${currentStripeValue}px, ${rgba} ${
-        currentStripeValue + 10
-    }px)`;
+
+    // if they are adding a stripe
+    if (shade == true) {
+        customStr += `, ${rgba} ${currentStripeValue}px, ${rgba} ${
+            currentStripeValue + 10
+        }px)`;
+    } else {
+        let replace;
+        rgba = rgba.toString();
+
+        let rgb = RGBAtoRGB(rgba);
+        replace = `, ${rgb}.*${rgb}\\s\\d{2,}px`;
+
+        replace = replace.split(")").join("\\)")
+        replace = replace.split("(").join("\\(")
+
+        replace = new RegExp(replace, "g");
+
+        customStr = customStr.split(replace).join('');
+    }
 
     document.querySelector(
         `#${current_view}-${buttonToShadeValue}`
     ).style.background = customStr;
+}
+
+function RGBAtoRGB(rgba) {
+    // calculate r, g, and b
+    let re = /\d{1,3}\.?.*/g
+    let results = rgba.match(re);
+
+    let r = Math.round(parseFloat(results[0].split(", ")[0]))
+    let g = Math.round(parseFloat(results[0].split(", ")[1]))
+    let b = Math.round(parseFloat(results[0].split(", ")[2]))
+
+    let rgb = `rgb(${r}, ${g}, ${b})`
+
+    return rgb;
 }
