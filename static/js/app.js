@@ -13,10 +13,12 @@ document.querySelector("#reset-stuff").addEventListener("click", tryReset);
 let is_clipboard = false;
 var current_view = "Years";
 var current_view_value;
-var applicableString;
 
 // setup fancy mode for editing by default
 var editingType = "fancy";
+
+// default modifier, used for calculations
+var modifier = 12;
 
 // Prevent bootstrap dialog from blocking focusin
 $(document).on('focusin', function(e) {
@@ -27,14 +29,15 @@ $(document).on('focusin', function(e) {
 
 // read the current view (months, weeks, years, etc.) and the current page (for pagination) - from the URL
 function readFromUrl() {
+    let urlGoTo = false; // modify current page if "page" not in URL
+
     const urlParams = new URLSearchParams(location.search);
 
     if (urlParams.get("page") != null) {
         current_view_value = parseInt(urlParams.get("page")) - 1;
-        applicableString = `page=${current_view_value + 1}&`;
     } else {
         current_view_value = 0;
-        applicableString = "";
+        urlGoTo = true;
     }
 
     // make sure that a negative number was not provided
@@ -46,15 +49,23 @@ function readFromUrl() {
         current_view =
             urlParams.get("view").slice(0, 1).toUpperCase() +
             urlParams.get("view").slice(1);
+
+        modifier = calculateModifier(current_view)
     }
+
+    if (urlGoTo == true) {
+        calculateDefaultView();
+    }
+}
+
+function calculateDefaultView() {
+    current_view_value = Math.floor(modifier * age_expectancy) - (Math.floor(modifier * age_expectancy) - calculateAmount(birthdate_value, current_view));
+    current_view_value = Math.floor(current_view_value / 150)
 }
 
 readFromUrl();
 
 var amount;
-
-// default modifier, used for calculations
-let modifier = 12;
 
 // whether or not they are a new user
 let is_new_user = false;
@@ -91,7 +102,7 @@ granularity_decades.addEventListener("click", function () {
     window.history.pushState(
         "",
         "Life Calendar",
-        `?${applicableString}view=decades`
+        `?view=decades`
     );
     readFromUrl();
     createMap(is_new_user, current_view);
@@ -102,7 +113,7 @@ granularity_years.addEventListener("click", function () {
     window.history.pushState(
         "",
         "Life Calendar",
-        `?${applicableString}view=years`
+        `?view=years`
     );
     readFromUrl();
     createMap(is_new_user, current_view);
@@ -113,7 +124,7 @@ granularity_months.addEventListener("click", function () {
     window.history.pushState(
         "",
         "Life Calendar",
-        `?${applicableString}view=months`
+        `?view=months`
     );
     readFromUrl();
     createMap(is_new_user, current_view);
@@ -124,7 +135,7 @@ granularity_weeks.addEventListener("click", function () {
     window.history.pushState(
         "",
         "Life Calendar",
-        `?${applicableString}view=weeks`
+        `?view=weeks`
     );
     readFromUrl();
     createMap(is_new_user, current_view);
@@ -135,7 +146,7 @@ granularity_days.addEventListener("click", function () {
     window.history.pushState(
         "",
         "Life Calendar",
-        `?${applicableString}view=days`
+        `?view=days`
     );
     readFromUrl();
     createMap(is_new_user, current_view);
@@ -167,29 +178,12 @@ function createMap(is_new, gran_level, e) {
         document.querySelector(".output").innerHTML = "";
     }
 
-    calculateAmount(birthdate_value);
+    amount = calculateAmount(birthdate_value, current_view);
 
     const btnContainer = document.querySelector(".output");
 
     // find button modifier - used for calculating what "number" a button should have and the number to be generated
-    switch (gran_level) {
-        case "Days":
-            modifier = 365.25;
-            break;
-        case "Months":
-            modifier = 12;
-            break;
-        case "Years":
-            modifier = 1;
-            break;
-        case "Decades":
-            modifier = 0.1;
-            break;
-        default:
-            // NOTE: weeks isn't accurate
-            modifier = 52;
-            break;
-    }
+    modifier = calculateModifier(gran_level);
 
     let maximal_amount; // the highest number of the button to be displayed
     let navbar_view = current_view_value + 1; // the active button for the pagination navigation bar
@@ -206,14 +200,14 @@ function createMap(is_new, gran_level, e) {
     } else {
         maximal_amount = (current_view_value + 1) * 150;
     }
-
     let minimal_amount; // the smallest number of the button being displayed
     if (current_view_value * 150 < maximal_amount) {
         minimal_amount = current_view_value * 150;
     } else {
-        minimal_amount = 0;
-        navbar_view = 1;
-        current_view_value = 0;
+        // they entered a number that was too high
+        minimal_amount = Math.floor((maximal_amount - 1) / 150) * 150;
+        current_view_value = Math.floor(age_expectancy * modifier / 150);
+        navbar_view = current_view_value + 1;
     }
 
     // generate the pagination bar from pagination.js if applicable
@@ -246,11 +240,6 @@ function createMap(is_new, gran_level, e) {
             )}`;
         }
     });
-
-    // lower maximal amount if user incorrectly entered page
-    if (maximal_amount > 150 && minimal_amount == 0) {
-        maximal_amount = 150;
-    }
 
     // create the buttons for that page
     for (let i = minimal_amount; i < maximal_amount; i++) {
@@ -340,9 +329,10 @@ function createMap(is_new, gran_level, e) {
 }
 
 // calculates the amount of units in time the user has left until the end of their (assumed) life
-function calculateAmount(birthday) {
+function calculateAmount(birthday, cview) {
     let dob = new Date(birthday);
     let c_time = new Date(Date.now());
+    let th_amount;
 
     function YearDiff(d1, d2) {
         var years;
@@ -358,33 +348,35 @@ function calculateAmount(birthday) {
         return months <= 0 ? 0 : months;
     }
 
-    switch (current_view) {
+    switch (cview) {
         case "Decades":
-            amount = Math.floor((YearDiff(dob, c_time) - 1) / 10);
+            th_amount = Math.floor((YearDiff(dob, c_time) - 1) / 10);
             break;
 
         case "Years":
-            amount = YearDiff(dob, c_time) - 1;
+            th_amount = YearDiff(dob, c_time) - 1;
             break;
 
         case "Months":
-            amount = MonthDiff(dob, c_time) - 1;
+            th_amount = MonthDiff(dob, c_time) - 1;
             break;
 
         case "Weeks":
-            amount = Math.round((Date.now() - dob) / 604800000);
+            th_amount = Math.round((Date.now() - dob) / 604800000);
             break;
 
         case "Days":
-            amount =
+            th_amount =
                 Math.ceil(Math.abs(Date.now() - dob) / (60 * 60 * 24 * 1000)) -
                 1;
             break;
 
         default:
-            amount = 0; // TODO: will cause the code to break;
+            th_amount = 0; // TODO: will cause the code to break;
             break;
     }
+
+    return th_amount;
 }
 
 function shadeButtons(age_expectancy, birthday) {
@@ -640,7 +632,6 @@ async function rewriteModal(i) {
                 );
             } else {
                 html = document.querySelector(`#user-text-${i + 1}`).innerHTML;
-                console.log("HTML detected... it is: ", html)
             }
 
             document.querySelector(`#user-text-${i + 1}`).innerHTML = html;
@@ -712,4 +703,28 @@ function checkSavedText(i) {
             unresponse_images[x].classList.add("img-fluid");
         }
     }
+}
+
+function calculateModifier(gran_level) {
+    let modification;
+    switch (gran_level) {
+        case "Days":
+            modification = 365.25;
+            break;
+        case "Months":
+            modification = 12;
+            break;
+        case "Years":
+            modification = 1;
+            break;
+        case "Decades":
+            modification = 0.1;
+            break;
+        default:
+            // NOTE: weeks isn't accurate
+            modification = 52;
+            break;
+    }
+
+    return modification;
 }

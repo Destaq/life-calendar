@@ -1,6 +1,5 @@
 // changes the text are to be fancy
 export function execFancy(i) {
-    console.log("initializing tinymce");
     return new Promise((resolve, reject) => {
         tinymce.init({
             selector: `#what-did-${i + 1}`,

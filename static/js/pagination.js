@@ -3,6 +3,11 @@ export function generateBottomBar(age_expectancy, modifier, navbar_view) {
         "#bottom-pagination-navbar"
     );
 
+    for (let i = 1; i < 5; i++) {
+        document.querySelector(`#page-${i + 1}`).classList.remove("invisible");
+        document.querySelector(`#page-${i + 1}`).children[0].textContent = "N/A";
+    }
+
     // set active bar
     try {
         // active-bottom is a class, as bootstrap uses the active class for several things
@@ -32,10 +37,6 @@ export function generateBottomBar(age_expectancy, modifier, navbar_view) {
         document.querySelector("#next-page").classList.remove("disabled");
     } else {
         document.querySelector("#next-page").classList.add("disabled");
-    }
-
-    for (let i = 0; i < 5; i++) {
-        document.querySelector(`#page-${i + 1}`).classList.remove("invisible");
     }
 
     let continue_checking = true; // whether or not they should continue with making the navbar
@@ -70,15 +71,25 @@ export function generateBottomBar(age_expectancy, modifier, navbar_view) {
     if (navbar_view == 1 && continue_checking) {
         document.querySelector("#page-1").classList.add("active");
         document.querySelector("#page-1").classList.add("active-bottom");
+        document.querySelector("#page-2").children[0].textContent = '2';
+        document.querySelector("#page-3").children[0].textContent = '3';
         document.querySelector("#page-4-5").classList.remove("invisible");
         document.querySelector("#page-4").classList.add("invisible");
+        document.querySelector("#page-1-5").classList.add("invisible");
     } else if (navbar_view == 2 && continue_checking) {
         document.querySelector("#page-2").classList.add("active");
+        document.querySelector("#page-2").children[0].textContent = '2';
+        document.querySelector("#page-3").children[0].textContent = '3';
         document.querySelector("#page-2").classList.add("active-bottom");
         document.querySelector("#page-4-5").classList.remove("invisible");
+        document.querySelector("#page-1-5").classList.add("invisible");
         document.querySelector("#page-4").classList.add("invisible");
     }
     if (navbar_view == 3 && continue_checking) {
+        document.querySelector("#page-1-5").classList.add("invisible");
+        document.querySelector("#page-2").children[0].textContent = '2';
+        document.querySelector("#page-3").children[0].textContent = '3';
+        document.querySelector("#page-4").children[0].textContent = '4';
         document.querySelector("#page-3").classList.add("active");
         document.querySelector("#page-3").classList.add("active-bottom");
         document.querySelector("#page-4-5").classList.remove("invisible");
