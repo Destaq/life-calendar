@@ -1,4 +1,5 @@
 import os
+from typing import Set
 from dotenv import load_dotenv
 from flask import Flask, render_template
 from flask_cors import CORS
@@ -9,7 +10,7 @@ from models.user import db
 
 # import views
 from views.generate_download import MakeImageView
-from views.pageviews import View, DownloadView, SignupView, LoginView, ContactView, ThanksView, PrivacyPolicyView, QuizView, ContributeView, DonateView
+from views.pageviews import View, DownloadView, SignupView, LoginView, ContactView, ThanksView, PrivacyPolicyView, QuizView, ContributeView, DonateView, ProfileView, SettingsView
 from views.apiviews import JSONDataView, ContactSubmitView
 
 # import authentication
@@ -60,7 +61,9 @@ def register_views(app):
         PrivacyPolicyView,
         QuizView,
         ContributeView,
-        DonateView
+        DonateView,
+        ProfileView,
+        SettingsView
     ]
 
     for view in views:

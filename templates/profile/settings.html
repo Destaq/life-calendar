@@ -1,0 +1,549 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+
+    <div class="row gutters-sm mt-2">
+        <div class="col-md-4 d-none d-md-block">
+            <div class="card">
+                <div class="card-body">
+                    <nav class="nav flex-column nav-pills nav-gap-y-1">
+                        <a href="#profile" data-toggle="tab" class="nav-item nav-link has-icon nav-link-faded active">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="feather feather-user mr-2">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+                            </svg>Profile Information
+                        </a>
+                        <a href="#account" data-toggle="tab" class="nav-item nav-link has-icon nav-link-faded">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="feather feather-settings mr-2">
+                                <circle cx="12" cy="12" r="3"></circle>
+                                <path
+                                    d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z">
+                                </path>
+                            </svg>Account Settings
+                        </a>
+                        <a href="#security" data-toggle="tab" class="nav-item nav-link has-icon nav-link-faded">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="feather feather-shield mr-2">
+                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                            </svg>Security
+                        </a>
+                        <a href="#notification" data-toggle="tab" class="nav-item nav-link has-icon nav-link-faded">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="feather feather-bell mr-2">
+                                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                                <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                            </svg>Notification
+                        </a>
+                        <!-- <a href="#billing" data-toggle="tab" class="nav-item nav-link has-icon nav-link-faded">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="feather feather-credit-card mr-2">
+                                <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+                                <line x1="1" y1="10" x2="23" y2="10"></line>
+                            </svg>Billing
+                        </a> -->
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header border-bottom mb-3 d-flex d-md-none">
+                    <ul class="nav nav-tabs card-header-tabs nav-gap-x-1" role="tablist">
+                        <li class="nav-item">
+                            <a href="#profile" data-toggle="tab" class="nav-link has-icon active"><svg
+                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="feather feather-user">
+                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="12" cy="7" r="4"></circle>
+                                </svg></a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#account" data-toggle="tab" class="nav-link has-icon"><svg
+                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="feather feather-settings">
+                                    <circle cx="12" cy="12" r="3"></circle>
+                                    <path
+                                        d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z">
+                                    </path>
+                                </svg></a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#security" data-toggle="tab" class="nav-link has-icon"><svg
+                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="feather feather-shield">
+                                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                                </svg></a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#notification" data-toggle="tab" class="nav-link has-icon"><svg
+                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="feather feather-bell">
+                                    <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                                    <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                                </svg></a>
+                        </li>
+                        <!-- <li class="nav-item">
+                            <a href="#billing" data-toggle="tab" class="nav-link has-icon"><svg
+                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="feather feather-credit-card">
+                                    <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+                                    <line x1="1" y1="10" x2="23" y2="10"></line>
+                                </svg></a>
+                        </li> -->
+                    </ul>
+                </div>
+                <div class="card-body tab-content">
+                    <div class="tab-pane active" id="profile">
+                        <h6>YOUR PROFILE INFORMATION</h6>
+                        <hr>
+                        <p class="text-muted">You can make your profile public here, and fill out any number of fields that you want. This can help you stay accountable or you can use this to compare yourself against family or friends. However, this is all completely optional.</p>
+                        <hr>
+                        <form>
+                            <div class="form-group">
+                                <label for="fullName">Name</label>
+                                <input type="text" class="form-control" id="fullName" aria-describedby="fullNameHelp"
+                                    placeholder="Enter your name">
+                                <small id="fullNameHelp" class="form-text text-muted">We use your name to address you, and this can be shown on your profile.</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="bio">Your Bio</label>
+                                <textarea class="form-control autosize" id="bio" placeholder="A couple of sentences about yourself."
+                                    style="overflow: hidden; overflow-wrap: break-word; resize: none; height: 62px;"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="url">URL</label>
+                                <input type="text" class="form-control" id="url"
+                                    placeholder="Enter your website address">
+                            </div>
+                            <div class="form-group small text-muted">
+                                All of the fields on this page are optional and can be deleted at any time, and by
+                                filling them out, you're giving us consent to share this data wherever your user profile
+                                appears.
+                            </div>
+                            <div class="form-group mb-0">
+                                <label class="d-block" aria-describedby="describeEmails">Show on Profile</label>
+                                <div class="small text-muted mb-3">Choose whether or not to include the data below on your profile.</div>
+                                <ul class="list-group list-group-sm">
+                                    <li class="list-group-item has-icon">
+                                        Age Expectancy
+                                        <div class="custom-control custom-control-nolabel custom-switch ml-auto">
+                                            <input type="checkbox" class="custom-control-input" id="customSwitch1">
+                                            <label class="custom-control-label" for="customSwitch1"></label>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item has-icon">
+                                        Birthdate
+                                        <div class="custom-control custom-control-nolabel custom-switch ml-auto">
+                                            <input type="checkbox" class="custom-control-input" id="customSwitch2">
+                                            <label class="custom-control-label" for="customSwitch2"></label>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <button type="button" class="btn btn-primary">Update Profile</button>
+                            <button type="reset" class="btn btn-light">Cancel Changes</button>
+                        </form>
+                    </div>
+                    <div class="tab-pane" id="account">
+                        <h6>ACCOUNT SETTINGS</h6>
+                        <hr>
+                        <form>
+                            <div class="form-group">
+                                <label for="username">Username</label>
+                                <input type="text" class="form-control" id="username" aria-describedby="usernameHelp"
+                                    placeholder="Enter your username">
+                                <small id="usernameHelp" class="form-text text-muted">After changing your username, your
+                                    old username becomes available for anyone else to claim.</small>
+                            </div>
+                            <hr>
+                            <div class="get-data alert alert-danger d-none"></div>
+                            <div class="form-group" id="hideOnFormSubmission">
+                                <form>
+                                    <div class="form-group age-years">
+                                        <label for="years">Age expectancy</label>
+                                        <input type="number" step="0.1" class="form-control" id="years" aria-describedby="emailHelp">
+                                        <small>Don't know? Take our 2-question <a href="#" id="setupExpectancyQuiz" data-toggle="modal"
+                                                data-target="#exampleModal">quiz</a>!</small>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="birthDateInput-input">Birthdate</label>
+                                        <input type="date" class="form-control" id="birthdateInput">
+                                    </div>
+                                    <button type="submit" class="btn btn-primary" id="finished-input">Submit</button>
+                                </form>
+                            </div>
+                            <!-- TODO: set default values based on input -->
+                            <div id="expectancyModal">
+                                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Life Expectancy Quiz!</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>Not sure what your life expectancy is? Not a problem. Simply input your gender and country of
+                                                    birth and we'll figure it out for you!</p>
+                                                <hr>
+                                                <form>
+                                                    <p><u><strong>Gender</strong></u></p>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" name="genderRadio" type="radio" name="exampleRadios"
+                                                            id="radioMale" value="Male" checked>
+                                                        <label class="form-check-label" for="radioMale">
+                                                            Male
+                                                        </label>
+                                                    </div>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" name="genderRadio" type="radio" name="exampleRadios"
+                                                            id="radioFemale" value="Female">
+                                                        <label class="form-check-label" for="radioFemale">
+                                                            Female
+                                                        </label>
+                                                    </div>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" name="genderRadio" type="radio" name="exampleRadios"
+                                                            id="radioNeutral" value="Overall">
+                                                        <label class="form-check-label" for="radioNeutral">
+                                                            Prefer not to say
+                                                        </label>
+                                                    </div>
+                                                    <br>
+                                                    <p><u><strong>Country of Birth</strong></u></p>
+                                                    <div class="form-group">
+                                                        <select class="form-control" id="selectCountry">
+                                                            <option value="Afghanistan">Afghanistan</option>
+                                                            <option value="Albania">Albania</option>
+                                                            <option value="Algeria">Algeria</option>
+                                                            <option value="Andorra">Andorra</option>
+                                                            <option value="Angola">Angola</option>
+                                                            <option value="Antigua & Barbuda">Antigua & Barbuda</option>
+                                                            <option value="Argentina">Argentina</option>
+                                                            <option value="Armenia">Armenia</option>
+                                                            <option value="Australia">Australia</option>
+                                                            <option value="Austria">Austria</option>
+                                                            <option value="Azerbaijan">Azerbaijan</option>
+                                                            <option value="Bahamas">Bahamas</option>
+                                                            <option value="Bahrain">Bahrain</option>
+                                                            <option value="Bangladesh">Bangladesh</option>
+                                                            <option value="Barbados">Barbados</option>
+                                                            <option value="Belarus">Belarus</option>
+                                                            <option value="Belgium">Belgium</option>
+                                                            <option value="Belize">Belize</option>
+                                                            <option value="Benin">Benin</option>
+                                                            <option value="Bermuda">Bermuda</option>
+                                                            <option value="Bhutan">Bhutan</option>
+                                                            <option value="Bolivia">Bolivia</option>
+                                                            <option value="Bosnia & Herzegovina">Bosnia & Herzegovina</option>
+                                                            <option value="Botswana">Botswana</option>
+                                                            <option value="Brazil">Brazil</option>
+                                                            <option value="Brunei">Brunei</option>
+                                                            <option value="Bulgaria">Bulgaria</option>
+                                                            <option value="Burkina Faso">Burkina Faso</option>
+                                                            <option value="Burundi">Burundi</option>
+                                                            <option value="Cambodia">Cambodia</option>
+                                                            <option value="Cameroon">Cameroon</option>
+                                                            <option value="Canada">Canada</option>
+                                                            <option value="Central African Republic">Central African Republic</option>
+                                                            <option value="Chad">Chad</option>
+                                                            <option value="Chile">Chile</option>
+                                                            <option value="China">China</option>
+                                                            <option value="Colombia">Colombia</option>
+                                                            <option value="Comoros">Comoros</option>
+                                                            <option value="Congo">Congo</option>
+                                                            <option value="Costa Rica">Costa Rica</option>
+                                                            <option value="Cote D'Ivoire">Cote D'Ivoire</option>
+                                                            <option value="Croatia">Croatia</option>
+                                                            <option value="Cuba">Cuba</option>
+                                                            <option value="Cyprus">Cyprus</option>
+                                                            <option value="Czech Republic">Czech Republic</option>
+                                                            <option value="Denmark">Denmark</option>
+                                                            <option value="Djibouti">Djibouti</option>
+                                                            <option value="Dominican Republic">Dominican Republic</option>
+                                                            <option value="Ecuador">Ecuador</option>
+                                                            <option value="Egypt">Egypt</option>
+                                                            <option value="El Salvador">El Salvador</option>
+                                                            <option value="Equatorial Guinea">Equatorial Guinea</option>
+                                                            <option value="Eritrea">Eritrea</option>
+                                                            <option value="Estonia">Estonia</option>
+                                                            <option value="Ethiopia">Ethiopia</option>
+                                                            <option value="Fiji">Fiji</option>
+                                                            <option value="Finland">Finland</option>
+                                                            <option value="France">France</option>
+                                                            <option value="Gabon">Gabon</option>
+                                                            <option value="Gambia">Gambia</option>
+                                                            <option value="Georgia">Georgia</option>
+                                                            <option value="Germany">Germany</option>
+                                                            <option value="Ghana">Ghana</option>
+                                                            <option value="Greece">Greece</option>
+                                                            <option value="Grenada">Grenada</option>
+                                                            <option value="Guatemala">Guatemala</option>
+                                                            <option value="Guinea">Guinea</option>
+                                                            <option value="Guyana">Guyana</option>
+                                                            <option value="Haiti">Haiti</option>
+                                                            <option value="Honduras">Honduras</option>
+                                                            <option value="Hong Kong">Hong Kong</option>
+                                                            <option value="Hungary">Hungary</option>
+                                                            <option value="Iceland">Iceland</option>
+                                                            <option value="Indonesia">Indonesia</option>
+                                                            <option value="India">India</option>
+                                                            <option value="Iran">Iran</option>
+                                                            <option value="Iraq">Iraq</option>
+                                                            <option value="Ireland">Ireland</option>
+                                                            <option value="Israel">Israel</option>
+                                                            <option value="Italy">Italy</option>
+                                                            <option value="Jamaica">Jamaica</option>
+                                                            <option value="Japan">Japan</option>
+                                                            <option value="Jordan">Jordan</option>
+                                                            <option value="Kazakhstan">Kazakhstan</option>
+                                                            <option value="Kenya">Kenya</option>
+                                                            <option value="Kiribati">Kiribati</option>
+                                                            <option value="Kuwait">Kuwait</option>
+                                                            <option value="Kyrgyzstan">Kyrgyzstan</option>
+                                                            <option value="Laos">Laos</option>
+                                                            <option value="Latvia">Latvia</option>
+                                                            <option value="Lebanon">Lebanon</option>
+                                                            <option value="Lesotho">Lesotho</option>
+                                                            <option value="Liberia">Liberia</option>
+                                                            <option value="Libya">Libya</option>
+                                                            <option value="Liechtenstein">Liechtenstein</option>
+                                                            <option value="Lithuania">Lithuania</option>
+                                                            <option value="Luxembourg">Luxembourg</option>
+                                                            <option value="Macedonia">Macedonia</option>
+                                                            <option value="Madagascar">Madagascar</option>
+                                                            <option value="Malaysia">Malaysia</option>
+                                                            <option value="Malawi">Malawi</option>
+                                                            <option value="Maldives">Maldives</option>
+                                                            <option value="Mali">Mali</option>
+                                                            <option value="Malta">Malta</option>
+                                                            <option value="Marshall Islands">Marshall Islands</option>
+                                                            <option value="Mauritania">Mauritania</option>
+                                                            <option value="Mauritius">Mauritius</option>
+                                                            <option value="Mexico">Mexico</option>
+                                                            <option value="Moldova">Moldova</option>
+                                                            <option value="Monaco">Monaco</option>
+                                                            <option value="Mongolia">Mongolia</option>
+                                                            <option value="Morocco">Morocco</option>
+                                                            <option value="Mozambique">Mozambique</option>
+                                                            <option value="Myanmar">Myanmar</option>
+                                                            <option value="Nambia">Nambia</option>
+                                                            <option value="Nepal">Nepal</option>
+                                                            <option value="Netherlands">Netherlands</option>
+                                                            <option value="New Zealand">New Zealand</option>
+                                                            <option value="Nicaragua">Nicaragua</option>
+                                                            <option value="Niger">Niger</option>
+                                                            <option value="Nigeria">Nigeria</option>
+                                                            <option value="North Korea">North Korea</option>
+                                                            <option value="Norway">Norway</option>
+                                                            <option value="Oman">Oman</option>
+                                                            <option value="Pakistan">Pakistan</option>
+                                                            <option value="Palau">Palau</option>
+                                                            <option value="Palestine">Palestine</option>
+                                                            <option value="Panama">Panama</option>
+                                                            <option value="Papua New Guinea">Papua New Guinea</option>
+                                                            <option value="Paraguay">Paraguay</option>
+                                                            <option value="Peru">Peru</option>
+                                                            <option value="Phillipines">Philippines</option>
+                                                            <option value="Poland">Poland</option>
+                                                            <option value="Portugal">Portugal</option>
+                                                            <option value="Qatar">Qatar</option>
+                                                            <option value="Republic of Montenegro">Republic of Montenegro</option>
+                                                            <option value="Republic of Serbia">Republic of Serbia</option>
+                                                            <option value="Romania">Romania</option>
+                                                            <option value="Russia">Russia</option>
+                                                            <option value="Rwanda">Rwanda</option>
+                                                            <option value="Saint Kitts and Nevis">St Kitts and Nevis</option>
+                                                            <option value="Saint Lucia">St Lucia</option>
+                                                            <option value="Saint Vincent and the Grenadines">St Vincent and the Grenadines
+                                                            </option>
+                                                            <option value="Samoa">Samoa</option>
+                                                            <option value="San Marino">San Marino</option>
+                                                            <option value="Sao Tome and Principe">Sao Tome and Principe</option>
+                                                            <option value="Saudi Arabia">Saudi Arabia</option>
+                                                            <option value="Senegal">Senegal</option>
+                                                            <option value="Seychelles">Seychelles</option>
+                                                            <option value="Sierra Leone">Sierra Leone</option>
+                                                            <option value="Singapore">Singapore</option>
+                                                            <option value="Slovakia">Slovakia</option>
+                                                            <option value="Slovenia">Slovenia</option>
+                                                            <option value="Solomon Islands">Solomon Islands</option>
+                                                            <option value="Somalia">Somalia</option>
+                                                            <option value="South Africa">South Africa</option>
+                                                            <option value="South Korea">South Korea</option>
+                                                            <option value="Spain">Spain</option>
+                                                            <option value="Sri Lanka">Sri Lanka</option>
+                                                            <option value="Sudan">Sudan</option>
+                                                            <option value="Suriname">Suriname</option>
+                                                            <option value="Swaziland">Swaziland</option>
+                                                            <option value="Sweden">Sweden</option>
+                                                            <option value="Switzerland">Switzerland</option>
+                                                            <option value="Syria">Syria</option>
+                                                            <option value="Tajikistan">Tajikistan</option>
+                                                            <option value="Tanzania">Tanzania</option>
+                                                            <option value="Thailand">Thailand</option>
+                                                            <option value="Togo">Togo</option>
+                                                            <option value="Tonga">Tonga</option>
+                                                            <option value="Trinidad and Tobago">Trinidad and Tobago</option>
+                                                            <option value="Tunisia">Tunisia</option>
+                                                            <option value="Turkey">Turkey</option>
+                                                            <option value="Turkmenistan">Turkmenistan</option>
+                                                            <option value="Uganda">Uganda</option>
+                                                            <option value="United Kingdom">United Kingdom</option>
+                                                            <option value="Ukraine">Ukraine</option>
+                                                            <option value="United Arab Erimates">United Arab Emirates</option>
+                                                            <option value="United States of America">United States of America</option>
+                                                            <option value="Uraguay">Uruguay</option>
+                                                            <option value="Uzbekistan">Uzbekistan</option>
+                                                            <option value="Vanuatu">Vanuatu</option>
+                                                            <option value="Vatican City">Vatican City</option>
+                                                            <option value="Venezuela">Venezuela</option>
+                                                            <option value="Vietnam">Vietnam</option>
+                                                            <option value="Yemen">Yemen</option>
+                                                            <option value="Zaire">Zaire</option>
+                                                            <option value="Zambia">Zambia</option>
+                                                            <option value="Zimbabwe">Zimbabwe</option>
+                                                        </select>
+                                                    </div>
+                                                    <button type="button" id="submitExpectancyQuiz" class="btn btn-primary" >Submit!</button>
+                                                </form>
+                                                <div class="modalOutput"></div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="form-group">
+                                <label class="d-block text-warning">Restart</label>
+                                <p class="text-muted font-size-sm">You can remove all your data and start from scratch. This is irreviersible, make sure you understand the implications before you restart if you choose to do so.</p>
+                            </div>
+                            <button class="btn btn-warning" id="restartAccount" type="button">Restart Account</button>
+                            <div class="form-group mt-3">
+                                <label class="d-block text-danger">Delete Account</label>
+                                <p class="text-muted font-size-sm">Once you delete your account, there is no going back.
+                                    Please be certain.</p>
+                            </div>
+                            <button class="btn btn-danger" id="deleteAccount" type="button">Delete Account</button>
+                        </form>
+                    </div>
+                    <div class="tab-pane" id="security">
+                        <h6>SECURITY SETTINGS</h6>
+                        <hr>
+                        <form>
+                            <div class="form-group">
+                                <label class="d-block">Change Email</label>
+                                <input type="text" class="form-control" placeholder="Old email address">
+                                <input type="text" class="form-control mt-1" placeholder="New email address">
+                                <button type="submit" class="form-control btn btn-info mt-2" style="width: 20%; height: 20%">Confirm</button>
+                            </div>
+                        </form>
+                        <hr>
+                        <form>
+                            <div class="form-group">
+                                <label class="d-block">Change Password</label>
+                                <input type="text" class="form-control" placeholder="Enter your old password">
+                                <input type="text" class="form-control mt-1" placeholder="New password">
+                                <input type="text" class="form-control mt-1" placeholder="Confirm new password">
+                                <button type="submit" class="form-control btn btn-info mt-2" style="width: 20%; height: 20%">Confirm</button>
+                            </div>
+                        </form>
+                        <hr>
+                        <form>
+                            <div class="form-group">
+                                <label class="d-block">Two Factor Authentication</label>
+                                <button class="btn btn-info" type="button">Enable two-factor authentication</button>
+                                <p class="small text-muted mt-2">Two-factor authentication adds an additional layer of
+                                    security to your account by requiring more than just a password to log in.</p>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="tab-pane" id="notification">
+                        <h6>NOTIFICATION SETTINGS</h6>
+                        <!-- Check/uncheck these labels based on user input -->
+                        <hr>
+                        <form>
+                            <div class="form-group">
+                                <label class="d-block mb-0">Email Updates</label>
+                                <div class="small text-muted mb-3">Emails concerning your progress, goals, and achievements.</div>
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="customCheck1">
+                                    <label class="custom-control-label" for="customCheck1">I want to receive email updates about my progress.</label>
+                                </div>
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="customCheck2">
+                                    <label class="custom-control-label" for="customCheck2">I want to receive email updates about this site (updates, new features, etc.).</label>
+                                </div>
+                            </div>
+                            <div class="form-group mb-0">
+                                <label class="d-block" aria-describedby="describeEmails">Email Notification Frequency</label>
+                                <div class="small text-muted mb-3">Strictly related to emails about your progress and life journey.</div>
+                                <ul class="list-group list-group-sm">
+                                    <li class="list-group-item has-icon">
+                                        Daily Summary
+                                        <div class="custom-control custom-control-nolabel custom-switch ml-auto">
+                                            <input type="checkbox" class="custom-control-input" id="customSwitch1"
+                                            >
+                                            <label class="custom-control-label" for="customSwitch1"></label>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item has-icon">
+                                        Weekly Summary
+                                        <div class="custom-control custom-control-nolabel custom-switch ml-auto">
+                                            <input type="checkbox" class="custom-control-input" id="customSwitch2">
+                                            <label class="custom-control-label" for="customSwitch2"></label>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item has-icon">
+                                        Monthly Summary
+                                        <div class="custom-control custom-control-nolabel custom-switch ml-auto">
+                                            <input type="checkbox" class="custom-control-input" id="customSwitch3"
+                                            >
+                                            <label class="custom-control-label" for="customSwitch3"></label>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <button type="button" class="btn btn-primary form-control mt-2">Save Changes</button>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- <div class="tab-pane" id="billing">
+                        <h6>BILLING SETTINGS</h6>
+                        <hr>
+                        <form>
+                            <div class="form-group">
+                                <label class="d-block mb-0">Payment Method</label>
+                                <div class="small text-muted mb-3">You have not added a payment method</div>
+                                <button class="btn btn-info" type="button">Add Payment Method</button>
+                            </div>
+                            <div class="form-group mb-0">
+                                <label class="d-block">Payment History</label>
+                                <div class="border border-gray-500 bg-gray-200 p-3 text-center font-size-sm">You have
+                                    not made any payment.</div>
+                            </div>
+                        </form>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

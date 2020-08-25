@@ -22,8 +22,18 @@ class ContactView(FlaskView):
 class QuizView(FlaskView):
     def index(self):
         return render_template("quiz.html")
-        
-### SPECIAL PAGEVIEW FORMS ###
+
+### PROFILE PAGEVIEWS ###
+
+class ProfileView(FlaskView):
+    def index(self):
+        return render_template("profile/profile.html")
+
+class SettingsView(FlaskView):
+    def index(self):
+        return render_template("profile/settings.html")
+
+### SPECIAL PAGEVIEWS ###
 
 class ContributeView(FlaskView):
     contributors = {"Destaq": ["Simon Ilincev", "https://github.com/Destaq"]}
