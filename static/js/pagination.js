@@ -5,7 +5,9 @@ export function generateBottomBar(age_expectancy, modifier, navbar_view) {
 
     // set active bar
     try {
-        document.querySelector(".active").classList.remove("active");
+        // active-bottom is a class, as bootstrap uses the active class for several things
+        
+        document.querySelector(".active-bottom").classList.remove("active");
         document
             .querySelector(".active-bottom")
             .classList.remove("active-bottom");
@@ -17,7 +19,6 @@ export function generateBottomBar(age_expectancy, modifier, navbar_view) {
     ).innerHTML = `<a class="page-link" href="#">${Math.ceil(
         (age_expectancy * modifier) / 150
     )}</a>`;
-
 
     // enable previous clicking if not at 1
     if (navbar_view != 1) {
@@ -46,7 +47,6 @@ export function generateBottomBar(age_expectancy, modifier, navbar_view) {
         for (let i = 0; i < 5; i++) {
             document.querySelector(`#page-${i + 1}`).classList.add("invisible");
         }
-
 
         for (
             let i = 0;
@@ -124,7 +124,7 @@ export function generateBottomBar(age_expectancy, modifier, navbar_view) {
         document.querySelector("#page-3").classList.add("active");
         document.querySelector("#page-3").classList.add("active-bottom");
 
-    // case for a large navbar, but close to the right edge
+        // case for a large navbar, but close to the right edge
     } else if (
         continue_checking &&
         navbar_view > 3 &&
@@ -136,8 +136,7 @@ export function generateBottomBar(age_expectancy, modifier, navbar_view) {
             .querySelector(
                 `#page-${
                     5 -
-                    (Math.ceil((age_expectancy * modifier) / 150) -
-                        navbar_view)
+                    (Math.ceil((age_expectancy * modifier) / 150) - navbar_view)
                 }`
             )
             .classList.add("active");
@@ -145,8 +144,7 @@ export function generateBottomBar(age_expectancy, modifier, navbar_view) {
             .querySelector(
                 `#page-${
                     5 -
-                    (Math.ceil((age_expectancy * modifier) / 150) -
-                        navbar_view)
+                    (Math.ceil((age_expectancy * modifier) / 150) - navbar_view)
                 }`
             )
             .classList.add("active-bottom");
@@ -160,8 +158,7 @@ export function generateBottomBar(age_expectancy, modifier, navbar_view) {
         ).children[0].textContent = navbar_view - 1;
         document.querySelector(
             `#page-${
-                5 -
-                (Math.ceil((age_expectancy * modifier) / 150) - navbar_view)
+                5 - (Math.ceil((age_expectancy * modifier) / 150) - navbar_view)
             }`
         ).children[0].textContent = navbar_view;
         try {
