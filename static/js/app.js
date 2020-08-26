@@ -1,8 +1,6 @@
 import { generateBottomBar } from "/static/js/pagination.js";
 import { execFancy, execSimple } from "/static/js/userInput.js";
 
-const http = new SimpleHTTP();
-
 var age_expectancy = localStorage.getItem("age-expectancy");
 var birthdate_value = localStorage.getItem("birthday");
 
@@ -94,7 +92,6 @@ if (age_expectancy == null || birthdate_value == null) {
 
 // Event Listener for home page - go to current point in life
 document.querySelector("#centerPage").addEventListener("click", function() {
-    console.log(current_view)
     window.history.pushState("", "Life Calendar", `?view=${current_view.toLowerCase()}`)
     readFromUrl()
     createMap(is_new_user, current_view)

@@ -1,16 +1,19 @@
 const logoutButton = document.querySelector("#logUserOut");
-const logoutLink = document.querySelector("#logOutLink");
+try {
+    var logoutLink = document.querySelector("#logOutLink");
+} catch {}
 const modalLogout = document.querySelector("#logoutFinalButton");
 
 logoutButton.addEventListener("click", confirmLogout);
 
-logoutLink.addEventListener("click", function () {
-    confirmLogout();
-    setTimeout(function () {
-        logoutLink.classList.remove("active");
-    }, 500);
-    console.log(logoutLink)
-});
+try {
+    logoutLink.addEventListener("click", function () {
+        confirmLogout();
+        setTimeout(function () {
+            logoutLink.classList.remove("active");
+        }, 500);
+    });
+} catch {}
 
 function confirmLogout() {
     $("#logoutModal").modal("show");

@@ -1,3 +1,5 @@
+import { modifyLegend } from "/static/js/legend.js";
+
 const pickrContainer = document.querySelector(".pickr-container");
 const themeContainer = document.querySelector(".theme-container");
 
@@ -77,7 +79,7 @@ for (const [theme, config] of themes) {
                     {
                         el,
                         theme,
-                        default: "#42445a",
+                        default: "#000099",
                     },
                     config
                 )
@@ -158,11 +160,11 @@ document
     .addEventListener("click", setupUnshading);
 
 function setupShading() {
-    shadeCustomizedButton("rgb(66, 68, 90)", true);
+    shadeCustomizedButton("rgb(0, 0, 153)", true);
 }
 
 function setupUnshading() {
-    shadeCustomizedButton("rgb(66, 68, 90)", false);
+    shadeCustomizedButton("rgb(0, 0, 153)", false);
 }
 
 function shadeCustomizedButton(rgba, shade) {
@@ -170,6 +172,7 @@ function shadeCustomizedButton(rgba, shade) {
 
     // get current view
     const urlParams = new URLSearchParams(location.search);
+    var current_view;
     if (urlParams.get("view") != null) {
         current_view =
             urlParams.get("view").slice(0, 1).toUpperCase() +
@@ -194,6 +197,14 @@ function shadeCustomizedButton(rgba, shade) {
         )
     );
 
+    const alreadyStriped = document.querySelector(`#${current_view}-${buttonToShadeValue}`).style.background.includes(RGBAtoRGB(rgba.toString()))
+
+    // modify legend with new colors if applicable
+    modifyLegend(RGBAtoRGB(rgba.toString()), shade, alreadyStriped);
+
+    pickr.setColor("#ff0000", true); //test
+    console.log("done")
+    
     let customStr = currentStyle;
 
     // if they are adding a stripe
@@ -206,6 +217,8 @@ function shadeCustomizedButton(rgba, shade) {
         rgba = rgba.toString();
 
         let rgb = RGBAtoRGB(rgba);
+    
+
         replace = `, ${rgb}.*${rgb}\\s\\d{2,}px`;
 
         replace = replace.split(")").join("\\)")

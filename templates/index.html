@@ -9,6 +9,8 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/pickr.min.js"></script>
 
+<script type="module" src="/static/js/legend.js"></script>
+
 </script>
 <h1>Life Calendar</h1>
 <br>
@@ -29,7 +31,8 @@
             <button id="view-weeks" class="dropdown-item">Weeks</button>
             <button id="view-days" class="dropdown-item">Days</button>
         </div>
-        <button class="btn btn-dark ml-2 mr-4 mb-4" id="centerPage" type="button">Home</button>
+        <button class="btn btn-secondary ml-2 mr-4 mb-4" id="centerPage" type="button">Home</button>
+        <button class="btn btn-dark ml-2 mr-4 mb-4" id="showLegendModal" type="button">Show Legend</button>
     </div>
     <br>
     <div class="btn-group" role="group">
@@ -40,10 +43,101 @@
         <input class="form-control ml-4" name="submit_add" type="submit" value="Shade" id="shadeButtonConfirm">
         <input class="form-control ml-2 mr-2" name="submit_remove" type="submit" value="Unshade"
             id="unshadeButtonConfirm">
-        <script src="/static/js/colorpicker.js"></script>
+        <script type="module" src="/static/js/colorpicker.js"></script>
     </div>
-    <p class="mt-2"><i>Help! Show me the <a href="/tutorial">tutorial</a> or take me to the <a href="#">video demo</a>!</i></p>
+    <p class="mt-2"><i>Help! Show me the <a href="/tutorial">tutorial</a> or take me to the <a href="#">video
+                demo</a>!</i></p>
     <hr>
+</div>
+
+<div class="modal" id="legendModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Legend</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>All of the colors used and their corresponding meanings are stored below.</p>
+                <p>You can click on the text next to the meaning (or the empty part if there is none) to change the
+                    meaning/name associated with that color, as long as it isn't one of the top three defaults.</p>
+                <p>You can also copy the hex code or click the set picker button to change the picker color to the
+                    selected color.</p>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Color</th>
+                            <th scope="col">Meaning</th>
+                            <th scope="col">Hex</th>
+                            <th scope="col">Set Picker</th>
+                        </tr>
+                    </thead>
+                    <tbody id="legendModalBody">
+                        <tr>
+                            <th scope="row">1</th>
+                            <td><svg height="25" width="25">
+                                    <circle cx="12" cy="12" r="10" fill="rgb(220, 53, 69)" />
+                                </svg> </td>
+                            <td>Past</td>
+                            <td>#dc3545</td>
+                            <td>
+                                <center><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-clipboard"
+                                        fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd"
+                                            d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z" />
+                                        <path fill-rule="evenodd"
+                                            d="M9.5 1h-3a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z" />
+                                    </svg></center>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">2</th>
+                            <td><svg height="25" width="25">
+                                    <circle cx="12" cy="12" r="10" fill="rgb(255, 193, 7)" />
+                                </svg> </td>
+                            <td>Present</td>
+                            <td>#ffc107</td>
+                            <td>
+                                <center><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-clipboard"
+                                        fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd"
+                                            d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z" />
+                                        <path fill-rule="evenodd"
+                                            d="M9.5 1h-3a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z" />
+                                    </svg></center>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">3</th>
+                            <td><svg height="25" width="25">
+                                    <circle cx="12" cy="12" r="10" fill="rgb(40, 167, 69)" />
+                                </svg> </td>
+                            <td>Future</td>
+                            <td>#28a745</td>
+                            <td>
+                                <center><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-clipboard"
+                                        fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd"
+                                            d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z" />
+                                        <path fill-rule="evenodd"
+                                            d="M9.5 1h-3a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z" />
+                                    </svg></center>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" id="saveEditableLegend" data-dismiss="modal">Save
+                    Changes</button>
+                <button type="button" class="btn btn-warning" data-dismiss="modal"
+                    id="cancelEditableLegend">Cancel</button>
+            </div>
+        </div>
+    </div>
 </div>
 
 <div class="output mb-4" role="group">
