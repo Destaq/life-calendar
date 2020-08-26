@@ -5,6 +5,23 @@ const themeContainer = document.querySelector(".theme-container");
 
 var addedCustom = false;
 
+// details for colors in the legend
+const legendModalBody = document.querySelector("#legendModalBody");
+
+// add initial event listeners for legend
+for (let i = 3; i < legendModalBody.children.length; i++) {
+
+    let svgIcon = document.querySelector(`#legend-${i}`).parentElement.children[4].children[0];
+
+    let tableclone = svgIcon.cloneNode(true)
+
+    svgIcon.replaceWith(tableclone)
+    
+    document.querySelector(`#legend-${i}`).parentElement.children[4].children[0].children[0].addEventListener("click", function() {
+        setPickrColor(document.querySelector(`#legend-${i}`).parentElement.children[1].children[0].children[0].getAttribute("fill"))
+    })
+}
+
 const themes = [
     [
         "classic",
@@ -202,8 +219,19 @@ function shadeCustomizedButton(rgba, shade) {
     // modify legend with new colors if applicable
     modifyLegend(RGBAtoRGB(rgba.toString()), shade, alreadyStriped);
 
-    pickr.setColor("#ff0000", true); //test
-    console.log("done")
+    // add event listeners for changing pickr
+    for (let i = 3; i < legendModalBody.children.length; i++) {
+
+        let svgIcon = document.querySelector(`#legend-${i}`).parentElement.children[4].children[0];
+
+        let tableclone = svgIcon.cloneNode(true)
+
+        svgIcon.replaceWith(tableclone)
+        
+        document.querySelector(`#legend-${i}`).parentElement.children[4].children[0].children[0].addEventListener("click", function() {
+            setPickrColor(document.querySelector(`#legend-${i}`).parentElement.children[1].children[0].children[0].getAttribute("fill"))
+        })
+    }
     
     let customStr = currentStyle;
 
@@ -246,4 +274,9 @@ function RGBAtoRGB(rgba) {
     let rgb = `rgb(${r}, ${g}, ${b})`
 
     return rgb;
+}
+
+function setPickrColor(newColor) {
+    pickr.setColor(newColor, true);
+    pickr.applyColor();
 }

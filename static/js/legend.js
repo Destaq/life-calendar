@@ -25,7 +25,7 @@ if (localStorage.getItem("legendModalColors") != null) {
         }
 
         newtr.innerHTML = `
-        <th scope="row">${i + 3}</th>
+        <th scope="row">${i + 4}</th>
             <td>
                 <svg height="25" width="25">
                     <circle cx="12" cy="12" r="10" fill="${rgb}" />
@@ -34,7 +34,7 @@ if (localStorage.getItem("legendModalColors") != null) {
         <td contenteditable="true" id="legend-${i + 3}" class="userMeaning" ></td>
         <td>${rgbToHex(hexablergb[0], hexablergb[1], hexablergb[2])}</td>
         <td>    
-            <center><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-clipboard" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <center><svg width="1em" id="svgCopy${i + 3}" height="1em" viewBox="0 0 16 16" class="bi bi-clipboard" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd" d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
                 <path fill-rule="evenodd" d="M9.5 1h-3a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
             </svg></center>
@@ -116,6 +116,8 @@ function rgbToHex(r, g, b) {
 var legendText = {};
 if (localStorage.getItem("legendTableText") != null) {
     legendText = JSON.parse(localStorage.getItem("legendTableText"))
+
+    // TODO: save legend text on exit...
 }
 
 
@@ -128,7 +130,7 @@ export function modifyLegend(rgb, shade, isSecond) {
     }
 
     if (shade == true && isSecond == false) {
-        if (!Object.keys(legendModalColors).includes(rgb)) {
+        if (Object.keys(legendModalColors).includes(rgb) == false) {
             legendModalColors[rgb] = 1;
             const newtr = document.createElement("tr");
             newtr.innerHTML = `
@@ -141,7 +143,7 @@ export function modifyLegend(rgb, shade, isSecond) {
                 <td contenteditable="true" class="userMeaning" id="legend-${Object.keys(legendModalColors).length}"></td>
                 <td>${rgbToHex(hexablergb[0], hexablergb[1], hexablergb[2])}</td>
                 <td>    
-                    <center><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-clipboard" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <center><svg width="1em" id="svgCopy${Object.keys(legendModalColors).length}" height="1em" viewBox="0 0 16 16" class="bi bi-clipboard" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
                         <path fill-rule="evenodd" d="M9.5 1h-3a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
                     </svg></center>
@@ -156,7 +158,17 @@ export function modifyLegend(rgb, shade, isSecond) {
     } else if (shade == false) {
         legendModalColors[rgb] -= 1;
         if (legendModalColors[rgb] == 0) {
+            let index = 0;
+            for (let i = 0; i < Object.keys(legendModalColors).length; i++) {
+                if (Object.keys(legendModalColors)[i] == rgb) {
+                    index = i;
+                    break;
+                }
+            }
+
             delete legendModalColors[rgb];
+
+            legendModalBody.children[index].remove()
         }
     }
 
