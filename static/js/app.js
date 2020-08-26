@@ -375,37 +375,54 @@ function shadeButtons(age_expectancy, birthday) {
     ) {
         // only if lower than the amount of x units left till end of life...
         try {
-            if (x < amount) {
-                // document
-                    // .querySelector(`#${current_view}-${x}`)
-                    // .classList.add("btn-danger");
+            if (x < amount && (localStorage.getItem(`${current_view}-${x}-background`) == null)) {
 
                     document
+                        .querySelector(`#${current_view}-${x}`)
+                        .style.background = "repeating-linear-gradient(45deg, #dc3545, #dc3545 10px)"
+            } else if (localStorage.getItem(`${current_view}-${x}-background`) != null) {
+                console.log("test... successs")
+                document
                     .querySelector(`#${current_view}-${x}`)
-                    .style.background = "repeating-linear-gradient(45deg, #dc3545, #dc3545 10px)"
+                    .style.background = localStorage.getItem(`${current_view}-${x}-background`)
             }
         } catch {}
     }
 
     if (amount <= (current_view_value + 1) * 150) {
+        console.log("correct, with amount + current view", amount, current_view)
         try {
-            document
-                .querySelector(`#${current_view}-${amount}`)
-                .style.background = "repeating-linear-gradient(45deg, #ffc107, #ffc107 10px)"; // current point in life
-        } catch {}
+            if (localStorage.getItem(`${current_view}-${amount}-background`) != null) {
+                console.log("test... w-success")
+                document
+                    .querySelector(`#${current_view}-${amount}`)
+                    .style.background = localStorage.getItem(`${current_view}-${amount}-background`)
+            } else {
+                document
+                    .querySelector(`#${current_view}-${amount}`)
+                    .style.background = "repeating-linear-gradient(45deg, #ffc107, #ffc107 10px)"; // current point in life
+            }
+        } catch {};
         for (
             let x = current_view_value * 150;
             x < (current_view_value + 1) * 150 + 1;
             x++
         ) {
             try {
-
+                console.log(document.querySelector(`#${current_view}-${x}`).style.background)
                 if (document
+                        .querySelector(`#${current_view}-${x}`)
+                        .style.background == "" && (localStorage.getItem(`${current_view}-${x}-background`) != null)) {
+                        console.log("s - success")
+                        document
+                            .querySelector(`#${current_view}-${x}`)
+                            .style.background = localStorage.getItem(`${current_view}-${x}-background`)
+                } else if (document
                     .querySelector(`#${current_view}-${x}`)
                     .style.background == "") {
-                document
-                .querySelector(`#${current_view}-${x}`)
-                .style.background = "repeating-linear-gradient(45deg, #28a745, #28a745 10px)"
+                    document
+                        .querySelector(`#${current_view}-${x}`)
+                        .style.background = "repeating-linear-gradient(45deg, #28a745, #28a745 10px)"
                 }
             } catch {}
         }

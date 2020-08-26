@@ -220,8 +220,7 @@ function shadeCustomizedButton(rgba, shade) {
     modifyLegend(RGBAtoRGB(rgba.toString()), shade, alreadyStriped);
 
     // add event listeners for changing pickr
-    for (let i = 3; i < legendModalBody.children.length; i++) {
-
+    for (let i = 4; i < legendModalBody.children.length; i++) {
         let svgIcon = document.querySelector(`#legend-${i}`).parentElement.children[4].children[0];
 
         let tableclone = svgIcon.cloneNode(true)
@@ -260,6 +259,9 @@ function shadeCustomizedButton(rgba, shade) {
     document.querySelector(
         `#${current_view}-${buttonToShadeValue}`
     ).style.background = customStr;
+
+    // update locastorage - TODO: DB w/ button stripes
+    localStorage.setItem(`${current_view}-${buttonToShadeValue}-background`, customStr);
 }
 
 function RGBAtoRGB(rgba) {
