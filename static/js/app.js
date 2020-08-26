@@ -6,9 +6,6 @@ const http = new SimpleHTTP();
 var age_expectancy = localStorage.getItem("age-expectancy");
 var birthdate_value = localStorage.getItem("birthday");
 
-// reset button (will be moved to their settings)
-document.querySelector("#reset-stuff").addEventListener("click", tryReset);
-
 // whether or not the clipboard button is displayed
 let is_clipboard = false;
 var current_view = "Years";
@@ -95,6 +92,14 @@ if (age_expectancy == null || birthdate_value == null) {
     } catch {}
 }
 
+// Event Listener for home page - go to current point in life
+document.querySelector("#centerPage").addEventListener("click", function() {
+    console.log(current_view)
+    window.history.pushState("", "Life Calendar", `?view=${current_view.toLowerCase()}`)
+    readFromUrl()
+    createMap(is_new_user, current_view)
+})
+
 // EVENT LISTENERS FOR GRANULARITIES
 
 granularity_decades.addEventListener("click", function () {
@@ -151,21 +156,6 @@ granularity_days.addEventListener("click", function () {
     readFromUrl();
     createMap(is_new_user, current_view);
 });
-
-// if the user chooses to restart entirely
-function tryReset() {
-    const serious = confirm(
-        "Are you SURE you want to reset? This action is IRREVERSIBLE!"
-    );
-    if (serious == true) {
-        localStorage.clear();
-        // NOTE: implement removing from DB too - nuke their email
-        document.querySelector(".output").innerHTML = "";
-        location.href = "/quiz";
-        document.querySelector("#hideOnFormSubmission").style.display =
-            "inline";
-    }
-}
 
 // main function that creates all of the buttons + markdown for that view
 function createMap(is_new, gran_level, e) {

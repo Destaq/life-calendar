@@ -49,9 +49,12 @@ for (const [theme, config] of themes) {
     const numberInput = document.createElement("input");
     numberInput.classList.add("form-control");
     numberInput.setAttribute("type", "number");
+
+    // NOTE: change with JS based on view
     numberInput.setAttribute("min", 1);
-    // TODO: alert if number inputted is too high
+    numberInput.setAttribute("max", 100);
     numberInput.setAttribute("value", 1);
+    numberInput.classList.add("mr-5")
     numberInput.id = "shadeDropdown";
 
     // TODO: add help popup/page
@@ -84,7 +87,7 @@ for (const [theme, config] of themes) {
                 .on("init", (instance) => {
                     document
                         .querySelector(".pcr-button")
-                        .classList.add("btn", "ml-2", "mt-2");
+                        .classList.add("btn", "mt-2", "ml-3");
                     document
                         .querySelector(".pcr-button")
                         .style.setProperty("height", "20px");

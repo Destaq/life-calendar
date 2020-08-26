@@ -6,7 +6,6 @@
     referrerpolicy="origin"></script>
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/themes/classic.min.css" />
-<!-- 'classic' theme -->
 
 <script src="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/pickr.min.js"></script>
 
@@ -14,29 +13,37 @@
 <h1>Life Calendar</h1>
 <br>
 <p><i>Your days are numbered. Make the most of them.</i></p>
-<hr>
+<hr class="specialHr">
 <p id="missingData"></p>
 
-<div class="btn-group dontShowAtStart resetStartOnClick">
-    <button class="btn btn-info mb-4 dropdown-toggle" id="granularity-select" type="button" data-toggle="dropdown"
-        aria-haspopup="true" aria-expanded="false">
-        Granularity
-    </button>
-    <div class="dropdown-menu">
-        <button id="view-decades" class="dropdown-item">Decades</button>
-        <button id="view-years" class="dropdown-item">Years</button>
-        <button id="view-months" class="dropdown-item">Months</button>
-        <button id="view-weeks" class="dropdown-item">Weeks</button>
-        <button id="view-days" class="dropdown-item">Days</button>
+<div class="dontShowAtStart resetStartOnClick">
+    <div class="btn-group" role="group">
+        <button class="btn btn-info mb-4 dropdown-toggle" id="granularity-select" type="button" data-toggle="dropdown"
+            aria-haspopup="true">
+            Granularity
+        </button>
+        <div class="dropdown-menu">
+            <button id="view-decades" class="dropdown-item">Decades</button>
+            <button id="view-years" class="dropdown-item">Years</button>
+            <button id="view-months" class="dropdown-item">Months</button>
+            <button id="view-weeks" class="dropdown-item">Weeks</button>
+            <button id="view-days" class="dropdown-item">Days</button>
+        </div>
+        <button class="btn btn-dark ml-2 mr-4 mb-4" id="centerPage" type="button">Home</button>
     </div>
-    <button class="btn btn-warning mb-4 ml-2" type="button" id="reset-stuff">Restart</button>
-    <!-- Pick the color, for shading buttons -->
-    <div class="theme-container"></div>
-    <div class="pickr-container"></div>
-    <!-- NOTE: removing form control enables max -->
-    <input class="form-control" name="submit_add" type="submit" value="Add" id="shadeButtonConfirm">
-    <input name="submit_remove" type="submit" value="Remove" id="unshadeButtonConfirm">
-    <script src="/static/js/colorpicker.js"></script>
+    <br>
+    <div class="btn-group" role="group">
+        <!-- Pick the color, for shading buttons -->
+        <div class="theme-container"></div>
+        <div class="pickr-container"></div>
+        <!-- NOTE: removing form control enables max -->
+        <input class="form-control ml-4" name="submit_add" type="submit" value="Shade" id="shadeButtonConfirm">
+        <input class="form-control ml-2 mr-2" name="submit_remove" type="submit" value="Unshade"
+            id="unshadeButtonConfirm">
+        <script src="/static/js/colorpicker.js"></script>
+    </div>
+    <p class="mt-2"><i>Help! Show me the <a href="/tutorial">tutorial</a> or take me to the <a href="#">video demo</a>!</i></p>
+    <hr>
 </div>
 
 <div class="output mb-4" role="group">
