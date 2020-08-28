@@ -45,7 +45,8 @@ if (localStorage.getItem("dontModify") != null) {
     dontModify = JSON.parse(localStorage.getItem("dontModify"))
     for (let i = 4; i < Object.keys(dontModify).length + 4; i++) {
         const tableToModify = Object.keys(dontModify)[i - 4]
-        document.querySelector(`#${tableToModify}`).textContent = dontModify[tableToModify]
+        console.log("thisi ", dontModify[tableToModify])
+        document.querySelector(`#${tableToModify}`).textContent = dontModify[tableToModify][0]
     }
 }
 
@@ -80,7 +81,8 @@ document.querySelector("#saveEditableLegend").addEventListener("click", function
 
     const dynamicTableValues = document.querySelectorAll(".userMeaning");
     for (let i = 0; i < dynamicTableValues.length; i++) {
-        dontModify[dynamicTableValues[i].id] = dynamicTableValues[i].textContent;
+       
+       dontModify[dynamicTableValues[i].id] = [dynamicTableValues[i].textContent, dynamicTableValues[i].parentElement.children[1].children[0].children[0].getAttribute("fill")];
     }
 
     setTimeout(function() {
@@ -93,7 +95,7 @@ $("#legendModal").on('hidden.bs.modal', function() {
     if (dismiss == true) {
         const dynamicTableValues = document.querySelectorAll(".userMeaning");
         for (let i = 0; i < dynamicTableValues.length; i++) {
-            document.querySelector(`#${dynamicTableValues[i].id}`).textContent = dontModify[dynamicTableValues[i].id]
+            document.querySelector(`#${dynamicTableValues[i].id}`).textContent = dontModify[dynamicTableValues[i].id][0]
         }
     }
     localStorage.setItem("dontModify", JSON.stringify(dontModify))
@@ -104,7 +106,7 @@ document.querySelector("#cancelEditableLegend").addEventListener("click", functi
 
     const dynamicTableValues = document.querySelectorAll(".userMeaning");
     for (let i = 0; i < dynamicTableValues.length; i++) {
-        document.querySelector(`#${dynamicTableValues[i].id}`).textContent = dontModify[dynamicTableValues[i].id]
+        document.querySelector(`#${dynamicTableValues[i].id}`).textContent = dontModify[dynamicTableValues[i].id[0]]
     }
 })
 
@@ -155,7 +157,7 @@ export function modifyLegend(rgb, shade, isSecond) {
                 </td>
             `;
             legendModalBody.appendChild(newtr);
-            dontModify[`legend-${Object.keys(legendModalColors).length}`] = document.querySelector(`#legend-${Object.keys(legendModalColors).length}`).textContent;
+            dontModify[`legend-${Object.keys(legendModalColors).length}`] = [document.querySelector(`#legend-${Object.keys(legendModalColors).length}`).textContent, document.querySelector(`#legend-${Object.keys(legendModalColors).length}`).parentElement.children[1].children[0].children[0].getAttribute("fill")];
 
         } else {
             legendModalColors[rgb] += 1;

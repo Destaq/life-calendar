@@ -264,8 +264,8 @@ function createMap(is_new, gran_level, e) {
                         <center><label for="what-did-${
                             i + 1
                         }"><strong><u>Goals/Accomplished</u></strong></label></center>
-                        <div id="switchInputType-${i + 1}"></div>
                         <div id="user-text-${i + 1}" class="smallInput"></div>
+                        <div id="switchInputType-${i + 1}" class="invisible"></div>
 
                         <div class="d-flex justify-content-center">
                             <div class="spinner-border invisible mt-5" id="fancyLoadingSpinner-${i + 1}" role="status" style="width: 3rem; height: 3rem;">
@@ -470,7 +470,7 @@ async function rewriteModal(i) {
                     .children[1]
             );
 
-        // BUG: won't actually *change* the editor until it is closed and opened again
+        document.querySelector(`#switchInputType-${i + 1}`).classList.remove("invisible")
         if (editingType == "fancy") {
             try {
                 document.querySelector(`#switchInputType-${i + 1}`).removeEventListener("click", function(e) {
@@ -595,6 +595,9 @@ async function rewriteModal(i) {
                 document
                     .querySelector(`#submit-year-${i + 1}`)
                     .parentElement.removeChild(clipboard_button);
+
+                document.querySelector(`#switchInputType-${i + 1}`).classList.add("invisible")
+                
                 is_clipboard = false;
             } catch (e) {
                 // happens due to too much/quick switching

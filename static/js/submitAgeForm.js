@@ -44,9 +44,9 @@ finished_button.addEventListener("click", function (e) {
 
         // set value for life progress bar
         localStorage.setItem(
-            "percentageThroughLife", (calculatePassed("days") / 
-            (calculatePassed("days") + calculateRemaining("days"))).toFixed(3));
-
+            "percentageThroughLife", ((calculatePassed("days") * 100) / 
+            (calculatePassed("days") + calculateRemaining("days"))).toFixed(3) + "%");
+            
         // initial values for misc. statistics
         if (localStorage.getItem("totalFilled") === null) {
             localStorage.setItem("totalFilled", 0);
@@ -54,8 +54,12 @@ finished_button.addEventListener("click", function (e) {
         if (localStorage.getItem("totalWords") == null) {
             localStorage.setItem("totalWords", 0);
         }
+        if (localStorage.getItem("joined") === null) {
+            let today = new Date(Date.now());
+            localStorage.setItem("joined", formatDate(today));
+        }
 
-        location.href = "/?view=months";
+        location.href = "/";
         e.preventDefault();
     }
 });
@@ -81,7 +85,6 @@ function calculateRemaining(keyword) {
     const expectancy = localStorage.getItem("age-expectancy");
     const yearDiff = expectancy - calculatePassed("years"); // years in the future
     var yearFuture = new Date();
-    console.log(yearFuture, "is year... future!");
     yearFuture.setUTCFullYear(yearFuture.getUTCFullYear() + yearDiff);
 
     let unitDifference;
@@ -134,4 +137,18 @@ function calculatePassed(keyword) {
     }
 
     return unitDifference;
+}
+
+// https://stackoverflow.com/a/23593099/12876940
+function formatDate(d) {
+    month = '' + (d.getMonth() + 1),
+    day = '' + d.getDate(),
+    year = d.getFullYear();
+
+    if (month.length < 2) 
+        month = '0' + month;
+    if (day.length < 2) 
+        day = '0' + day;
+
+    return [year, month, day].join('-');
 }
