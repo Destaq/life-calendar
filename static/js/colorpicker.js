@@ -8,8 +8,8 @@ var addedCustom = false;
 // details for colors in the legend
 const legendModalBody = document.querySelector("#legendModalBody");
 
-// add initial event listeners for legend
-for (let i = 3; i < legendModalBody.children.length; i++) {
+// add initial event listeners for legend - copying to pickr
+for (let i = 4; i < legendModalBody.children.length + 1; i++) {
 
     let svgIcon = document.querySelector(`#legend-${i}`).parentElement.children[4].children[0];
 
@@ -220,7 +220,7 @@ function shadeCustomizedButton(rgba, shade) {
     modifyLegend(RGBAtoRGB(rgba.toString()), shade, alreadyStriped);
 
     // add event listeners for changing pickr
-    for (let i = 4; i < legendModalBody.children.length; i++) {
+    for (let i = 4; i < legendModalBody.children.length + 1; i++) {
         let svgIcon = document.querySelector(`#legend-${i}`).parentElement.children[4].children[0];
 
         let tableclone = svgIcon.cloneNode(true)

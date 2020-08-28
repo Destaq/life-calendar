@@ -23,6 +23,10 @@ class QuizView(FlaskView):
     def index(self):
         return render_template("quiz.html")
 
+class StatisticsView(FlaskView):
+    def index(self):
+        return render_template("statistics.html")
+
 ### PROFILE PAGEVIEWS ###
 
 class ProfileView(FlaskView):

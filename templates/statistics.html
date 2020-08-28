@@ -1,0 +1,138 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="jumbotron">
+    <h1>Statistics</h1>
+    <p>Welcome to your own personalized <em>statistics page</em>. Here, you can find interesing information about your
+        life and your usage of Life Calendar - things that you might not find in your profile or settings. Have a look
+        around!</p>
+    <div class="row">
+        <div class="col-md-5">
+            <ul class="list-group">
+                <li class="list-group-item" id="age-expectancy"><strong>Age Expectancy: </strong></p>
+                <li class="list-group-item" id="birthday"><strong>Birthdate: </strong></p>
+                <li class="list-group-item" id="joined"><strong>Joined: </strong></p>
+            </ul>
+        </div>
+        <div class="col-md-2">
+
+        </div>
+        <div class="col-md-5">
+            <ul class="list-group">
+                <li class="list-group-item" id="totalFilled"><strong>Total number of boxes modified: </strong></p>
+                <li class="list-group-item" id="totalWords"><strong>Total number of words inputted: </strong></p>
+                <li class="list-group-item" id="percentageThroughLife"><strong>Percentage through life: </strong></p>
+            </ul>
+        </div>
+    </div>
+    <center>
+        <h4 class="mt-4 mb-4">Life Progress Bar</h4>
+        <div class="progress ml-4 mr-4">
+            <!-- Life Used -->
+            <div class="progress-bar bg-danger" role="progressbar" style="width: 33.7%" aria-valuenow="33.7"
+                aria-valuemin="0" aria-valuemax="100"></div>
+            <div class="progress-bar bg-warning" role="progressbar" style="width: 0.1%" aria-valuenow="0.1"
+                aria-valuemin="0" aria-valuemax="100"></div>
+            <!-- Life Left -->
+            <div class="progress-bar bg-success" role="progressbar" style="width: 66.2%" aria-valuenow="66.2"
+                aria-valuemin="0" aria-valuemax="100"></div>
+
+        </div>
+    </center>
+    <hr>
+    <div class="card h-100">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-sm-6">
+                    <ul class="list-group">
+                        <li class="list-group-item" id="daysPassed"><strong>Days passed in life: </strong></p>
+                        <li class="list-group-item" id="weeksPassed"><strong>Weeks passed in life: </strong></p>
+                        <li class="list-group-item" id="monthsPassed"><strong>Months passed in life: </strong></p>
+                        <li class="list-group-item" id="yearsPassed"><strong>Years passed in life: </strong></p>
+                        <li class="list-group-item" id="decadesPassed"><strong>Decades passed in life: </strong></p>
+                    </ul>
+                </div>
+                <div class="col-sm-6">
+                    <ul class="list-group">
+                        <li class="list-group-item" id="daysLeft"><strong>Days left of life: </strong></p>
+                        <li class="list-group-item" id="weeksLeft"><strong>Weeks left of life: </strong></p>
+                        <li class="list-group-item" id="monthsLeft"><strong>Months left of life: </strong></p>
+                        <li class="list-group-item" id="yearsLeft"><strong>Years left of life: </strong></p>
+                        <li class="list-group-item" id="decadesLeft"><strong>Decades left of life: </strong></p>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="card h-100">
+        <div class="card-body">
+            <h5 class="d-flex align-items-center mb-3">Life Calendar Custom Colors</h5>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Color</th>
+                        <th scope="col">Meaning</th>
+                        <!-- NOTE: modify based on settings choice -->
+                        <th scope="col">Count</th>
+                    </tr>
+                </thead>
+                <tbody id="colorTable">
+                    <tr>
+                        <th scope="row">1</th>
+                        <td><svg height="25" width="25">
+                                <circle cx="12" cy="12" r="10" fill="red" />
+                            </svg> </td>
+                        <td>Work</td>
+                        <td>134 days</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">2</th>
+                        <td><svg height="25" width="25">
+                                <circle cx="12" cy="12" r="10" fill="blue" />
+                            </svg> </td>
+                        <td>School</td>
+                        <td>78 days</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">3</th>
+                        <td><svg height="25" width="25">
+                                <circle cx="12" cy="12" r="10" fill="pink" />
+                            </svg> </td>
+                        <td>Vacation</td>
+                        <td>71 days</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">4</th>
+                        <td><svg height="25" width="25">
+                                <circle cx="12" cy="12" r="10" fill="green" />
+                            </svg> </td>
+                        <td>Writing</td>
+                        <td>54 days</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">5</th>
+                        <td><svg height="25" width="25">
+                                <circle cx="12" cy="12" r="10" fill="yellow" />
+                            </svg> </td>
+                        <td>Sick</td>
+                        <td>19 days</td>
+                    </tr>
+                    <!-- NOTE: limit six -->
+                    <tr>
+                        <th scope="row">6</th>
+                        <td><svg height="25" width="25">
+                                <circle cx="12" cy="12" r="10" fill="black" />
+                            </svg> </td>
+                        <td>Family Time</td>
+                        <td>2 days</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script src="/static/js/statistics.js"></script>
+{% endblock %}

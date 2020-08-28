@@ -381,7 +381,6 @@ function shadeButtons(age_expectancy, birthday) {
                         .querySelector(`#${current_view}-${x}`)
                         .style.background = "repeating-linear-gradient(45deg, #dc3545, #dc3545 10px)"
             } else if (localStorage.getItem(`${current_view}-${x}-background`) != null) {
-                console.log("test... successs")
                 document
                     .querySelector(`#${current_view}-${x}`)
                     .style.background = localStorage.getItem(`${current_view}-${x}-background`)
@@ -390,10 +389,8 @@ function shadeButtons(age_expectancy, birthday) {
     }
 
     if (amount <= (current_view_value + 1) * 150) {
-        console.log("correct, with amount + current view", amount, current_view)
         try {
             if (localStorage.getItem(`${current_view}-${amount}-background`) != null) {
-                console.log("test... w-success")
                 document
                     .querySelector(`#${current_view}-${amount}`)
                     .style.background = localStorage.getItem(`${current_view}-${amount}-background`)
@@ -409,11 +406,9 @@ function shadeButtons(age_expectancy, birthday) {
             x++
         ) {
             try {
-                console.log(document.querySelector(`#${current_view}-${x}`).style.background)
                 if (document
                         .querySelector(`#${current_view}-${x}`)
                         .style.background == "" && (localStorage.getItem(`${current_view}-${x}-background`) != null)) {
-                        console.log("s - success")
                         document
                             .querySelector(`#${current_view}-${x}`)
                             .style.background = localStorage.getItem(`${current_view}-${x}-background`)

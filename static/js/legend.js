@@ -6,18 +6,14 @@ document.querySelector("#showLegendModal").addEventListener("click", () => {
 const legendModalBody = document.querySelector("#legendModalBody");
 var dontModify = {};
 
-if (localStorage.getItem("dontModify") != null) {
-    dontModify = JSON.parse(localStorage.getItem())
-}
-
 var legendModalColors = {};
 if (localStorage.getItem("legendModalColors") != null) {
     legendModalColors = JSON.parse(localStorage.getItem("legendModalColors"));
 
     // generate table
-    for (let i = 0; i < Object.keys(legendModalColors).length - 3; i++) {
+    for (let i = 1; i < Object.keys(legendModalColors).length - 2; i++) {
         const newtr = document.createElement("tr");
-        const rgb = Object.keys(legendModalColors)[i + 3];
+        const rgb = Object.keys(legendModalColors)[i + 2];
         let hexablergb = rgb.replace("rgb(", "").split(", ");
 
         for (let x = 0; x < hexablergb.length; x++) {
@@ -25,7 +21,7 @@ if (localStorage.getItem("legendModalColors") != null) {
         }
 
         newtr.innerHTML = `
-        <th scope="row">${i + 4}</th>
+        <th scope="row">${i + 3}</th>
             <td>
                 <svg height="25" width="25">
                     <circle cx="12" cy="12" r="10" fill="${rgb}" />
@@ -41,6 +37,15 @@ if (localStorage.getItem("legendModalColors") != null) {
         </td>
         `;
         legendModalBody.appendChild(newtr);
+    }
+}
+
+// setup table values for the legend
+if (localStorage.getItem("dontModify") != null) {
+    dontModify = JSON.parse(localStorage.getItem("dontModify"))
+    for (let i = 4; i < Object.keys(dontModify).length + 4; i++) {
+        const tableToModify = Object.keys(dontModify)[i - 4]
+        document.querySelector(`#${tableToModify}`).textContent = dontModify[tableToModify]
     }
 }
 
@@ -86,12 +91,12 @@ document.querySelector("#saveEditableLegend").addEventListener("click", function
 
 $("#legendModal").on('hidden.bs.modal', function() {
     if (dismiss == true) {
-        console.log("hiding everything...")
         const dynamicTableValues = document.querySelectorAll(".userMeaning");
         for (let i = 0; i < dynamicTableValues.length; i++) {
             document.querySelector(`#${dynamicTableValues[i].id}`).textContent = dontModify[dynamicTableValues[i].id]
         }
     }
+    localStorage.setItem("dontModify", JSON.stringify(dontModify))
 })
 
 document.querySelector("#cancelEditableLegend").addEventListener("click", function() {
