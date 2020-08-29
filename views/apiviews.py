@@ -20,6 +20,15 @@ class JSONDataView(FlaskView):
 
             return data
 
+class UpdateInitialUserInfo(FlaskView):
+    route_base = "/api/updateinfo"
+
+    def post(self):
+
+        details = [value for key, value in request.form.items()]
+        
+        
+        return redirect(url_for("View:index"))
 
 class ContactSubmitView(FlaskView):
     route_base = "/contact"

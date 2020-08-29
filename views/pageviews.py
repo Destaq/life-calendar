@@ -3,8 +3,8 @@ from flask import render_template, session, redirect, url_for, abort, flash
 from models.user import db, User
 from models.text import Day, Week, Month, Year, Decade
 from views.forms import LoginForm, SignupForm
-from wtforms.validators import ValidationError
 
+### DEFAULT PAGEVIEWS ###
 class View(FlaskView):
     def index(self):
         return render_template("index.html")
@@ -25,15 +25,11 @@ class StatisticsView(FlaskView):
     def index(self):
         return render_template("statistics.html")
 
-### PROFILE PAGEVIEWS ###
-
-class ProfileView(FlaskView):
-    def index(self):
-        return render_template("profile/profile.html")
 
 class SettingsView(FlaskView):
     def index(self):
         return render_template("profile/settings.html")
+
 
 ### SPECIAL PAGEVIEWS ###
 
@@ -53,11 +49,12 @@ class PrivacyPolicyView(FlaskView):
     def index(self):
         return render_template("other/privacypolicy.html")
 
-# thank user for form
 class ThanksView(FlaskView):
     def index(self):
         return render_template("jinja/thanks.jinja")
 
+
+### ADVANCED PAGEVIEWS ###
 class SignupView(FlaskView):
     def index(self):
         form = SignupForm()

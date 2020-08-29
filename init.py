@@ -10,7 +10,7 @@ from models.user import db
 
 # import views
 from views.generate_download import MakeImageView
-from views.pageviews import View, DownloadView, SignupView, LoginView, ContactView, ThanksView, PrivacyPolicyView, QuizView, ContributeView, DonateView, ProfileView, SettingsView, StatisticsView
+from views.pageviews import View, DownloadView, SignupView, LoginView, ContactView, ThanksView, PrivacyPolicyView, QuizView, ContributeView, DonateView, SettingsView, StatisticsView
 from views.apiviews import JSONDataView, ContactSubmitView
 
 
@@ -57,7 +57,6 @@ def register_views(app):
         QuizView,
         ContributeView,
         DonateView,
-        ProfileView,
         SettingsView,
         StatisticsView
     ]
