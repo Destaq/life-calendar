@@ -6,7 +6,6 @@ from dotenv import load_dotenv
 load_dotenv()
 yag = yagmail.SMTP(os.getenv("SEND_FROM_ADDRESS"), os.getenv("SEND_FROM_PASSWORD"))
 
-from flask_jwt import jwt_required
 from flask_classful import FlaskView
 from flask import request, url_for
 from werkzeug.utils import redirect
@@ -14,7 +13,6 @@ from werkzeug.utils import redirect
 
 class JSONDataView(FlaskView):
     route_base = "/data/expectancydata/"
-    # decorators = [jwt_required()]
 
     def get(self):
         with open("data/ageExpectancy.json") as json_file:

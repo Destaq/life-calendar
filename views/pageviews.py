@@ -1,15 +1,13 @@
 from flask_classful import FlaskView
-from flask import render_template, session, redirect, url_for, abort
-from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, PasswordField, BooleanField
-from wtforms.validators import DataRequired
+from flask import render_template, session, redirect, url_for, abort, flash
 from models.user import db, User
 from models.text import Day, Week, Month, Year, Decade
+from views.forms import LoginForm, SignupForm
+from wtforms.validators import ValidationError
 
 class View(FlaskView):
     def index(self):
         return render_template("index.html")
-
 
 class DownloadView(FlaskView):
     def index(self):
@@ -60,19 +58,11 @@ class ThanksView(FlaskView):
     def index(self):
         return render_template("jinja/thanks.jinja")
 
-# setup form for signing up
-class SignupForm(FlaskForm):
-    password = PasswordField("Password", validators=[DataRequired()])
-    subscribe = BooleanField("I want to receive email updates about my progress", validators=[])
-    email = StringField("Email Address", validators=[])
-    submit = SubmitField("Submit")
-
-
 class SignupView(FlaskView):
     def index(self):
         form = SignupForm()
 
-        return render_template("jinja/signup.jinja", form=form)
+        return render_template("jinja/signup.jinja", form=form, sameerror=False)
 
     def post(self):
         form = SignupForm()
@@ -81,26 +71,20 @@ class SignupView(FlaskView):
             session["subscribe"] = form.subscribe.data
             session["email"] = form.email.data
 
-            # perform database magic
-            print(session["subscribe"], session["password"], session["email"])
+            user = User.query.filter_by(email = session["email"]).first()
 
-            new_user = User(session["email"], session["password"], subscribe = session["subscribe"])
-            db.session.add(new_user)
-            db.session.commit()
+            if user is not None:
+                return render_template("jinja/signup.jinja", form=form, sameerror=True)
 
-            # let's make sure that it works...
-            print(User.query.all())
+            else:
+                new_user = User(session["email"], session["password"], subscribe = session["subscribe"])
+                db.session.add(new_user)
+                db.session.commit()
 
-            return redirect(url_for("View:index"))
+                return redirect(url_for("View:index"))
 
         else:
             return abort(500)
-
-# form for returning users
-class LoginForm(FlaskForm):
-    email = StringField("Email Address", validators = [DataRequired()])
-    password = PasswordField("Password", validators=[DataRequired()])
-    submit = SubmitField("Submit")
 
 class LoginView(FlaskView):
     def index(self):
@@ -111,9 +95,16 @@ class LoginView(FlaskView):
     def post(self):
         form = LoginForm()
         if form.validate_on_submit():
-            session["email"] = form.email.data
-            session["password"] = form.password.data
+            user = User.query.filter_by(email = form.email.data).first()
 
-            # perform database magic
+            if user is not None:
+                if user.check_password(form.password.data) and user is not None:
+                    return redirect(url_for("View:index"))
+    
+                elif user.check_password(form.password.data) == False and user is not None:
+                    return render_template("jinja/login.jinja", form=form, error="Incorrect password!")
 
-            return redirect(url_for("View:index"))
+            else:
+                return render_template("jinja/login.jinja", form=form, error="A user with this email does not exist!")
+
+        return render_template("jinja/login.jinja", form=form, error=None)

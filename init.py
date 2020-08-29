@@ -13,10 +13,6 @@ from views.generate_download import MakeImageView
 from views.pageviews import View, DownloadView, SignupView, LoginView, ContactView, ThanksView, PrivacyPolicyView, QuizView, ContributeView, DonateView, ProfileView, SettingsView, StatisticsView
 from views.apiviews import JSONDataView, ContactSubmitView
 
-# import authentication
-from authentication import authenticate, identity
-from flask_jwt import JWT
-
 
 def load_settings(app: Flask):
     basedir = os.path.abspath(os.path.dirname(__file__))
@@ -25,7 +21,6 @@ def load_settings(app: Flask):
     app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + os.path.join(basedir, "data.sqlite")
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
-    JWT(app, authentication_handler=authenticate, identity_handler=identity)
     CORS(app, resources={r"/api/*": {"origins": "*"}})
 
     db.init_app(app)

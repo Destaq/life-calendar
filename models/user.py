@@ -1,5 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
+
 db = SQLAlchemy()
 
 from models.text import Day, Week, Month, Year, Decade
@@ -25,7 +26,7 @@ class User(db.Model):
 
     def __init__(self, email, password, age_expectancy=0, dob="", subscribe=False):
         self.email = email
-        self.password = generate_password_hash(password)
+        self.password_hash = generate_password_hash(password)
 
         self.age_expectancy = age_expectancy
         self.dob = dob

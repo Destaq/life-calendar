@@ -9,6 +9,9 @@
     <p>The website should be intuitive, but if you need help, you can check out the <a href="#">tutorial</a>, <a href="mailto:simon@simonilincev.com">contact us</a>, or, if you're <em>really</em> desperate, browse through the open-source <a href="https://github.com/Destaq/life-calendar">source code.</a>
     <hr>
     <form method="POST">
+    {% if sameerror == True %}
+        <div class="alert alert-warning" role="alert">A user with under email address already exists!</div>
+    {% endif %}
     <p class="form-text text-muted">Not a new user? You can <a href="/login">log in here</a> instead.</p>
     <div class="form-group">
         {{ form.hidden_tag() }}

@@ -5,7 +5,6 @@ import os
 
 from datetime import datetime
 from flask import request
-from flask_jwt import jwt_required, current_identity
 from flask_classful import FlaskView
 
 # TODO: add x and y labels for posters

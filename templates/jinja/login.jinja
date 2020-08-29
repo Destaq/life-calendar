@@ -6,6 +6,9 @@
     <p>Welcome back! Please login below so that you can access all of your historical data!</p>
     <hr>
     <form method="POST">
+    {% if error %}
+        <div class="alert alert-warning" role="alert">{{ error }}</div>
+    {% endif %}
     <p class="form-text text-muted">New user? You can <a href="/signup">register here</a> instead.</p>
     <div class="form-group">
         {{ form.hidden_tag() }}
