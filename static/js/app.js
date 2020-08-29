@@ -284,11 +284,14 @@ function createMap(is_new, gran_level, e) {
 
                         <div class="modal-footer">
 
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-
                             <button type="button" class="btn btn-primary edit" id="submit-year-${
                                 i + 1
                             }">Edit</button>
+
+                            <button type="button" class="btn btn-danger" id="clear-contents-${i + 1}">Delete</button>
+
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
                         </div>
                     </div>
                 </div>
@@ -298,11 +301,19 @@ function createMap(is_new, gran_level, e) {
         // button for saving markdown changes
         const saveChanges =
             newBtnStyling.children[0].children[0].children[0].children[2]
+                .children[0];
+
+        // button for deleting everything
+        const deleteButton = 
+            newBtnStyling.children[0].children[0].children[0].children[2]
                 .children[1];
 
         saveChanges.addEventListener("mousedown", () => {
             rewriteModal(i); // edit the modal box
         });
+        deleteButton.addEventListener("click", () => {
+            deleteConfirmation(i);
+        })
         newBtn.addEventListener("click", () => {
             checkSavedText(i); // check if the user already has written text there
         });
@@ -704,6 +715,36 @@ function checkSavedText(i) {
         for (let x = 0; x < unresponse_images.length; x++) {
             unresponse_images[x].classList.add("img-fluid");
         }
+    }
+}
+
+// deletes everything from a modal, removes it from statistics
+function deleteConfirmation(i) {
+    let confirmation = confirm("Are you sure that you would like to permanently delete all info associated with this box?\n\nThis action is irreversible!");
+    if (confirmation == true) {
+        localStorage.removeItem(`${current_view}-${i + 1}`);
+        document.querySelector(`#user-text-${i + 1}`).innerHTML = "";
+    
+        const delete_success = document.createElement("div");
+        delete_success.classList.add("alert");
+        delete_success.classList.add("alert-success");
+        delete_success.setAttribute("role", "alert");
+        delete_success.innerHTML = "Data successfully deleted!";
+
+        // show copy success for 2 secs
+
+        document
+            .querySelector(`#what-did-${i + 1}-markdown`)
+            .parentElement.insertBefore(
+                delete_success,
+                document.querySelector(`#what-did-${i + 1}-markdown`)
+                    .parentElement.children[0]
+            );
+
+
+        setTimeout(function () {
+            delete_success.remove();
+        }, 2000);
     }
 }
 
