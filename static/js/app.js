@@ -228,6 +228,13 @@ function createMap(is_new, gran_level, e) {
         }
     });
 
+    // update number input with new values
+    const numberInput = document.querySelector("#shadeDropdown");
+    numberInput.setAttribute("min", minimal_amount + 1);
+    numberInput.setAttribute("max", maximal_amount);
+    numberInput.setAttribute("value", minimal_amount + 1);
+    numberInput.setAttribute("style", "width: 5.5em");
+
     // create the buttons for that page
     for (let i = minimal_amount; i < maximal_amount; i++) {
         const newBtn = document.createElement("button");
@@ -752,7 +759,7 @@ function calculateModifier(gran_level) {
     let modification;
     switch (gran_level) {
         case "Days":
-            modification = 365.25;
+            modification = 365.2422;
             break;
         case "Months":
             modification = 12;
@@ -764,8 +771,7 @@ function calculateModifier(gran_level) {
             modification = 0.1;
             break;
         default:
-            // NOTE: weeks isn't accurate
-            modification = 52;
+            modification = 52.1429;
             break;
     }
 

@@ -73,7 +73,7 @@ for (const [theme, config] of themes) {
     numberInput.setAttribute("min", 1);
     numberInput.setAttribute("max", 100);
     numberInput.setAttribute("value", 1);
-    numberInput.classList.add("mr-5")
+    numberInput.classList.add("mr-1")
     numberInput.id = "shadeDropdown";
 
     // TODO: add help popup/page
