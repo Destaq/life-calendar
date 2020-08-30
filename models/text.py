@@ -4,14 +4,17 @@ class Day(db.Model):
     __tablename__ = "day"
     id = db.Column(db.Integer, primary_key = True)
     textcontent = db.Column(db.Text)
+    number = db.Column(db.Integer, unique=True)
     colors = db.Column(db.Text)
 
     # connect day to user
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
 
-    def __init__(self, textcontent, user_id):
+    def __init__(self, textcontent, user_id, number, colors):
         self.textcontent = textcontent
         self.user_id = user_id
+        self.number = number
+        self.colors = colors
 
 
 class Week(db.Model):
@@ -23,9 +26,11 @@ class Week(db.Model):
     # connect day to user
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
 
-    def __init__(self, textcontent, user_id):
+    def __init__(self, textcontent, user_id, number, colors):
         self.textcontent = textcontent
         self.user_id = user_id
+        self.number = number
+        self.colors = colors
 
 
 class Month(db.Model):
@@ -37,9 +42,11 @@ class Month(db.Model):
     # connect day to user
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
 
-    def __init__(self, textcontent, user_id):
+    def __init__(self, textcontent, user_id, number, colors):
         self.textcontent = textcontent
         self.user_id = user_id
+        self.number = number
+        self.colors = colors
 
 
 class Year(db.Model):
@@ -51,9 +58,11 @@ class Year(db.Model):
     # connect day to user
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
 
-    def __init__(self, textcontent, user_id):
+    def __init__(self, textcontent, user_id, number, colors):
         self.textcontent = textcontent
         self.user_id = user_id
+        self.number = number
+        self.colors = colors
 
 
 class Decade(db.Model):
@@ -65,6 +74,8 @@ class Decade(db.Model):
     # connect day to user
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
 
-    def __init__(self, textcontent, user_id):
+    def __init__(self, textcontent, user_id, number, colors):
         self.textcontent = textcontent
         self.user_id = user_id
+        self.number = number
+        self.colors = colors

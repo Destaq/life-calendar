@@ -1,7 +1,6 @@
 from flask_classful import FlaskView
 from flask import render_template, session, redirect, url_for, abort, flash
 from models.user import db, User
-from models.text import Day, Week, Month, Year, Decade
 from views.forms import LoginForm, SignupForm
 
 ### DEFAULT PAGEVIEWS ###
