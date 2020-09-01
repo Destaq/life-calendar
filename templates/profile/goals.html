@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="jumbotron">
+    <h1>Goals</h1>
+    <p>This is where you can organize your goals in life. We'll be sending you reminders for this goals, if you so wish,
+        and they are meant to describe what you're trying to accomplish or deadlines that you are setting yourself.</p>
+    <div id="user-goals">
+
+        <div class="row" id="last">
+            <div class="card bg-light col-sm-4" id="template-card">
+                <div class="card-body">
+                    <h5 class="card-title" id="goalTitle" contenteditable="true">Goal Title</h5>
+                    <h6 class="card-subtitle mb-2 text-muted" contenteditable="true" id="goalSubtitle">Goal Subtitle
+                    </h6>
+                    <p class="card-text" contenteditable="true" id="goalText">This is a goal card. You can have any
+                        number of them! Fill this out however you want - it's editable - with a goal of yours, and then
+                        save it to add it to the list!</p>
+                    <hr>
+                    <div class="form-group">
+                        <label for="goalFinish">Due Date</label>
+                        <input type="date" class="form-control" id="goalFinish">
+
+                        <label for="goalFinishExact">Due Time</label>
+                        <input type="time" id="goalFinishExact" class="form-control" value="23:59">
+                        <br>
+                        <button type="button" class="btn btn-success form-control" id="addCard">Add new card</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/static/js/emailSetup.js"></script>
+{% endblock %}

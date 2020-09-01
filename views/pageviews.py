@@ -24,6 +24,9 @@ class StatisticsView(FlaskView):
     def index(self):
         return render_template("statistics.html")
 
+class GoalsView(FlaskView):
+    def index(self):
+        return render_template("profile/goals.html")
 
 class SettingsView(FlaskView):
     def index(self):

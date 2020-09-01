@@ -10,7 +10,21 @@ from models.user import db
 
 # import views
 from views.generate_download import MakeImageView
-from views.pageviews import View, DownloadView, SignupView, LoginView, ContactView, ThanksView, PrivacyPolicyView, QuizView, ContributeView, DonateView, SettingsView, StatisticsView
+from views.pageviews import (
+    View,
+    DownloadView,
+    SignupView,
+    LoginView,
+    ContactView,
+    ThanksView,
+    PrivacyPolicyView,
+    QuizView,
+    ContributeView,
+    DonateView,
+    SettingsView,
+    StatisticsView,
+    GoalsView,
+)
 from views.apiviews import JSONDataView, ContactSubmitView
 
 
@@ -18,7 +32,9 @@ def load_settings(app: Flask):
     basedir = os.path.abspath(os.path.dirname(__file__))
 
     app.config["SECRET_KEY"] = os.getenv("APP_CONFIG_KEY")
-    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + os.path.join(basedir, "data.sqlite")
+    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + os.path.join(
+        basedir, "data.sqlite"
+    )
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
     CORS(app, resources={r"/api/*": {"origins": "*"}})
@@ -58,7 +74,8 @@ def register_views(app):
         ContributeView,
         DonateView,
         SettingsView,
-        StatisticsView
+        StatisticsView,
+        GoalsView
     ]
 
     for view in views:

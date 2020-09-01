@@ -301,7 +301,7 @@ class MakeImageView(FlaskView):
     def get(self):
         args = request.args
         bday = args["bday"]
-        expectancy = int(args["expectancy"])
+        expectancy = int(float(args["expectancy"]))
         auth = args["auth"]
         map_type = args["map_type"]
         map_form = args["interval"]
