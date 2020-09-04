@@ -5,6 +5,7 @@ db = SQLAlchemy()
 
 from models.text import Day, Week, Month, Year, Decade
 
+
 class User(db.Model):
 
     __tablename__ = "users"
@@ -23,6 +24,7 @@ class User(db.Model):
     month_info = db.relationship("Month", backref="user", lazy="dynamic")
     year_info = db.relationship("Year", backref="user", lazy="dynamic")
     decade_info = db.relationship("Decade", backref="user", lazy="dynamic")
+    goals = db.relationship("Goals", backref="user", lazy="dynamic")
 
     def __init__(self, email, password, age_expectancy=0, dob="", subscribe=False):
         self.email = email
@@ -37,3 +39,31 @@ class User(db.Model):
 
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
+
+
+# setup special goals model for user goals
+class Goals(db.Model):
+
+    __tablename__ = "goals"
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.Text)
+    subtitle = db.Column(db.Text)
+    text = db.Column(db.Text)
+    radio = db.Column(db.String(32))
+
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+
+    def __init__(self, title, subtitle, text, radio, user_id):
+        self.title = title
+        self.subtitle = subtitle
+        self.text = text
+        self.radio = radio
+        self.user_id = user_id
+
+    def __repr__(self):
+        if len(self.text) > 32:
+            details = self.text[:32]
+        else:
+            details = self.text
+
+        return f"{self.title} -- {self.subtitle}\n\n{details}"

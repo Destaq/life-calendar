@@ -15,7 +15,10 @@ var cardCount = 0;
 const preCards = document.querySelectorAll(".user-card");
 preCards.forEach((preCard) => {
     setupEv(preCard);
-})
+    setupRadioBackground(preCard);
+});
+
+// TODO: colorize on init
 
 finishCard.addEventListener("click", function (e) {
     if (dueTime.value === "" || dueDate.value === "") {
@@ -38,7 +41,7 @@ finishCard.addEventListener("click", function (e) {
 
 function createCard() {
     const userCard = document.createElement("div");
-    userCard.classList.add("card", "bg-light", "col-sm-4", "user-card");
+    userCard.classList.add("card", "bg-light", "col-sm-4", "user-card", "border-dark");
     userCard.id = `userCard-${cardCount}`;
     userCard.setAttribute("editing", "false");
     userCard.innerHTML = `
@@ -46,7 +49,7 @@ function createCard() {
         <h5 class="card-title">${goalTitle.textContent}</h5>
         <h6 class="card-subtitle mb-2 text-muted">${goalSubtitle.textContent}</h6>
         <p class="card-text">${goalText.textContent}</p>
-            <div class="mt-auto">
+            <div class="mt-auto special-background">
                 <hr>
                 <div class="form-check form-check-inline">
                     <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio0" value="unstarted" checked>
@@ -57,7 +60,7 @@ function createCard() {
                     <label class="form-check-label" for="inlineRadio1">In Progress</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="Complete">
+                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="complete">
                     <label class="form-check-label" for="inlineRadio2">Complete</Complete>
                 </div>
                 <div class="form-check form-check-inline">
@@ -107,6 +110,7 @@ function createCard() {
     );
 
     setupEv(userCard);
+    setupRadioBackground(userCard);
 }
 
 function setupEv(someCard) {
@@ -166,4 +170,34 @@ function setupEv(someCard) {
             e.preventDefault();
         }
     );
+}
+
+function setupRadioBackground(someCard) {
+    someCard.querySelectorAll(".form-check-input").forEach((child) => {
+        child.addEventListener("click", function() {
+            shadeBackground(someCard, child);
+        })
+    })
+}
+
+function shadeBackground(someCard, child) {
+    if (child.checked) {
+        const re = /^border-/;
+        for (const name of someCard.classList) {
+            if (re.test(name) === true) {
+                someCard.classList.remove(name);
+            }
+        }
+        if (child.value == "progress") {
+            someCard.classList.add("border-warning");
+        } else if (child.value == "complete") {
+            someCard.classList.add("border-success");
+        } else if (child.value == "cancelled") {
+            someCard.classList.add("border-danger");
+        } else {
+            someCard.classList.add("border-dark");
+        }
+    } else {
+        child.checked = false;
+    }
 }
