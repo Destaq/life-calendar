@@ -2,6 +2,7 @@ from flask_classful import FlaskView
 from flask import render_template, session, redirect, url_for, abort, flash
 from models.user import db, User
 from views.forms import LoginForm, SignupForm
+from flask_login import login_user, current_user
 
 ### DEFAULT PAGEVIEWS ###
 class View(FlaskView):
@@ -98,6 +99,7 @@ class LoginView(FlaskView):
 
             if user is not None:
                 if user.check_password(form.password.data) and user is not None:
+                    login_user(user)
                     return redirect(url_for("View:index"))
     
                 elif user.check_password(form.password.data) == False and user is not None:

@@ -64,18 +64,3 @@ class Year(db.Model):
         self.number = number
         self.colors = colors
 
-
-class Decade(db.Model):
-    __tablename__ = "decade"
-    id = db.Column(db.Integer, primary_key = True)
-    textcontent = db.Column(db.Text)
-    colors = db.Column(db.Text)
-
-    # connect day to user
-    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
-
-    def __init__(self, textcontent, user_id, number, colors):
-        self.textcontent = textcontent
-        self.user_id = user_id
-        self.number = number
-        self.colors = colors

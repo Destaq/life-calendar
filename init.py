@@ -1,8 +1,15 @@
 import os
-from typing import Set
 from dotenv import load_dotenv
 from flask import Flask, render_template
 from flask_cors import CORS
+from flask_login import LoginManager
+
+app = Flask(__name__)
+
+# set up login manager
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = "users.login"
 
 # setup database
 from flask_migrate import Migrate
@@ -25,7 +32,7 @@ from views.pageviews import (
     StatisticsView,
     GoalsView,
 )
-from views.apiviews import JSONDataView, ContactSubmitView
+from views.apiviews import JSONDataView, ContactSubmitView, ModifyLifeView
 
 
 def load_settings(app: Flask):
@@ -46,8 +53,6 @@ def load_settings(app: Flask):
 
 
 def form_application() -> Flask:
-    app = Flask(__name__)
-
     @app.errorhandler(404)
     def page_not_found(e):
         return render_template("404.html"), 404
@@ -75,7 +80,8 @@ def register_views(app):
         DonateView,
         SettingsView,
         StatisticsView,
-        GoalsView
+        GoalsView,
+        ModifyLifeView
     ]
 
     for view in views:

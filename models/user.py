@@ -3,10 +3,17 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 db = SQLAlchemy()
 
-from models.text import Day, Week, Month, Year, Decade
+from models.text import Day, Week, Month, Year
+
+from flask_login import UserMixin
+from init import login_manager
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(user_id)
 
 
-class User(db.Model):
+class User(db.Model, UserMixin):
 
     __tablename__ = "users"
 
@@ -39,6 +46,24 @@ class User(db.Model):
 
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
+
+class Decade(db.Model):
+    __tablename__ = "decade"
+    id = db.Column(db.Integer, primary_key = True)
+    textcontent = db.Column(db.Text)
+    colors = db.Column(db.Text)
+
+    # connect day to user
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+
+    def __init__(self, textcontent, user_id, number, colors):
+        self.textcontent = textcontent
+        self.user_id = user_id
+        self.number = number
+        self.colors = colors
+
+    def __repr__(self):
+        return self.textcontent
 
 
 # setup special goals model for user goals

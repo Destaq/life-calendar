@@ -1,6 +1,7 @@
 import json
 import os
 import yagmail
+import ast
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -10,8 +11,8 @@ from flask_classful import FlaskView
 from flask import request, url_for
 from werkzeug.utils import redirect
 
-from models.user import db, User
-from models.text import Day, Week, Month, Year, Decade
+from models.user import db, User, Decade
+from models.text import Day, Week, Month, Year
 
 class JSONDataView(FlaskView):
     route_base = "/data/expectancydata/"
@@ -27,23 +28,39 @@ class ModifyLifeView(FlaskView):
     """Updates database of user's boxes with inputted text."""
     route_base = "/api/modify"
 
-    level_setup = {"days": Day,
-                    "weeks": Week,
-                    "months": Month,
-                    "years": Year,
-                    "decades": Decade}
 
     def post(self):
-        details = [value for key, value in request.form.items()]
+        dict_str = request.data.decode("UTF-8")
+        mydata = ast.literal_eval(dict_str)
 
-        user_email = details[0]
-        view_level = details[1]
-        box_number = details[2]
-        text = details[3]
-        color_details = details[4]
+        user_id = mydata["user_id"]
+        view_level = mydata["view_level"]
+        box_number = mydata["box_number"]
+        text = mydata["text_content"]
+        color_details = mydata["color_details"]
 
-        info = self.level_setup[view_level](text, user_email, box_number, color_details)
+        if view_level == "Days":
+            new_box = Day(text, user_id, box_number, color_details)
+        elif view_level == "Weeks":
+            new_box = Week(text, user_id, box_number, color_details)
+        elif view_level == "Months":
+            new_box = Month(text, user_id, box_number, color_details)
+        elif view_level == "Years":
+            new_box = Year(text, user_id, box_number, color_details)
+        else:
+            new_box = Decade(text, user_id, box_number, color_details)
+
+        db.session.add(new_box)
+        db.session.commit()
+
+        restest = User.query.get(1)
+        print(restest)  # user with email: one@one.com
+        restest2 = Decade.query.get(1)
+        print(restest2)  # happy day
+        print(restest2.user_id)  # 1
+        print(restest2.user)  # user with email: one@one.com
         
+        return {"result": "success"}
 
 class ContactSubmitView(FlaskView):
     route_base = "/contact/"
