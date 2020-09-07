@@ -48,18 +48,17 @@ class ModifyLifeView(FlaskView):
         elif view_level == "Years":
             new_box = Year(text, user_id, box_number, color_details)
         else:
-            new_box = Decade(text, user_id, box_number, color_details)
+            new_box = Year(text, user_id, box_number, color_details)
 
         db.session.add(new_box)
         db.session.commit()
 
+        # example usage
         restest = User.query.get(1)
         print(restest)  # user with email: one@one.com
-        restest2 = Decade.query.get(1)
-        print(restest2)  # happy day
-        print(restest2.user_id)  # 1
-        print(restest2.user)  # user with email: one@one.com
-        
+        restest2 = Year.query.get(1)
+        jeff = restest2.user
+        print(jeff.id, jeff.email, jeff.password_hash, jeff.age_expectancy, jeff.dob, jeff.subscribe)
         return {"result": "success"}
 
 class ContactSubmitView(FlaskView):
