@@ -32,7 +32,14 @@ from views.pageviews import (
     StatisticsView,
     GoalsView,
 )
-from views.apiviews import JSONDataView, ContactSubmitView, ModifyLifeView
+from views.apiviews import (
+    JSONDataView,
+    ContactSubmitView,
+    UpdateBoxView,
+    DeleteBoxView,
+    ReadAllView,
+    CreateBoxView,
+)
 
 
 def load_settings(app: Flask):
@@ -81,7 +88,10 @@ def register_views(app):
         SettingsView,
         StatisticsView,
         GoalsView,
-        ModifyLifeView
+        CreateBoxView,
+        UpdateBoxView,
+        ReadAllView,
+        DeleteBoxView,
     ]
 
     for view in views:

@@ -11,8 +11,9 @@ from flask_classful import FlaskView
 from flask import request, url_for
 from werkzeug.utils import redirect
 
-from models.user import db, User, Decade
-from models.text import Day, Week, Month, Year
+from models.user import db, User
+from models.text import Day, Week, Month, Year, Decade
+
 
 class JSONDataView(FlaskView):
     route_base = "/data/expectancydata/"
@@ -24,10 +25,48 @@ class JSONDataView(FlaskView):
             return data
 
 
-class ModifyLifeView(FlaskView):
-    """Updates database of user's boxes with inputted text."""
-    route_base = "/api/modify"
+class DeleteBoxView(FlaskView):
+    """Deletes the box that a user specifies."""
 
+    # find box based on view, number
+
+    # delete and disassociate from user
+    pass
+
+
+class ReadAllView(FlaskView):
+    """Reads all data for a user and sets it to local storage."""
+
+    route_base = "/api/read"
+
+    def get(self, user_email):
+        # read all data associated with a user
+        user = User.query.filter_by(email = user_email).first()
+        print(user)
+        print(type(user))
+        print(user.year_info.first())
+        # set that data to a dictionary
+
+        # send to JS to store in local storage
+        return {"result": "success"}
+
+
+class CreateBoxView(FlaskView):
+    """Forms a new box with user info."""
+
+    # read data from request
+
+    # create new box
+
+    # assign box parameters
+
+    # add and commit
+
+
+class UpdateBoxView(FlaskView):
+    """Updates database of user's boxes with inputted text."""
+
+    route_base = "/api/modify/"
 
     def post(self):
         dict_str = request.data.decode("UTF-8")
@@ -48,8 +87,11 @@ class ModifyLifeView(FlaskView):
         elif view_level == "Years":
             new_box = Year(text, user_id, box_number, color_details)
         else:
-            new_box = Year(text, user_id, box_number, color_details)
+            new_box = Decade(text, user_id, box_number, color_details)
 
+        # edit box with new text/colors/whatever changed
+
+        # commit changes
         db.session.add(new_box)
         db.session.commit()
 
@@ -58,8 +100,16 @@ class ModifyLifeView(FlaskView):
         print(restest)  # user with email: one@one.com
         restest2 = Year.query.get(1)
         jeff = restest2.user
-        print(jeff.id, jeff.email, jeff.password_hash, jeff.age_expectancy, jeff.dob, jeff.subscribe)
+        print(
+            jeff.id,
+            jeff.email,
+            jeff.password_hash,
+            jeff.age_expectancy,
+            jeff.dob,
+            jeff.subscribe,
+        )
         return {"result": "success"}
+
 
 class ContactSubmitView(FlaskView):
     route_base = "/contact/"
@@ -69,7 +119,8 @@ class ContactSubmitView(FlaskView):
         details = [value for key, value in request.form.items()]
         name = details[0]
 
-        contents = [f"""
+        contents = [
+            f"""
         Hi Simon, you had someone contact you through the automated messaging service on lifecalendar. You can view the details below: 
         
         Name: {details[0]}
@@ -81,9 +132,11 @@ class ContactSubmitView(FlaskView):
         Message: {details[3]}
 
         Make sure to get back to them soon!
-                    """]
+                    """
+        ]
 
-        yag.send("simon@simonilincev.com", "New Contact Message from Life Calendar", contents)
-
+        yag.send(
+            "simon@simonilincev.com", "New Contact Message from Life Calendar", contents
+        )
 
         return redirect(url_for("ThanksView:index", name=name))
