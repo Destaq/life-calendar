@@ -1,8 +1,10 @@
 from models.user import db
 
+
 class Day(db.Model):
     __tablename__ = "day"
-    id = db.Column(db.Integer, primary_key = True)
+    id = db.Column(db.Integer, primary_key=True)
+    number = db.Column(db.Integer)
     textcontent = db.Column(db.Text)
     number = db.Column(db.Integer, unique=True)
     colors = db.Column(db.Text)
@@ -19,7 +21,8 @@ class Day(db.Model):
 
 class Week(db.Model):
     __tablename__ = "week"
-    id = db.Column(db.Integer, primary_key = True)
+    id = db.Column(db.Integer, primary_key=True)
+    number = db.Column(db.Integer)
     textcontent = db.Column(db.Text)
     colors = db.Column(db.Text)
 
@@ -35,7 +38,8 @@ class Week(db.Model):
 
 class Month(db.Model):
     __tablename__ = "month"
-    id = db.Column(db.Integer, primary_key = True)
+    id = db.Column(db.Integer, primary_key=True)
+    number = db.Column(db.Integer)
     textcontent = db.Column(db.Text)
     colors = db.Column(db.Text)
 
@@ -51,7 +55,8 @@ class Month(db.Model):
 
 class Year(db.Model):
     __tablename__ = "year"
-    id = db.Column(db.Integer, primary_key = True)
+    id = db.Column(db.Integer, primary_key=True)
+    number = db.Column(db.Integer)
     textcontent = db.Column(db.Text)
     colors = db.Column(db.Text)
 
@@ -65,11 +70,13 @@ class Year(db.Model):
         self.colors = colors
 
     def __repr__(self):
-        return f"Year {self.textcontent}"
+        return f"Year {self.number} -- {self.textcontent}"
+
 
 class Decade(db.Model):
     __tablename__ = "decade"
-    id = db.Column(db.Integer, primary_key = True)
+    id = db.Column(db.Integer, primary_key=True)
+    number = db.Column(db.Integer)
     textcontent = db.Column(db.Text)
     colors = db.Column(db.Text)
 

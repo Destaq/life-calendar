@@ -8,7 +8,7 @@ load_dotenv()
 yag = yagmail.SMTP(os.getenv("SEND_FROM_ADDRESS"), os.getenv("SEND_FROM_PASSWORD"))
 
 from flask_classful import FlaskView
-from flask import request, url_for
+from flask import request, url_for, abort, jsonify
 from werkzeug.utils import redirect
 
 from models.user import db, User
@@ -28,43 +28,100 @@ class JSONDataView(FlaskView):
 class DeleteBoxView(FlaskView):
     """Deletes the box that a user specifies."""
 
-    # find box based on view, number
+    route_base = "/api/delete"
 
-    # delete and disassociate from user
-    pass
+    def post(self, user_email):
+        user = User.query.filter_by(email=user_email).first()
+        # find box based on view, number
+        view_level = request.get_json()["view_level"]
+        box_number = request.get_json()["number"]
+
+        if view_level == "Days":
+            new_box = Day.query.filter_by(number=int(box_number)).first()
+        elif view_level == "Weeks":
+            new_box = Week.query.filter_by(number=int(box_number)).first()
+        elif view_level == "Months":
+            new_box = Month.query.filter_by(number=int(box_number)).first()
+        elif view_level == "Years":
+            new_box = Year.query.filter_by(number=int(box_number)).first()
+        else:
+            new_box = Decade.query.filter_by(number=int(box_number)).first()
+
+        # delete and disassociate from user
+        try:
+            db.session.delete(new_box)
+            db.session.commit()
+        except:
+            pass
+
+        return jsonify(success = True)
 
 
+# TODO: protect route with LoginManager
 class ReadAllView(FlaskView):
     """Reads all data for a user and sets it to local storage."""
 
-    route_base = "/api/read"
+    route_base = "/api/read/"
 
     def get(self, user_email):
         # read all data associated with a user
-        user = User.query.filter_by(email = user_email).first()
-        print(user)
-        print(type(user))
-        print(user.year_info.first())
+        user = User.query.filter_by(email=user_email).first()
+
+        days = user.day_info.all()
+        weeks = user.week_info.all()
+        months = user.month_info.all()
+        years = user.year_info.all()
+        decades = user.decade_info.all()
+
         # set that data to a dictionary
+        days = [(e.id, e.textcontent, e.colors) for e in days]
+        weeks = [(e.id, e.textcontent, e.colors) for e in weeks]
+        months = [(e.id, e.textcontent, e.colors) for e in months]
+        years = [(e.id, e.textcontent, e.colors) for e in years]
+        decades = [(e.id, e.textcontent, e.colors) for e in decades]
+
+        userdata = {
+            "days": days,
+            "weeks": weeks,
+            "months": months,
+            "years": years,
+            "decades": decades,
+        }
 
         # send to JS to store in local storage
-        return {"result": "success"}
+        return {"result": userdata}
+
+
+class UpdateBoxView(FlaskView):
+    """Updates an existing user box."""
+
+    route_base = "/api/update/"
+
+    def post(self):
+        # read data from request
+
+        request_json = request.get_json()
+        box_number = request_json["number"]
+        view_level = request_json["view_level"][:-1]  # must be exact to class name, cutting to keep same as others
+        text = request_json["text"]
+        colors = request_json["colors"]
+
+        # assign box parameters
+
+        updated_box = globals()[view_level].query.filter_by(number=box_number).first()
+        updated_box.textcontent = text
+        updated_box.colors = colors
+
+        # commit changes
+
+        db.session.add(updated_box)
+        db.session.commit()
+
+        return jsonify(success = True)
 
 
 class CreateBoxView(FlaskView):
     """Forms a new box with user info."""
-
-    # read data from request
-
-    # create new box
-
-    # assign box parameters
-
-    # add and commit
-
-
-class UpdateBoxView(FlaskView):
-    """Updates database of user's boxes with inputted text."""
 
     route_base = "/api/modify/"
 
@@ -80,16 +137,24 @@ class UpdateBoxView(FlaskView):
 
         if view_level == "Days":
             new_box = Day(text, user_id, box_number, color_details)
+            if Day.query.filter_by(number=box_number).first() != None:
+                return abort(400)
         elif view_level == "Weeks":
             new_box = Week(text, user_id, box_number, color_details)
+            if Week.query.filter_by(number=box_number).first() != None:
+                return abort(400)
         elif view_level == "Months":
             new_box = Month(text, user_id, box_number, color_details)
+            if Month.query.filter_by(number=box_number).first() != None:
+                return abort(400)
         elif view_level == "Years":
             new_box = Year(text, user_id, box_number, color_details)
+            if Year.query.filter_by(number=box_number).first() != None:
+                return abort(400)
         else:
             new_box = Decade(text, user_id, box_number, color_details)
-
-        # edit box with new text/colors/whatever changed
+            if Decade.query.filter_by(number=box_number).first() != None:
+                return abort(400)
 
         # commit changes
         db.session.add(new_box)
