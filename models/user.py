@@ -8,9 +8,13 @@ from models.text import Day, Week, Month, Year
 from flask_login import UserMixin
 from init import login_manager
 
+from flask import request, render_template
+
 @login_manager.user_loader
-def load_user(user_id):
-    return User.query.get(user_id)
+def load_user(user_email):
+    print(User.query.filter_by(email=user_email).first())
+    print(user_email)
+    return User.query.filter_by(email=user_email).first()
 
 
 class User(db.Model, UserMixin):
@@ -43,6 +47,9 @@ class User(db.Model, UserMixin):
 
     def __repr__(self):
         return f"User with email: {self.email}"
+
+    def get_id(self):
+        return self.email  # satisfy Flask-Login
 
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)

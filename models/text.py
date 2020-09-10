@@ -10,11 +10,11 @@ class Day(db.Model):
     colors = db.Column(db.Text)
 
     # connect day to user
-    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+    user_email = db.Column(db.Text, db.ForeignKey("users.email"))
 
-    def __init__(self, textcontent, user_id, number, colors):
+    def __init__(self, textcontent, user_email, number, colors):
         self.textcontent = textcontent
-        self.user_id = user_id
+        self.user_email = user_email
         self.number = number
         self.colors = colors
 
@@ -27,11 +27,11 @@ class Week(db.Model):
     colors = db.Column(db.Text)
 
     # connect day to user
-    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+    user_email = db.Column(db.Text, db.ForeignKey("users.email"))
 
-    def __init__(self, textcontent, user_id, number, colors):
+    def __init__(self, textcontent, user_email, number, colors):
         self.textcontent = textcontent
-        self.user_id = user_id
+        self.user_email = user_email
         self.number = number
         self.colors = colors
 
@@ -44,11 +44,11 @@ class Month(db.Model):
     colors = db.Column(db.Text)
 
     # connect day to user
-    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+    user_email = db.Column(db.Text, db.ForeignKey("users.email"))
 
-    def __init__(self, textcontent, user_id, number, colors):
+    def __init__(self, textcontent, user_email, number, colors):
         self.textcontent = textcontent
-        self.user_id = user_id
+        self.user_email = user_email
         self.number = number
         self.colors = colors
 
@@ -61,11 +61,11 @@ class Year(db.Model):
     colors = db.Column(db.Text)
 
     # connect day to user
-    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+    user_email = db.Column(db.Text, db.ForeignKey("users.email"))
 
-    def __init__(self, textcontent, user_id, number, colors):
+    def __init__(self, textcontent, user_email, number, colors):
         self.textcontent = textcontent
-        self.user_id = user_id
+        self.user_email = user_email
         self.number = number
         self.colors = colors
 
@@ -81,11 +81,11 @@ class Decade(db.Model):
     colors = db.Column(db.Text)
 
     # connect day to user
-    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+    user_email = db.Column(db.Integer, db.ForeignKey("users.email"))
 
-    def __init__(self, textcontent, user_id, number, colors):
+    def __init__(self, textcontent, user_email, number, colors):
         self.textcontent = textcontent
-        self.user_id = user_id
+        self.user_email = user_email
         self.number = number
         self.colors = colors
 

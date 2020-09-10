@@ -1,5 +1,6 @@
 import json
 import os
+from flask_login import login_required, current_user
 import yagmail
 import ast
 from dotenv import load_dotenv
@@ -124,35 +125,36 @@ class CreateBoxView(FlaskView):
     """Forms a new box with user info."""
 
     route_base = "/api/modify/"
-
+    @login_required
     def post(self):
+        print(current_user)
         dict_str = request.data.decode("UTF-8")
         mydata = ast.literal_eval(dict_str)
 
-        user_id = mydata["user_id"]
+        user_email = mydata["user_email"]
         view_level = mydata["view_level"]
         box_number = mydata["box_number"]
         text = mydata["text_content"]
         color_details = mydata["color_details"]
 
         if view_level == "Days":
-            new_box = Day(text, user_id, box_number, color_details)
+            new_box = Day(text, user_email, box_number, color_details)
             if Day.query.filter_by(number=box_number).first() != None:
                 return abort(400)
         elif view_level == "Weeks":
-            new_box = Week(text, user_id, box_number, color_details)
+            new_box = Week(text, user_email, box_number, color_details)
             if Week.query.filter_by(number=box_number).first() != None:
                 return abort(400)
         elif view_level == "Months":
-            new_box = Month(text, user_id, box_number, color_details)
+            new_box = Month(text, user_email, box_number, color_details)
             if Month.query.filter_by(number=box_number).first() != None:
                 return abort(400)
         elif view_level == "Years":
-            new_box = Year(text, user_id, box_number, color_details)
+            new_box = Year(text, user_email, box_number, color_details)
             if Year.query.filter_by(number=box_number).first() != None:
                 return abort(400)
         else:
-            new_box = Decade(text, user_id, box_number, color_details)
+            new_box = Decade(text, user_email, box_number, color_details)
             if Decade.query.filter_by(number=box_number).first() != None:
                 return abort(400)
 

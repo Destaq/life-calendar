@@ -96,10 +96,11 @@ class LoginView(FlaskView):
         form = LoginForm()
         if form.validate_on_submit():
             user = User.query.filter_by(email = form.email.data).first()
-
+            print(form.email.data, "is form.email.data")
             if user is not None:
                 if user.check_password(form.password.data) and user is not None:
                     login_user(user)
+                    print(current_user, "is current user")
                     return redirect(url_for("View:index"))
     
                 elif user.check_password(form.password.data) == False and user is not None:
