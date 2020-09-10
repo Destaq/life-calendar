@@ -12,8 +12,6 @@ from flask import request, render_template
 
 @login_manager.user_loader
 def load_user(user_email):
-    print(User.query.filter_by(email=user_email).first())
-    print(user_email)
     return User.query.filter_by(email=user_email).first()
 
 

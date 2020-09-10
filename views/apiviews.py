@@ -32,28 +32,26 @@ class DeleteBoxView(FlaskView):
     route_base = "/api/delete"
 
     def post(self, user_email):
-        user = User.query.filter_by(email=user_email).first()
-        # find box based on view, number
         view_level = request.get_json()["view_level"]
         box_number = request.get_json()["number"]
 
-        if view_level == "Days":
-            new_box = Day.query.filter_by(number=int(box_number)).first()
-        elif view_level == "Weeks":
-            new_box = Week.query.filter_by(number=int(box_number)).first()
-        elif view_level == "Months":
-            new_box = Month.query.filter_by(number=int(box_number)).first()
-        elif view_level == "Years":
-            new_box = Year.query.filter_by(number=int(box_number)).first()
-        else:
-            new_box = Decade.query.filter_by(number=int(box_number)).first()
+        check_user = User.query.filter_by(email = user_email).first()
 
-        # delete and disassociate from user
-        try:
-            db.session.delete(new_box)
+        query_function = getattr(check_user, f"{view_level[:-1].lower()}_info")
+
+        checker = query_function.all()
+
+        updated_box = None
+
+        for i in range(len(checker)):
+            if checker[i].number == box_number:
+                updated_box = checker[i]
+                break
+
+        # delete box object
+        if updated_box is not None:
+            db.session.delete(updated_box)
             db.session.commit()
-        except:
-            pass
 
         return jsonify(success = True)
 
@@ -98,7 +96,7 @@ class UpdateBoxView(FlaskView):
 
     route_base = "/api/update/"
 
-    def post(self):
+    def post(self, user_email):
         # read data from request
 
         request_json = request.get_json()
@@ -107,9 +105,22 @@ class UpdateBoxView(FlaskView):
         text = request_json["text"]
         colors = request_json["colors"]
 
+
+        check_user = User.query.filter_by(email = user_email).first()
+
+        query_function = getattr(check_user, f"{view_level.lower()}_info")
+
+        checker = query_function.all()
+
+        updated_box = None
+
+        for i in range(len(checker)):
+            if checker[i].number == box_number:
+                updated_box = checker[i]
+                break
+
         # assign box parameters
 
-        updated_box = globals()[view_level].query.filter_by(number=box_number).first()
         updated_box.textcontent = text
         updated_box.colors = colors
 
@@ -125,9 +136,8 @@ class CreateBoxView(FlaskView):
     """Forms a new box with user info."""
 
     route_base = "/api/modify/"
-    @login_required
+    @login_required  # TODO: check for login based on user_email
     def post(self):
-        print(current_user)
         dict_str = request.data.decode("UTF-8")
         mydata = ast.literal_eval(dict_str)
 
@@ -139,42 +149,44 @@ class CreateBoxView(FlaskView):
 
         if view_level == "Days":
             new_box = Day(text, user_email, box_number, color_details)
-            if Day.query.filter_by(number=box_number).first() != None:
+            check_user = User.query.filter_by(email = user_email).first()
+            checker = check_user.day_info.all()
+            checker = [e.number for e in checker]
+            if box_number in checker:
                 return abort(400)
         elif view_level == "Weeks":
             new_box = Week(text, user_email, box_number, color_details)
-            if Week.query.filter_by(number=box_number).first() != None:
+            check_user = User.query.filter_by(email = user_email).first()
+            checker = check_user.week_info.all()
+            checker = [e.number for e in checker]
+            if box_number in checker:
                 return abort(400)
         elif view_level == "Months":
             new_box = Month(text, user_email, box_number, color_details)
-            if Month.query.filter_by(number=box_number).first() != None:
+            check_user = User.query.filter_by(email = user_email).first()
+            checker = check_user.month_info.all()
+            checker = [e.number for e in checker]
+            if box_number in checker:
                 return abort(400)
         elif view_level == "Years":
             new_box = Year(text, user_email, box_number, color_details)
-            if Year.query.filter_by(number=box_number).first() != None:
+            check_user = User.query.filter_by(email = user_email).first()
+            checker = check_user.year_info.all()
+            checker = [e.number for e in checker]
+            if box_number in checker:
                 return abort(400)
         else:
             new_box = Decade(text, user_email, box_number, color_details)
-            if Decade.query.filter_by(number=box_number).first() != None:
+            check_user = User.query.filter_by(email = user_email).first()
+            checker = check_user.decade_info.all()
+            checker = [e.number for e in checker]
+            if box_number in checker:
                 return abort(400)
 
         # commit changes
         db.session.add(new_box)
         db.session.commit()
 
-        # example usage
-        restest = User.query.get(1)
-        print(restest)  # user with email: one@one.com
-        restest2 = Year.query.get(1)
-        jeff = restest2.user
-        print(
-            jeff.id,
-            jeff.email,
-            jeff.password_hash,
-            jeff.age_expectancy,
-            jeff.dob,
-            jeff.subscribe,
-        )
         return {"result": "success"}
 
 
