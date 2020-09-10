@@ -766,6 +766,20 @@ function deleteConfirmation(i) {
     if (confirmation == true) {
         localStorage.removeItem(`${current_view}-${i + 1}`);
         document.querySelector(`#user-text-${i + 1}`).innerHTML = "";
+
+        // delete from database; TODO: custom email
+        fetch("/api/delete/one@one.com/",
+            {
+                headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+                },
+                method: "POST",
+                body: JSON.stringify({view_level: current_view, number: i + 1})
+            })
+            .then(res => res.json()).then(data => {
+                console.log(data)})
+            .catch(function(res){ console.log(res) })
     
         const delete_success = document.createElement("div");
         delete_success.classList.add("alert");
