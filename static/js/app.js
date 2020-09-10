@@ -625,6 +625,7 @@ async function rewriteModal(i) {
         // change back to edit
         document.querySelector(`#submit-year-${i + 1}`).textContent = "Edit";
 
+        var outputText;
 
         // display changes
         if (editingType == "simple") {
@@ -645,6 +646,8 @@ async function rewriteModal(i) {
                         .value,
                     html = converter.makeHtml(text);
 
+                outputText = document.querySelector(`#what-did-${i + 1}-markdown`).value;
+
                 // NOTE - implement DB storage for users...
                 localStorage.setItem(
                     `${current_view}-${i + 1}`,
@@ -652,6 +655,7 @@ async function rewriteModal(i) {
                 );
             } else {
                 html = document.querySelector(`#user-text-${i + 1}`).innerHTML;
+                outputText = document.querySelector(`#what-did-${i + 1}-markdown`).innerHTML;
             }
 
             document.querySelector(`#user-text-${i + 1}`).innerHTML = html;
@@ -664,7 +668,9 @@ async function rewriteModal(i) {
             // TODO - to DB too
 
             try {
-                let myContent = tinymce.get(`what-did-${i + 1}`).getContent()
+                let myContent = tinymce.get(`what-did-${i + 1}`).getContent();
+
+                outputText = tinymce.get(`what-did-${i + 1}`).getContent();
 
                 if (myContent != "") {
                     document.querySelector(`#user-text-${i + 1}`).innerHTML = myContent
@@ -683,6 +689,35 @@ async function rewriteModal(i) {
                 // switched too many times, too quickly. have nothing happen
             }
         }
+
+        // make request to server to create/update box; TODO: custom email
+        fetch("/api/update/one@one.com/", // first try to modify
+        {
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+            method: "POST",
+            body: JSON.stringify({view_level: current_view, number: i + 1, text: outputText, colors: "IGNORE"})
+        })
+        .then(res => res.json()).then(data => {
+              console.log(data)})
+        .catch(function(res){ console.log(res) })
+
+        // otherwise create box
+        fetch("/api/addbox/",
+            {
+                headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+                },
+                method: "POST",
+                body: JSON.stringify({user_email: "one@one.com", view_level: current_view, box_number: i + 1, text_content: outputText, color_details: "IGNORE"})
+            })
+            .then(res => res.json()).then(data => {
+                console.log(data)})
+            .catch(function(res){ console.log(res) })
+
 
         // make all images responsive to width
         let unresponse_images = document

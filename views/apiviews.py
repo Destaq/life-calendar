@@ -135,7 +135,7 @@ class UpdateBoxView(FlaskView):
 class CreateBoxView(FlaskView):
     """Forms a new box with user info."""
 
-    route_base = "/api/modify/"
+    route_base = "/api/addbox/"
     @login_required  # TODO: check for login based on user_email
     def post(self):
         dict_str = request.data.decode("UTF-8")
