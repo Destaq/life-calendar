@@ -33,7 +33,7 @@ class DeleteBoxView(FlaskView):
 
     def post(self, user_email):
         view_level = request.get_json()["view_level"]
-        box_number = request.get_json()["number"]
+        box_number = int(request.get_json()["number"])
 
         check_user = User.query.filter_by(email = user_email).first()
 
@@ -100,7 +100,7 @@ class UpdateBoxView(FlaskView):
         # read data from request
 
         request_json = request.get_json()
-        box_number = request_json["number"]
+        box_number = int(request_json["number"])
         view_level = request_json["view_level"][:-1]  # must be exact to class name, cutting to keep same as others
         text = request_json["text"]
         colors = request_json["colors"]
@@ -121,8 +121,11 @@ class UpdateBoxView(FlaskView):
 
         # assign box parameters
 
-        updated_box.textcontent = text
-        updated_box.colors = colors
+        if text != "IGNORE":
+            updated_box.textcontent = text
+
+        if colors != "IGNORE":
+            updated_box.colors = colors
 
         # commit changes
 
@@ -143,7 +146,7 @@ class CreateBoxView(FlaskView):
 
         user_email = mydata["user_email"]
         view_level = mydata["view_level"]
-        box_number = mydata["box_number"]
+        box_number = int(mydata["box_number"])
         text = mydata["text_content"]
         color_details = mydata["color_details"]
 

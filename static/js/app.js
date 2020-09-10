@@ -692,33 +692,32 @@ async function rewriteModal(i) {
 
         // make request to server to create/update box; TODO: custom email
         fetch("/api/update/one@one.com/", // first try to modify
-        {
-            headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json'
-            },
-            method: "POST",
-            body: JSON.stringify({view_level: current_view, number: i + 1, text: outputText, colors: "IGNORE"})
-        })
-        .then(res => res.json()).then(data => {
-              console.log(data)})
-        .catch(function(res){ console.log(res) })
-
-        // otherwise create box
-        fetch("/api/addbox/",
             {
                 headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
                 },
                 method: "POST",
-                body: JSON.stringify({user_email: "one@one.com", view_level: current_view, box_number: i + 1, text_content: outputText, color_details: "IGNORE"})
+                body: JSON.stringify({view_level: current_view, number: i + 1, text: outputText, colors: "IGNORE"})
             })
             .then(res => res.json()).then(data => {
-                console.log(data)})
-            .catch(function(res){ console.log(res) })
-
-
+                    console.log(data)})
+            .catch(function(res){ 
+                // otherwise create box
+                fetch("/api/addbox/",
+                {
+                    headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                    },
+                    method: "POST",
+                    body: JSON.stringify({user_email: "one@one.com", view_level: current_view, box_number: i + 1, text_content: outputText, color_details: "IGNORE"})
+                })
+                .then(res => res.json()).then(data => {
+                    console.log(data)})
+                .catch(function(res){ console.log(res) })
+            })
+            
         // make all images responsive to width
         let unresponse_images = document
             .querySelector(`#user-text-${i + 1}`)

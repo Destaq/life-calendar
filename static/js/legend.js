@@ -45,7 +45,6 @@ if (localStorage.getItem("dontModify") != null) {
     dontModify = JSON.parse(localStorage.getItem("dontModify"))
     for (let i = 4; i < Object.keys(dontModify).length + 4; i++) {
         const tableToModify = Object.keys(dontModify)[i - 4]
-        console.log("thisi ", dontModify[tableToModify])
         document.querySelector(`#${tableToModify}`).textContent = dontModify[tableToModify][0]
     }
 }

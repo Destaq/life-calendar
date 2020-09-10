@@ -262,6 +262,33 @@ function shadeCustomizedButton(rgba, shade) {
 
     // update locastorage - TODO: DB w/ button stripes
     localStorage.setItem(`${current_view}-${buttonToShadeValue}-background`, customStr);
+
+    // make request to server to create/update box; TODO: custom email
+    fetch("/api/update/one@one.com/", // first try to modify
+    {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        method: "POST",
+        body: JSON.stringify({view_level: current_view, number: buttonToShadeValue, text: "IGNORE", colors: customStr})
+    })
+    .then(res => res.json()).then(data => {
+            console.log(data)})
+    .catch(function(res){
+        fetch("/api/addbox/",
+            {
+                headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+                },
+                method: "POST",
+                body: JSON.stringify({user_email: "one@one.com", view_level: current_view, box_number: buttonToShadeValue, text_content: "", color_details: customStr})
+            })
+            .then(res => res.json()).then(data => {
+                console.log(data)})
+            .catch(function(res){ console.log(res) })
+        })
 }
 
 function RGBAtoRGB(rgba) {
