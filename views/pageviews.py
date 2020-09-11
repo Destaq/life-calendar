@@ -1,3 +1,4 @@
+from flask.json import jsonify
 from flask_classful import FlaskView
 from flask import render_template, session, redirect, url_for, abort, flash
 from models.user import db, User
@@ -108,3 +109,12 @@ class LoginView(FlaskView):
                 return render_template("jinja/login.jinja", form=form, error="A user with this email does not exist!")
 
         return render_template("jinja/login.jinja", form=form, error=None)
+
+class GrabCurrentUserView(FlaskView):
+
+    route_base = "/api/currentuser/"
+    def get(self):
+        if current_user.get_id() != None:
+            return current_user.get_id()
+        else:
+            return abort(403, "Not currently logged in.")  # user not logged in
