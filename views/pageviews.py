@@ -82,6 +82,8 @@ class SignupView(FlaskView):
                 db.session.add(new_user)
                 db.session.commit()
 
+                login_user(new_user)
+
                 return redirect(url_for("View:index"))
 
         else:
