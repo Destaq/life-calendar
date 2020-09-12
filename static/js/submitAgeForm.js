@@ -176,7 +176,7 @@ async function updateDatabase(age_expectancy, dob) {
             })
             .then(res => res.json()).then(data => {
                 console.log(data)})
-            .catch(function(res){ console.log(res) }
+            .catch(function(res){ console.info(res) }
         );
     }
 

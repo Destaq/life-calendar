@@ -214,7 +214,7 @@ class UpdateUserInfoView(FlaskView):
         db.session.add(user)
         db.session.commit()
 
-        return jsonify(200)
+        return {"result": "successfully added"}
 
 
 class ContactSubmitView(FlaskView):
