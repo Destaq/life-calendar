@@ -1,8 +1,8 @@
 import { generateBottomBar } from "/static/js/pagination.js";
 import { execFancy, execSimple } from "/static/js/userInput.js";
 
-var age_expectancy = localStorage.getItem("age-expectancy");
-var birthdate_value = localStorage.getItem("birthday");
+var age_expectancy;
+var birthdate_value;
 
 import { callDB } from "/static/js/readUserContent.js";
 async function readFromServer() {
@@ -77,23 +77,34 @@ const granularity_months = document.querySelector("#view-months");
 const granularity_weeks = document.querySelector("#view-weeks");
 const granularity_days = document.querySelector("#view-days");
 
-if (age_expectancy == null || birthdate_value == null) {
-    // they need to head over to /quiz to find out!
-    document.querySelector("#missingData").innerHTML = `
-    <strong>You haven't filled out your data!</strong> Please head over to the <a href="/quiz/">quiz page</a> to submit your life expectancy so that we can generate your life calendar!
-    `;
-} else {
-    // TODO: if registered user, use XOR with data from DB
+// get information from server
+async function runGetServer() {
+    await readFromServer();
+    readFromUrl();
 
-    createMap(is_new_user, current_view);
+    age_expectancy = localStorage.getItem("age-expectancy");
+    birthdate_value = localStorage.getItem("birthday");
 
-    // show the granularity + restart buttons
-    try {
-        document
-            .querySelector(".dontShowAtStart")
-            .classList.remove("dontShowAtStart");
-    } catch {}
+    if (age_expectancy == null || birthdate_value == null) {
+        // they need to head over to /quiz to find out!
+        document.querySelector("#missingData").innerHTML = `
+        <strong>You haven't filled out your data!</strong> Please head over to the <a href="/quiz/">quiz page</a> to submit your life expectancy so that we can generate your life calendar!
+        `;
+    } else {
+        // TODO: if registered user, use XOR with data from DB
+        readFromUrl();
+        createMap(is_new_user, current_view);
+
+        // show the granularity + restart buttons
+        try {
+            document
+                .querySelector(".dontShowAtStart")
+                .classList.remove("dontShowAtStart");
+        } catch {}
+    }
 }
+
+runGetServer();
 
 // Event Listener for home page - go to current point in life
 document.querySelector("#centerPage").addEventListener("click", function() {
@@ -161,7 +172,6 @@ granularity_days.addEventListener("click", function () {
 
 // main function that creates all of the buttons + markdown for that view
 async function createMap(is_new, gran_level, e) {
-    await readFromServer();
     try {
         document
             .querySelector(".dontShowAtStart")

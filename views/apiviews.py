@@ -79,12 +79,17 @@ class ReadAllView(FlaskView):
         years = [(e.number, e.textcontent, e.colors) for e in years]
         decades = [(e.number, e.textcontent, e.colors) for e in decades]
 
+        age_expectancy = user.age_expectancy
+        dob = user.dob
+
         userdata = {
             "days": days,
             "weeks": weeks,
             "months": months,
             "years": years,
             "decades": decades,
+            "age_expectancy": age_expectancy,
+            "dob": dob
         }
 
         # send to JS to store in local storage

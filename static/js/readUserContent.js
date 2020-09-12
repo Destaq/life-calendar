@@ -21,8 +21,6 @@ export async function callDB() {
     for (var key in user_data.result) {
         if (acceptable.includes(key)) {
             for (var subkey in Array.from(user_data.result[key])) {
-                console.log(subkey, key, user_data.result[key][subkey]);
-
                 // set text box **value**
                 localStorage.setItem(
                     capitalize(key) + "-" + user_data.result[key][subkey][0],
@@ -40,6 +38,10 @@ export async function callDB() {
                     );
                 }
             }
+        } else if (key === "age_expectancy") {
+            localStorage.setItem("age-expectancy", parseInt(user_data.result[key]));
+        } else if (key === "dob") {
+            localStorage.setItem("birthdate_value", user_data.result[key]);
         }
     }
 }
