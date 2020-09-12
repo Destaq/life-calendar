@@ -4,6 +4,11 @@ import { execFancy, execSimple } from "/static/js/userInput.js";
 var age_expectancy = localStorage.getItem("age-expectancy");
 var birthdate_value = localStorage.getItem("birthday");
 
+import { callDB } from "/static/js/readUserContent.js";
+async function readFromServer() {
+    await callDB();
+}
+
 // whether or not the clipboard button is displayed
 let is_clipboard = false;
 var current_view = "Years";
@@ -155,7 +160,8 @@ granularity_days.addEventListener("click", function () {
 });
 
 // main function that creates all of the buttons + markdown for that view
-function createMap(is_new, gran_level, e) {
+async function createMap(is_new, gran_level, e) {
+    await readFromServer();
     try {
         document
             .querySelector(".dontShowAtStart")

@@ -73,11 +73,11 @@ class ReadAllView(FlaskView):
         decades = user.decade_info.all()
 
         # set that data to a dictionary
-        days = [(e.id, e.textcontent, e.colors) for e in days]
-        weeks = [(e.id, e.textcontent, e.colors) for e in weeks]
-        months = [(e.id, e.textcontent, e.colors) for e in months]
-        years = [(e.id, e.textcontent, e.colors) for e in years]
-        decades = [(e.id, e.textcontent, e.colors) for e in decades]
+        days = [(e.number, e.textcontent, e.colors) for e in days]
+        weeks = [(e.number, e.textcontent, e.colors) for e in weeks]
+        months = [(e.number, e.textcontent, e.colors) for e in months]
+        years = [(e.number, e.textcontent, e.colors) for e in years]
+        decades = [(e.number, e.textcontent, e.colors) for e in decades]
 
         userdata = {
             "days": days,
