@@ -612,7 +612,7 @@ async function rewriteModal(i) {
         }
     }
 
-    function editModalBox(i) {
+    async function editModalBox(i) {
         // remove clipboard button
         if (is_clipboard == true) {
             try {
@@ -696,33 +696,44 @@ async function rewriteModal(i) {
             }
         }
 
-        // make request to server to create/update box; TODO: custom email
-        fetch("/api/update/one@one.com/", // first try to modify
-            {
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                method: "POST",
-                body: JSON.stringify({view_level: current_view, number: i + 1, text: outputText, colors: "IGNORE"})
-            })
-            .then(res => res.json()).then(data => {
-                    console.log(data)})
-            .catch(function(res){ 
-                // otherwise create box
-                fetch("/api/addbox/",
+        let current_user;
+
+        // grab custom email
+        await fetch("/api/currentuser/")
+            .then((response) => response.text())
+            .then((data) => {
+                current_user = data;
+            });
+
+        // make request to server to create/update box
+        if (current_user != "") {
+            await fetch(`/api/update/${current_user}/`, // first try to modify
                 {
                     headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
                     },
                     method: "POST",
-                    body: JSON.stringify({user_email: "one@one.com", view_level: current_view, box_number: i + 1, text_content: outputText, color_details: "IGNORE"})
+                    body: JSON.stringify({view_level: current_view, number: i + 1, text: outputText, colors: "IGNORE"})
                 })
                 .then(res => res.json()).then(data => {
-                    console.log(data)})
-                .catch(function(res){ console.log(res) })
-            })
+                        console.log(data)})
+                .catch(function(res){ 
+                    // otherwise create box
+                    fetch("/api/addbox/",
+                    {
+                        headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                        },
+                        method: "POST",
+                        body: JSON.stringify({user_email: current_user, view_level: current_view, box_number: i + 1, text_content: outputText, color_details: "IGNORE"})
+                    })
+                    .then(res => res.json()).then(data => {
+                        console.log(data)})
+                    .catch(function(res){ console.log(res) })
+                })
+        }
             
         // make all images responsive to width
         let unresponse_images = document
@@ -766,25 +777,36 @@ function checkSavedText(i) {
 }
 
 // deletes everything from a modal, removes it from statistics
-function deleteConfirmation(i) {
+async function deleteConfirmation(i) {
     let confirmation = confirm("Are you sure that you would like to permanently delete all info associated with this box?\n\nThis action is irreversible!");
     if (confirmation == true) {
+        let current_user; 
+
         localStorage.removeItem(`${current_view}-${i + 1}`);
         document.querySelector(`#user-text-${i + 1}`).innerHTML = "";
 
+        // grab custom email
+        await fetch("/api/currentuser/")
+            .then((response) => response.text())
+            .then((data) => {
+                current_user = data;
+            });
+
         // delete from database; TODO: custom email
-        fetch("/api/delete/one@one.com/",
-            {
-                headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-                },
-                method: "POST",
-                body: JSON.stringify({view_level: current_view, number: i + 1})
-            })
-            .then(res => res.json()).then(data => {
-                console.log(data)})
-            .catch(function(res){ console.log(res) })
+        if (current_user != "") {
+            await fetch(`/api/delete/${current_user}/`,
+                {
+                    headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                    },
+                    method: "POST",
+                    body: JSON.stringify({view_level: current_view, number: i + 1})
+                })
+                .then(res => res.json()).then(data => {
+                    console.log(data)})
+                .catch(function(res){ console.log(res) })
+        }
     
         const delete_success = document.createElement("div");
         delete_success.classList.add("alert");

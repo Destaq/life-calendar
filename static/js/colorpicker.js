@@ -184,7 +184,7 @@ function setupUnshading() {
     shadeCustomizedButton("rgb(0, 0, 153)", false);
 }
 
-function shadeCustomizedButton(rgba, shade) {
+async function shadeCustomizedButton(rgba, shade) {
     const buttonToShadeValue = document.querySelector("#shadeDropdown").value;
 
     // get current view
@@ -263,32 +263,43 @@ function shadeCustomizedButton(rgba, shade) {
     // update locastorage - TODO: DB w/ button stripes
     localStorage.setItem(`${current_view}-${buttonToShadeValue}-background`, customStr);
 
+    let current_user;
+
+    // grab custom email
+    await fetch("/api/currentuser/")
+        .then((response) => response.text())
+        .then((data) => {
+            current_user = data;
+        });
+
     // make request to server to create/update box; TODO: custom email
-    fetch("/api/update/one@one.com/", // first try to modify
-    {
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        method: "POST",
-        body: JSON.stringify({view_level: current_view, number: buttonToShadeValue, text: "IGNORE", colors: customStr})
-    })
-    .then(res => res.json()).then(data => {
-            console.log(data)})
-    .catch(function(res){
-        fetch("/api/addbox/",
-            {
-                headers: {
+    if (current_user != "") {
+        await fetch(`/api/update/${current_user}/`, // first try to modify
+        {
+            headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
-                },
-                method: "POST",
-                body: JSON.stringify({user_email: "one@one.com", view_level: current_view, box_number: buttonToShadeValue, text_content: "", color_details: customStr})
-            })
-            .then(res => res.json()).then(data => {
-                console.log(data)})
-            .catch(function(res){ console.log(res) })
+            },
+            method: "POST",
+            body: JSON.stringify({view_level: current_view, number: buttonToShadeValue, text: "IGNORE", colors: customStr})
         })
+        .then(res => res.json()).then(data => {
+                console.log(data)})
+        .catch(function(res){
+            fetch("/api/addbox/",
+                {
+                    headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                    },
+                    method: "POST",
+                    body: JSON.stringify({user_email: current_user, view_level: current_view, box_number: buttonToShadeValue, text_content: "", color_details: customStr})
+                })
+                .then(res => res.json()).then(data => {
+                    console.log(data)})
+                .catch(function(res){ console.log(res) })
+            })
+    }
 }
 
 function RGBAtoRGB(rgba) {
