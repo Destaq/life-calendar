@@ -25,9 +25,11 @@ finished_button.addEventListener("click", function (e) {
         );
         const error = setTimeout(warningHide, 3000);
     } else {
-        // TODO: move to DB for users
         localStorage.setItem("age-expectancy", expectancy.value);
         localStorage.setItem("birthday", birthdate.value);
+
+        // update database
+        updateDatabase(expectancy.value, birthdate.value);
 
         // set initial data values for statistics page
         localStorage.setItem("daysLeft", calculateRemaining("days"));
@@ -151,4 +153,31 @@ function formatDate(d) {
         day = '0' + day;
 
     return [year, month, day].join('-');
+}
+
+async function updateDatabase(age_expectancy, dob) {
+    let current_user;
+
+    await fetch("/api/currentuser/")
+        .then((response) => response.text())
+        .then((data) => {
+            current_user = data;
+        });
+
+    if (current_user != "") {
+        await fetch(`/api/updateuser/${current_user}/`,
+            {
+                headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+                },
+                method: "POST",
+                body: JSON.stringify({dob: dob, age_expectancy: age_expectancy})
+            })
+            .then(res => res.json()).then(data => {
+                console.log(data)})
+            .catch(function(res){ console.log(res) }
+        );
+    }
+
 }

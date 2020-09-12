@@ -192,6 +192,30 @@ class CreateBoxView(FlaskView):
 
         return {"result": "success"}
 
+# TODO: protect route
+class UpdateUserInfoView(FlaskView):
+    route_base = "/api/updateuser/"
+
+    def post(self, user_email):
+        request_json = request.get_json()
+
+        user = User.query.filter_by(email = user_email).first()
+        
+        if 'age_expectancy' in request_json.keys() and 'dob' in request_json.keys():
+            user.age_expectancy = int(request_json['age_expectancy'])
+            user.dob = request_json['dob']
+        elif 'age_expectancy' in request_json.keys():
+            user.age_expectancy = int(request_json['age_expectancy'])
+        elif 'dob' in request_json.keys():
+            user.dob = request_json['dob']
+        else:
+            return abort(400)
+
+        db.session.add(user)
+        db.session.commit()
+
+        return jsonify(200)
+
 
 class ContactSubmitView(FlaskView):
     route_base = "/contact/"

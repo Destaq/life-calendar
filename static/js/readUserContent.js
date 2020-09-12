@@ -1,19 +1,19 @@
 var current_user;
-var user_data;
-
+var user_data = { result: [] };
 
 export async function callDB() {
     await fetch("/api/currentuser/")
         .then((response) => response.text())
         .then((data) => {
-            console.log(data);
             current_user = data;
         });
 
-    // read data based on current user
-    await fetch(`/api/read/${current_user}/`)
-        .then((data) => data.json())
-        .then((result) => (user_data = result));
+    if ((current_user != "")) {
+        // read data based on current user
+        await fetch(`/api/read/${current_user}/`)
+            .then((data) => data.json())
+            .then((result) => (user_data = result));
+    }
 
     let acceptable = ["days", "weeks", "months", "years", "decades"];
 

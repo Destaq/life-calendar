@@ -117,4 +117,4 @@ class GrabCurrentUserView(FlaskView):
         if current_user.get_id() != None:
             return current_user.get_id()
         else:
-            return abort(403, "Not currently logged in.")  # user not logged in
+            return ""  # user not logged in
