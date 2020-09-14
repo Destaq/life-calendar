@@ -36,6 +36,11 @@ class DeleteBoxView(FlaskView):
         box_number = int(request.get_json()["number"])
 
         check_user = User.query.filter_by(email = user_email).first()
+        if current_user.is_authenticated:
+            if current_user.email != check_user.email:
+                return abort(403)
+        else:
+           return abort(403)
 
         query_function = getattr(check_user, f"{view_level[:-1].lower()}_info")
 
@@ -65,6 +70,12 @@ class ReadAllView(FlaskView):
     def get(self, user_email):
         # read all data associated with a user
         user = User.query.filter_by(email=user_email).first()
+
+        if current_user.is_authenticated:
+            if current_user.email != user.email:
+                return abort(403)
+        else:
+           return abort(403)
 
         days = user.day_info.all()
         weeks = user.week_info.all()
@@ -112,6 +123,11 @@ class UpdateBoxView(FlaskView):
 
 
         check_user = User.query.filter_by(email = user_email).first()
+        if current_user.is_authenticated:
+            if current_user.email != check_user.email:
+                return abort(403)
+        else:
+           return abort(403)
 
         query_function = getattr(check_user, f"{view_level.lower()}_info")
 
@@ -144,7 +160,6 @@ class CreateBoxView(FlaskView):
     """Forms a new box with user info."""
 
     route_base = "/api/addbox/"
-    @login_required  # TODO: check for login based on user_email
     def post(self):
         dict_str = request.data.decode("UTF-8")
         mydata = ast.literal_eval(dict_str)
@@ -155,37 +170,39 @@ class CreateBoxView(FlaskView):
         text = mydata["text_content"]
         color_details = mydata["color_details"]
 
+        check_user = User.query.filter_by(email = user_email).first()
+        if current_user.is_authenticated:
+            if current_user.email != check_user.email:
+                return abort(403)
+        else:
+           return abort(403)
+
         if view_level == "Days":
             new_box = Day(text, user_email, box_number, color_details)
-            check_user = User.query.filter_by(email = user_email).first()
             checker = check_user.day_info.all()
             checker = [e.number for e in checker]
             if box_number in checker:
                 return abort(400)
         elif view_level == "Weeks":
             new_box = Week(text, user_email, box_number, color_details)
-            check_user = User.query.filter_by(email = user_email).first()
             checker = check_user.week_info.all()
             checker = [e.number for e in checker]
             if box_number in checker:
                 return abort(400)
         elif view_level == "Months":
             new_box = Month(text, user_email, box_number, color_details)
-            check_user = User.query.filter_by(email = user_email).first()
             checker = check_user.month_info.all()
             checker = [e.number for e in checker]
             if box_number in checker:
                 return abort(400)
         elif view_level == "Years":
             new_box = Year(text, user_email, box_number, color_details)
-            check_user = User.query.filter_by(email = user_email).first()
             checker = check_user.year_info.all()
             checker = [e.number for e in checker]
             if box_number in checker:
                 return abort(400)
         else:
             new_box = Decade(text, user_email, box_number, color_details)
-            check_user = User.query.filter_by(email = user_email).first()
             checker = check_user.decade_info.all()
             checker = [e.number for e in checker]
             if box_number in checker:
@@ -197,7 +214,6 @@ class CreateBoxView(FlaskView):
 
         return {"result": "success"}
 
-# TODO: protect route
 class UpdateUserInfoView(FlaskView):
     route_base = "/api/updateuser/"
 
@@ -205,6 +221,12 @@ class UpdateUserInfoView(FlaskView):
         request_json = request.get_json()
 
         user = User.query.filter_by(email = user_email).first()
+
+        if current_user.is_authenticated:
+            if current_user.email != user.email:
+                return abort(403)
+        else:
+           return abort(403)        
         
         if 'age_expectancy' in request_json.keys() and 'dob' in request_json.keys():
             user.age_expectancy = int(request_json['age_expectancy'])
