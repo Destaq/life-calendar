@@ -26,8 +26,22 @@ function confirmLogout() {
 }
 
 function performLogout() {
-    // LS - TODO - set cookie for whether logged in/out
+    // remove info in local storage
     localStorage.clear();
 
-    location.href = "/login";
+    // log user out from DB
+    fetch("/logout/", {
+        headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+        },
+        method: "POST",
+    })
+        .then((res) => res.json())
+        .then((data) => {
+            console.log(data);
+        })
+        .catch(function (res) {
+            console.log(res);
+        });
 }

@@ -1,6 +1,7 @@
 from flask.json import jsonify
 from flask_classful import FlaskView
 from flask import render_template, session, redirect, url_for, abort, flash
+from flask_login.utils import login_required, logout_user
 from models.user import db, User
 from views.forms import LoginForm, SignupForm
 from flask_login import login_user, current_user
@@ -111,6 +112,17 @@ class LoginView(FlaskView):
                 return render_template("jinja/login.jinja", form=form, error="A user with this email does not exist!")
 
         return render_template("jinja/login.jinja", form=form, error=None)
+
+class LogOutView(FlaskView):
+
+    route_base = "/logout/"
+
+    @login_required
+    def post(self):
+        print(current_user, current_user.is_authenticated)
+        logout_user()
+        print(current_user, current_user.is_authenticated)
+        return redirect("/login")
 
 class GrabCurrentUserView(FlaskView):
 
