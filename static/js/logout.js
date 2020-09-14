@@ -4,7 +4,20 @@ try {
 } catch {}
 const modalLogout = document.querySelector("#logoutFinalButton");
 
-logoutButton.addEventListener("click", confirmLogout);
+try {
+    logoutButton.addEventListener("click", confirmLogout);
+} catch {
+    const loginButton = document.querySelector("#logUserIn");
+    const registerButton = document.querySelector("#registerUser");
+
+    loginButton.addEventListener("click", () => {
+        location.href = "/login/";
+    });
+
+    registerButton.addEventListener("click", () => {
+        location.href = "/signup/";
+    });
+} // essentially they are not logged in
 
 try {
     logoutLink.addEventListener("click", function () {
@@ -42,6 +55,9 @@ function performLogout() {
             console.log(data);
         })
         .catch(function (res) {
+            // already logged out
             console.log(res);
+
+            location.href = "/login/";
         });
 }

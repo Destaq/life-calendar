@@ -32,7 +32,7 @@
 
 <body class="d-flex flex-column min-vh-100">
     <nav class="navbar-dark navbar-expand-lg bg-dark navbar mb-2">
-        <a class="navbar-brand" href="/">Life Calendar</a>
+        <a class="navbar-brand mb-1" href="/">Life Calendar</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -44,19 +44,32 @@
                     <a class="nav-link" href="/statistics">Statistics</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/download">Download</a>
+                    <a class="nav-link mb-1" href="/download">Download</a>
                 </li>
             </ul>
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item mr-4">
-                    <a href="/goals" class="nav-link">Goals</a>
-                </li>
-                <li class="nav-item mr-4">
-                    <a class="nav-link" href="/settings">Settings</a>
-                </li>
-                <li class="nav-item mr-auto">
-                    <button type="button" class="btn btn-outline-danger nav-link" href="#" id="logUserOut">&nbsp;&nbsp;&nbsp;Log Out&nbsp;&nbsp;&nbsp;</button>
-                </li>
+                {% if current_user.is_authenticated %}
+                    <li class="nav-item mr-3">
+                        <a href="/goals" class="nav-link">Goals</a>
+                    </li>
+                    <li class="nav-item mr-4">
+                        <a class="nav-link" href="/settings">Settings</a>
+                    </li>
+                    <li class="nav-item mr-auto">
+                        <button type="button" class="btn btn-outline-danger nav-link" href="#" id="logUserOut">&nbsp;&nbsp;&nbsp;Log Out&nbsp;&nbsp;&nbsp;</button>
+                    </li>
+                {% else %}
+                    <li class="nav-item mr-5">
+                        <a href="/goals" class="nav-link">Goals</a>
+                    </li>
+                    <li class="nav-item mr-3 mb-1">
+                        <button type="button" class="btn btn-outline-success nav-link" href="/register/" id="registerUser">&nbsp;&nbsp;&nbsp;Sign Up&nbsp;&nbsp;&nbsp;</button>
+                    </li>
+                    <li class="nav-item mr-auto">
+                        <button type="button" class="btn btn-outline-warning nav-link" href="/login/" id="logUserIn">&nbsp;&nbsp;&nbsp;Log In&nbsp;&nbsp;&nbsp;</button>
+                    </li>
+                {% endif %}
+                
             </ul>
         </div>
     </nav>
