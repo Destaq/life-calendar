@@ -30,6 +30,7 @@ class User(db.Model, UserMixin):
     legend_text = db.Column(db.Text)
     goals_text = db.Column(db.Text)
     statistics_text = db.Column(db.Text)
+    joined = db.Column(db.String(16))
 
     day_info = db.relationship("Day", backref="user", lazy="dynamic")
     week_info = db.relationship("Week", backref="user", lazy="dynamic")

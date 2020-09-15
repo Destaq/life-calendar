@@ -161,6 +161,22 @@ class UpdateBoxView(FlaskView):
 
         return jsonify(success = True)
 
+class ReturnAttrView(FlaskView):
+
+    route_base = "/api/read_attr/"
+
+    def get(self, user_email):
+
+        user = User.query.filter_by(email = user_email).first()
+
+        if current_user.is_authenticated:
+            if current_user.email != user.email:
+                return abort(403)
+        else:
+            return abort(403)
+
+        return {"result": user.joined}
+
 class UpdateAttrView(FlaskView):
 
     route_base = "/api/update_attr/"
