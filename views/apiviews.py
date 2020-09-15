@@ -96,6 +96,8 @@ class ReadAllView(FlaskView):
         goals_info = user.goals_text
         statistics_info = user.statistics_text
 
+        joined = user.joined
+
         userdata = {
             "days": days,
             "weeks": weeks,
@@ -106,7 +108,8 @@ class ReadAllView(FlaskView):
             "dob": dob,
             "legend": legend_info,
             "goals": goals_info,
-            "statistics": statistics_info
+            "statistics": statistics_info,
+            "joined": joined
         }
 
         # send to JS to store in local storage
@@ -177,6 +180,30 @@ class ReturnAttrView(FlaskView):
 
         return {"result": user.joined}
 
+class SimpleAttrUpdateView(FlaskView):
+
+    route_base = "/api/simple_update/"
+
+    def post(self, user_email):
+        request_json = request.get_json()
+
+        check_user = User.query.filter_by(email = user_email).first()
+        if current_user.is_authenticated:
+            if current_user.email != check_user.email:
+                return abort(403)
+        else:
+           return abort(403)
+
+        user = User.query.filter_by(email = user_email).first()
+
+        for key in list(request_json.keys()):
+            setattr(user, key, request_json[key])
+
+        db.session.add(user)
+        db.session.commit()
+
+        return jsonify(success = True)
+
 class UpdateAttrView(FlaskView):
 
     route_base = "/api/update_attr/"
@@ -202,12 +229,17 @@ class UpdateAttrView(FlaskView):
 
         # generate Python dictionary
         for key in greater_lst:
-            send_result = eval(getattr(user, key))
-            for req_key in req_lst:
-                # update only newly added attributes
-                send_result[req_key] = request_json[key][req_key]
+            try:
+                send_result = eval(getattr(user, key))
+                for req_key in req_lst:
+                    # update only newly added attributes
+                    send_result[req_key] = request_json[key][req_key]
 
-            User.update_attribute(user, key, str(send_result))
+                User.update_attribute(user, key, str(send_result))
+
+            except:
+                print("some error")
+
 
         db.session.add(user)
         db.session.commit()

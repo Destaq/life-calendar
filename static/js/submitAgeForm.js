@@ -58,9 +58,40 @@ finished_button.addEventListener("click", async function (e) {
         if (localStorage.getItem("totalWords") == null) {
             localStorage.setItem("totalWords", 0);
         }
-        if (localStorage.getItem("joined") === null) {
+
+        let joined_for_database;
+        if (await checkDBJoin() === null) { // TODO: check DB
+            console.log("join is empty...")
             let today = new Date(Date.now());
             localStorage.setItem("joined", formatDate(today));
+            joined_for_database = formatDate(today);
+        } else {
+            joined_for_database = await checkDBJoin();
+        }
+
+        let current_user;
+
+        // grab current user
+        await fetch("/api/currentuser/")
+            .then((response) => response.text())
+            .then((data) => {
+                current_user = data;
+            });
+    
+        // add information to database
+        if (current_user !== null) {
+            await fetch(`/api/simple_update/${current_user}/`,
+                {
+                    headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                    },
+                    method: "POST",
+                    body: JSON.stringify({joined: joined_for_database})
+                })
+                .then(res => res.json()).then(data => {
+                    console.log(data)})
+                // .catch(function(res){ console.log(res) })
         }
 
         let statistics_obj = {
@@ -75,10 +106,9 @@ finished_button.addEventListener("click", async function (e) {
             "yearsPassed": calculatePassed("years"),
             "decadesPassed": calculatePassed("decades"),
             "percentageThroughLife": ((calculatePassed("days") * 100) / 
-            (calculatePassed("days") + calculateRemaining("days"))).toFixed(3) + "%"
+            (calculatePassed("days") + calculateRemaining("days"))).toFixed(3) + "%",
+            "joined": joined_for_database
         }
-
-        let current_user;
 
         // grab current user
         await fetch("/api/currentuser/")
@@ -223,4 +253,12 @@ async function updateDatabase(age_expectancy, dob) {
         ;
     }
 
+}
+
+// check database for joined
+async function checkDBJoin() {
+    let result;
+    await fetch("/api/read_attr/one@one.com").then(data => data.json()).then(res => result = res.result);
+
+    return result;
 }

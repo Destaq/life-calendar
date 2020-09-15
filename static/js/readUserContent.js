@@ -42,7 +42,9 @@ export async function callDB() {
             localStorage.setItem("age-expectancy", parseInt(user_data.result[key]));
         } else if (key === "dob") {
             localStorage.setItem("birthday", user_data.result[key]);
-        } else if (key === "legend" || key === "statistics" || key === "goals") {
+        } else if (key === "joined") {
+            localStorage.setItem("joined", user_data.result[key]);
+        } else if (key === "statistics" || key === "goals") {
             // iterate through dictionary
             try {
                 let mydict = user_data.result[key];
@@ -52,6 +54,15 @@ export async function callDB() {
                 for (var key in output_obj) {
                     localStorage.setItem(key, output_obj[key]);
                 }
+            } catch { console.log(user_data.result[key] )}
+        } else if (key === "legend") {
+            try {
+                let mydict = user_data.result[key];
+                let correct_quote_dict = mydict.replace(/'/g, '"');
+                let output_obj = JSON.parse(correct_quote_dict);
+
+                localStorage.setItem("dontModify", JSON.stringify(output_obj["dontModify"]));
+                localStorage.setItem("legendModalColors", JSON.stringify(output_obj["legendModalColors"]));
             } catch { console.log(user_data.result[key] )}
         }
     }
