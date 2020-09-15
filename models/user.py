@@ -8,8 +8,6 @@ from models.text import Day, Week, Month, Year
 from flask_login import UserMixin
 from init import login_manager
 
-from flask import request, render_template
-
 @login_manager.user_loader
 def load_user(user_email):
     return User.query.filter_by(email=user_email).first()
@@ -28,12 +26,20 @@ class User(db.Model, UserMixin):
     dob = db.Column(db.String(32))
     subscribe = db.Column(db.Boolean)
 
+    # miscellaneous information
+    legend_text = db.Column(db.Text)
+    goals_text = db.Column(db.Text)
+    statistics_text = db.Column(db.Text)
+
     day_info = db.relationship("Day", backref="user", lazy="dynamic")
     week_info = db.relationship("Week", backref="user", lazy="dynamic")
     month_info = db.relationship("Month", backref="user", lazy="dynamic")
     year_info = db.relationship("Year", backref="user", lazy="dynamic")
     decade_info = db.relationship("Decade", backref="user", lazy="dynamic")
     goals = db.relationship("Goals", backref="user", lazy="dynamic")
+
+
+    user_modifiable_attrs = ["legend_text", "goals_text", "statistics_text", "dob", "subscribe", "age_expectancy"]
 
     def __init__(self, email, password, age_expectancy=0, dob="", subscribe=False):
         self.email = email
@@ -48,6 +54,10 @@ class User(db.Model, UserMixin):
 
     def get_id(self):
         return self.email  # satisfy Flask-Login
+
+    def update_attribute(self, attribute: str, attr_text: str):
+        if attribute in self.user_modifiable_attrs:
+            setattr(self, attribute, attr_text)
 
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)

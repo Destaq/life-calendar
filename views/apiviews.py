@@ -155,6 +155,33 @@ class UpdateBoxView(FlaskView):
 
         return jsonify(success = True)
 
+class UpdateAttrView(FlaskView):
+
+    route_base = "/api/update_attr/"
+
+    def post(self, user_email):
+        request_json = request.get_json()
+        req_lst = []
+        for req_key in list(request_json.keys()):
+            req_lst.append(req_key)
+
+        check_user = User.query.filter_by(email = user_email).first()
+        if current_user.is_authenticated:
+            if current_user.email != check_user.email:
+                return abort(403)
+        else:
+           return abort(403)
+
+        user = User.query.filter_by(email = user_email).first()
+
+        for req_key in req_lst:
+            User.update_attribute(user, req_key, request_json[req_key])
+
+        db.session.add(user)
+        db.session.commit()
+
+        return jsonify(success = True)
+
 
 class CreateBoxView(FlaskView):
     """Forms a new box with user info."""

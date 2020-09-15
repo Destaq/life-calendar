@@ -41,7 +41,8 @@ from views.apiviews import (
     DeleteBoxView,
     ReadAllView,
     CreateBoxView,
-    UpdateUserInfoView
+    UpdateUserInfoView,
+    UpdateAttrView
 )
 
 
@@ -97,7 +98,8 @@ def register_views(app):
         DeleteBoxView,
         GrabCurrentUserView,
         UpdateUserInfoView,
-        LogOutView
+        LogOutView,
+        UpdateAttrView
     ]
 
     for view in views:
