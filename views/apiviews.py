@@ -178,14 +178,14 @@ class UpdateAttrView(FlaskView):
         user = User.query.filter_by(email = user_email).first()
 
 
-        send_result = {}
         # generate Python dictionary
         for key in greater_lst:
+            send_result = eval(getattr(user, key))
             for req_key in req_lst:
+                # update only newly added attributes
                 send_result[req_key] = request_json[key][req_key]
 
             User.update_attribute(user, key, str(send_result))
-            send_result = {}
 
         db.session.add(user)
         db.session.commit()

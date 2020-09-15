@@ -21,6 +21,40 @@ for (i = 0; i < window.localStorage.length; i++) {
 localStorage.setItem("totalFilled", counter);
 localStorage.setItem("totalWords", wordcount);
 
+let statistics_obj = {
+    "counter": counter,
+    "wordcount": wordcount
+}
+
+async function updateDatabase() {
+    let current_user;
+
+    // grab current user
+    await fetch("/api/currentuser/")
+        .then((response) => response.text())
+        .then((data) => {
+            current_user = data;
+        });
+
+    // update database with new values
+    if (current_user !== null) {
+        await fetch(`/api/update_attr/${current_user}/`,
+            {
+                headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+                },
+                method: "POST",
+                body: JSON.stringify({statistics_text: statistics_obj})
+            })
+            .then(res => res.json()).then(data => {
+                console.log(data)});
+            // .catch(function(res){ console.log(res) })
+    }
+}
+
+updateDatabase();
+
 var modifiableElements = [
     "age-expectancy",
     "birthday",
