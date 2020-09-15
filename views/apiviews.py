@@ -162,8 +162,11 @@ class UpdateAttrView(FlaskView):
     def post(self, user_email):
         request_json = request.get_json()
         req_lst = []
-        for req_key in list(request_json.keys()):
-            req_lst.append(req_key)
+        greater_lst = []
+        for key in list(request_json.keys()):
+            greater_lst.append(key)
+            for subkey in list(request_json[key].keys()):
+                req_lst.append(subkey)
 
         check_user = User.query.filter_by(email = user_email).first()
         if current_user.is_authenticated:
@@ -174,8 +177,15 @@ class UpdateAttrView(FlaskView):
 
         user = User.query.filter_by(email = user_email).first()
 
-        for req_key in req_lst:
-            User.update_attribute(user, req_key, request_json[req_key])
+
+        send_result = {}
+        # generate Python dictionary
+        for key in greater_lst:
+            for req_key in req_lst:
+                send_result[req_key] = request_json[key][req_key]
+
+            User.update_attribute(user, key, str(send_result))
+            send_result = {}
 
         db.session.add(user)
         db.session.commit()

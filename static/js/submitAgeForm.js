@@ -3,7 +3,9 @@ const birthdate = document.querySelector("#birthdateInput");
 const expectancy = document.querySelector("#years");
 
 // quiz page - for modifying age expectancy; TODO will be moved to /settings/quiz/
-finished_button.addEventListener("click", function (e) {
+finished_button.addEventListener("click", async function (e) {
+    e.preventDefault();
+
     let bdayDate = new Date(birthdate.value);
 
     // they are missing data
@@ -61,8 +63,49 @@ finished_button.addEventListener("click", function (e) {
             localStorage.setItem("joined", formatDate(today));
         }
 
+        let statistics_obj = {
+            "daysLeft": calculateRemaining("days"),
+            "weeksLeft": calculateRemaining("weeks"),
+            "monthsLeft": calculateRemaining("months"),
+            "yearsLeft": calculateRemaining("years"),
+            "decadesLeft": calculateRemaining("decades"),
+            "daysPassed": calculatePassed("days"),
+            "weeksPassed": calculatePassed("weeks"),
+            "monthsPassed": calculatePassed("months"),
+            "yearsPassed": calculatePassed("years"),
+            "decadesPassed": calculatePassed("decades"),
+            "percentageThroughLife": ((calculatePassed("days") * 100) / 
+            (calculatePassed("days") + calculateRemaining("days"))).toFixed(3) + "%"
+        }
+
+        let current_user;
+
+        // grab current user
+        await fetch("/api/currentuser/")
+            .then((response) => response.text())
+            .then((data) => {
+                current_user = data;
+            })
+            .catch( () => { });
+
+        // update database with new values
+        if (current_user !== null) {
+            await fetch(`/api/update_attr/${current_user}/`,
+                {
+                    headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                    },
+                    method: "POST",
+                    body: JSON.stringify({"statistics_text": statistics_obj})
+                })
+                .then(res => res.json()).then(data => {
+                    console.log(data)})
+                // .catch( () => { console.log("continuing"); location.href = "/"; console.log("updated location") })
+            location.href = "/";
+        }
+        
         location.href = "/";
-        e.preventDefault();
     }
 });
 
@@ -176,8 +219,8 @@ async function updateDatabase(age_expectancy, dob) {
             })
             .then(res => res.json()).then(data => {
                 console.log(data)})
-            .catch(function(res){ console.info(res) }
-        );
+            // .catch(function(res){ console.log(res) }
+        ;
     }
 
 }
