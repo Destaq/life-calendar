@@ -61,7 +61,6 @@ class DeleteBoxView(FlaskView):
         return jsonify(success = True)
 
 
-# TODO: protect route with LoginManager
 class ReadAllView(FlaskView):
     """Reads all data for a user and sets it to local storage."""
 
@@ -93,6 +92,10 @@ class ReadAllView(FlaskView):
         age_expectancy = user.age_expectancy
         dob = user.dob
 
+        legend_info = user.legend_text
+        goals_info = user.goals_text
+        statistics_info = user.statistics_text
+
         userdata = {
             "days": days,
             "weeks": weeks,
@@ -100,7 +103,10 @@ class ReadAllView(FlaskView):
             "years": years,
             "decades": decades,
             "age_expectancy": age_expectancy,
-            "dob": dob
+            "dob": dob,
+            "legend": legend_info,
+            "goals": goals_info,
+            "statistics": statistics_info
         }
 
         # send to JS to store in local storage
