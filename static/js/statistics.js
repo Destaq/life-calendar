@@ -57,92 +57,96 @@ async function updateDatabase() {
     }
 }
 
-updateDatabase();
+async function main() {
+    await updateDatabase();
 
-var modifiableElements = [
-    "age-expectancy",
-    "birthday",
-    "joined",
-    "totalFilled",
-    "totalWords",
-    "percentageThroughLife",
-    "daysLeft",
-    "weeksLeft",
-    "monthsLeft",
-    "yearsLeft",
-    "decadesLeft",
-    "daysPassed",
-    "weeksPassed",
-    "monthsPassed",
-    "yearsPassed",
-    "decadesPassed",
-];
-
-// modify statistics page with custom user info
-function modifyPage(keyword) {
-    const toModify = document.querySelector(`#${keyword}`);
-    if (localStorage.getItem(keyword) !== null) {
-        toModify.innerHTML += localStorage.getItem(keyword); // assumes correct name for HTML element
-    } else {
-        toModify.innerHTML += "unavailable";
+    var modifiableElements = [
+        "age-expectancy",
+        "birthday",
+        "joined",
+        "totalFilled",
+        "totalWords",
+        "percentageThroughLife",
+        "daysLeft",
+        "weeksLeft",
+        "monthsLeft",
+        "yearsLeft",
+        "decadesLeft",
+        "daysPassed",
+        "weeksPassed",
+        "monthsPassed",
+        "yearsPassed",
+        "decadesPassed",
+    ];
+    
+    // modify statistics page with custom user info
+    function modifyPage(keyword) {
+        const toModify = document.querySelector(`#${keyword}`);
+        if (localStorage.getItem(keyword) !== null) {
+            toModify.innerHTML += localStorage.getItem(keyword); // assumes correct name for HTML element
+        } else {
+            toModify.innerHTML += "unavailable";
+        }
     }
-}
-
-modifiableElements.forEach((el) => {
-    modifyPage(el);
-});
-
-// modify life progress bar
-let percentageData = localStorage.getItem("percentageThroughLife");
-document.querySelector(".progress").children[0].style.width = percentageData;
-document
-    .querySelector(".progress")
-    .setAttribute(
-        "aria-valuenow",
-        percentageData.slice(0, percentageData.length - 2)
-    );
-
-document.querySelector(".progress").children[2].style.width =
-    100 - parseInt(percentageData.slice(0, percentageData.length - 2)) + "%";
-document
-    .querySelector(".progress")
-    .setAttribute(
-        "aria-valuenow",
-        100 - parseInt(percentageData.slice(0, percentageData.length - 2))
-    );
-
-
-// Modify color table at bottom
-var colorTableColors = JSON.parse(localStorage.getItem("legendModalColors"));
-var sortable = [];
-var delcount = 0;
-for (let associatedColor in colorTableColors) {
-    if (delcount < 3) {
-        delcount += 1;
-        delete colorTableColors.associatedColor;
-    } else {
-        sortable.push([associatedColor, colorTableColors[associatedColor]])
+    
+    modifiableElements.forEach((el) => {
+        modifyPage(el);
+    });
+    
+    // modify life progress bar
+    let percentageData = localStorage.getItem("percentageThroughLife");
+    document.querySelector(".progress").children[0].style.width = percentageData;
+    document
+        .querySelector(".progress")
+        .setAttribute(
+            "aria-valuenow",
+            percentageData.slice(0, percentageData.length - 2)
+        );
+    
+    document.querySelector(".progress").children[2].style.width =
+        100 - parseInt(percentageData.slice(0, percentageData.length - 2)) + "%";
+    document
+        .querySelector(".progress")
+        .setAttribute(
+            "aria-valuenow",
+            100 - parseInt(percentageData.slice(0, percentageData.length - 2))
+        );
+    
+    
+    // Modify color table at bottom
+    var colorTableColors = JSON.parse(localStorage.getItem("legendModalColors"));
+    var sortable = [];
+    var delcount = 0;
+    for (let associatedColor in colorTableColors) {
+        if (delcount < 3) {
+            delcount += 1;
+            delete colorTableColors.associatedColor;
+        } else {
+            sortable.push([associatedColor, colorTableColors[associatedColor]])
+        }
     }
-}
+    
+    var connectedNames = JSON.parse(localStorage.getItem("dontModify"));
+    for (let i = 0; i < Object.keys(connectedNames).length; i++) {
+        sortable[i].push(connectedNames[Object.keys(connectedNames)[i]][0]);
+    }
+    
+    sortable.sort(function(a, b) {
+        return b[1] - a[1];
+    })
+    
+    for (let i = 0; i < sortable.length; i++) {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+            <th scope="row">${i + 1}</th>
+            <td><svg height="25" width="25">
+                    <circle cx="12" cy="12" r="10" fill="${sortable[i][0]}" />
+                </svg> </td>
+            <td>${sortable[i][2]}</td>
+            <td>${sortable[i][1]} boxes</td>
+                       `
+        document.querySelector("#colorTable").appendChild(tr);
+    }
+}    
 
-var connectedNames = JSON.parse(localStorage.getItem("dontModify"));
-for (let i = 0; i < Object.keys(connectedNames).length; i++) {
-    sortable[i].push(connectedNames[Object.keys(connectedNames)[i]][0]);
-}
-
-sortable.sort(function(a, b) {
-    return b[1] - a[1];
-})
-
-for (let i = 0; i < sortable.length; i++) {
-    const tr = document.createElement("tr");
-    tr.innerHTML = `
-        <th scope="row">${i + 1}</th>
-        <td><svg height="25" width="25">
-                <circle cx="12" cy="12" r="10" fill="${sortable[i][0]}" />
-            </svg> </td>
-        <td>${sortable[i][2]}</td>
-        <td>${sortable[i][1]} boxes</td>
-                   `
-    document.querySelector("#colorTable").appendChild(tr);
-}
+main();
