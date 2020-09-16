@@ -257,8 +257,16 @@ async function updateDatabase(age_expectancy, dob) {
 
 // check database for joined
 async function checkDBJoin() {
+    let current_user;
+
+    await fetch("/api/currentuser/")
+        .then((response) => response.text())
+        .then((data) => {
+            current_user = data;
+        });
+
     let result;
-    await fetch("/api/read_attr/one@one.com").then(data => data.json()).then(res => result = res.result);
+    await fetch(`/api/read_attr/${current_user}`).then(data => data.json()).then(res => result = res.result);
 
     return result;
 }

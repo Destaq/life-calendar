@@ -85,13 +85,14 @@ async function runGetServer() {
     age_expectancy = localStorage.getItem("age-expectancy");
     birthdate_value = localStorage.getItem("birthday");
 
-    if (age_expectancy == null || birthdate_value == null) {
+    if (age_expectancy == null || birthdate_value == null || age_expectancy === 0 || birthdate_value === "") {
         // they need to head over to /quiz to find out!
         document.querySelector("#missingData").innerHTML = `
         <strong>You haven't filled out your data!</strong> Please head over to the <a href="/quiz/">quiz page</a> to submit your life expectancy so that we can generate your life calendar!
         `;
     } else {
         // TODO: if registered user, use XOR with data from DB
+        console.log(age_expectancy, birthdate_value)
         readFromUrl();
         createMap(is_new_user, current_view);
 
