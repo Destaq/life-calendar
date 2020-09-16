@@ -226,19 +226,21 @@ class UpdateAttrView(FlaskView):
 
         user = User.query.filter_by(email = user_email).first()
 
+        # TODO: correctly update dontModify - on modify legend modal
 
         # generate Python dictionary
         for key in greater_lst:
-            try:
+            if getattr(user, key) != None:
                 send_result = eval(getattr(user, key))
-                for req_key in req_lst:
-                    # update only newly added attributes
-                    send_result[req_key] = request_json[key][req_key]
+            else:
+                send_result = {}
+            for req_key in req_lst:
+                # update only newly added attributes
+                print(req_key, request_json[key][req_key])
+                send_result[req_key] = request_json[key][req_key]
 
-                User.update_attribute(user, key, str(send_result))
+            User.update_attribute(user, key, str(send_result))
 
-            except:
-                print("some error")
 
 
         db.session.add(user)

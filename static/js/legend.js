@@ -90,14 +90,45 @@ document.querySelector("#saveEditableLegend").addEventListener("click", function
 
 })
 
-$("#legendModal").on('hidden.bs.modal', function() {
+$("#legendModal").on('hidden.bs.modal', async function() {
     if (dismiss == true) {
         const dynamicTableValues = document.querySelectorAll(".userMeaning");
         for (let i = 0; i < dynamicTableValues.length; i++) {
             document.querySelector(`#${dynamicTableValues[i].id}`).textContent = dontModify[dynamicTableValues[i].id][0]
         }
     }
-    localStorage.setItem("dontModify", JSON.stringify(dontModify))
+    localStorage.setItem("dontModify", JSON.stringify(dontModify));
+
+    // update database with any new text
+    let current_user;
+
+    // grab current user
+    await fetch("/api/currentuser/")
+        .then((response) => response.text())
+        .then((data) => {
+            current_user = data;
+        });
+
+    // add information to database
+    console.log(dontModify, "as unmodifiable")
+    if (current_user !== null) {
+        await fetch(`/api/update_attr/${current_user}/`,
+            {
+                headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+                },
+                method: "POST",
+                body: JSON.stringify({legend_text: {
+                    dontModify: dontModify,
+                    legendModalColors: legendModalColors
+                }})
+            })
+            .then(res => res.json()).then(data => {
+                console.log(data)})
+            // .catch(function(res){ console.log(res) })
+    }
+
 })
 
 document.querySelector("#cancelEditableLegend").addEventListener("click", function() {
@@ -122,13 +153,13 @@ function rgbToHex(r, g, b) {
 var legendText = {};
 if (localStorage.getItem("legendTableText") != null) {
     legendText = JSON.parse(localStorage.getItem("legendTableText"))
-
+    console.log("btw calc", legendText)
     // TODO: save legend text on exit...
 }
 
 
 // add data to the table when shaded
-export function modifyLegend(rgb, shade, isSecond) {
+export async function modifyLegend(rgb, shade, isSecond) {
     let hexablergb = rgb.replace("rgb(", "").split(", ");
 
     for (let i = 0; i < hexablergb.length; i++) {
@@ -183,4 +214,33 @@ export function modifyLegend(rgb, shade, isSecond) {
         "legendModalColors",
         JSON.stringify(legendModalColors)
     );
+
+    let current_user;
+
+    // grab current user
+    await fetch("/api/currentuser/")
+        .then((response) => response.text())
+        .then((data) => {
+            current_user = data;
+        });
+
+    // add information to database
+    console.log(dontModify, "as unmodifiable")
+    if (current_user !== null) {
+        await fetch(`/api/update_attr/${current_user}/`,
+            {
+                headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+                },
+                method: "POST",
+                body: JSON.stringify({legend_text: {
+                    dontModify: dontModify,
+                    legendModalColors: legendModalColors
+                }})
+            })
+            .then(res => res.json()).then(data => {
+                console.log(data)})
+            // .catch(function(res){ console.log(res) })
+    }
 }

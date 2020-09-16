@@ -1,11 +1,13 @@
 // table with all colors used by the user
 const customColors = document.querySelector("#colorTable");
 
+import { callDB } from "/static/js/readUserContent.js";
+
 // dynamically generate totalFilled and totalWords values
 let counter = 0; // number of boxes modified
 let wordcount = 0; // total number of words inputted by user
-for (i = 0; i < window.localStorage.length; i++) {
-    key = window.localStorage.key(i);
+for (let i = 0; i < window.localStorage.length; i++) {
+    let key = window.localStorage.key(i);
     if (
         key.includes("Years-") ||
         key.includes("Decades-") ||
@@ -27,6 +29,8 @@ let statistics_obj = {
 }
 
 async function updateDatabase() {
+    await callDB();
+
     let current_user;
 
     // grab current user
