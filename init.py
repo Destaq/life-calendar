@@ -36,7 +36,7 @@ from views.pageviews import (
 )
 from views.apiviews import (
     JSONDataView,
-    ContactSubmitView,
+    ContactSubmitView, ReturnGoalsView,
     UpdateBoxView,
     DeleteBoxView,
     ReadAllView,
@@ -44,7 +44,8 @@ from views.apiviews import (
     UpdateUserInfoView,
     UpdateAttrView,
     ReturnAttrView,
-    SimpleAttrUpdateView
+    SimpleAttrUpdateView,
+    ReturnGoalsView
 )
 
 
@@ -103,7 +104,8 @@ def register_views(app):
         LogOutView,
         UpdateAttrView,
         ReturnAttrView,
-        SimpleAttrUpdateView
+        SimpleAttrUpdateView,
+        ReturnGoalsView
     ]
 
     for view in views:

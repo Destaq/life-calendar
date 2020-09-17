@@ -135,16 +135,14 @@ async function createCard() {
 
     // update database
     if (current_user !== null) {
-        await fetch(`/api/update_attr/${current_user}/`,
+        await fetch(`/api/simple_update/${current_user}/`,
             {
                 headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
                 },
                 method: "POST",
-                body: JSON.stringify({goals_text: {
-                    res: finalGoalObj
-                }})
+                body: JSON.stringify({goals_text: finalGoalObj})
             })
             .then(res => res.json()).then(data => {
                 console.log(data)})
@@ -241,14 +239,19 @@ function setupRadioBackground(someCard) {
     })
 }
 
-function shadeBackground(someCard, child) {
+async function shadeBackground(someCard, child) {
     if (child.checked) {
+        let updateDB;
+
         const re = /^border-/;
         for (const name of someCard.classList) {
             if (re.test(name) === true) {
                 someCard.classList.remove(name);
             }
         }
+
+        updateDB = child.value;
+
         if (child.value == "progress") {
             someCard.classList.add("border-warning");
         } else if (child.value == "complete") {
@@ -258,6 +261,53 @@ function shadeBackground(someCard, child) {
         } else {
             someCard.classList.add("border-dark");
         }
+
+        // update database
+        let current_user;
+
+        // grab custom email
+        await fetch("/api/currentuser/")
+            .then((response) => response.text())
+            .then((data) => {
+                current_user = data;
+            });
+
+        // read current database
+        let userGoals;
+
+        await fetch(`/api/return_goals/${current_user}`)
+            .then(res => res.json())
+            .then(data => { 
+                userGoals = JSON.parse(data.result) });
+
+        
+        let cardNumber = parseInt(someCard.id.replace("userCard-", ""));
+        cardNumber += 1;
+
+        for (var key in userGoals) {
+            if (key === cardNumber.toString()) {
+                userGoals[key].radio = updateDB;
+            }
+        }
+
+        let tosend = JSON.stringify({goals_text: userGoals});
+
+        // update database
+        if (current_user !== null) {
+            await fetch(`/api/simple_update/${current_user}/`,
+                {
+                    headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                    },
+                    method: "POST",
+                    body: tosend
+                })
+                .then(res => res.json()).then(data => {
+                    console.log(data)})
+                .catch(function(res){ console.log("some error here") })
+        }
+
     } else {
         child.checked = false;
     }

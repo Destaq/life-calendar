@@ -180,6 +180,24 @@ class ReturnAttrView(FlaskView):
 
         return {"result": user.joined}
 
+# TODO: merge into one view with the above
+class ReturnGoalsView(FlaskView):
+
+    route_base = "/api/return_goals/"
+
+    def get(self, user_email):
+
+        user = User.query.filter_by(email = user_email).first()
+
+        if current_user.is_authenticated:
+            if current_user.email != user.email:
+                return abort(403)
+        
+        else:
+            return abort(403)
+
+        return {"result": user.goals_text}
+
 class SimpleAttrUpdateView(FlaskView):
 
     route_base = "/api/simple_update/"
@@ -197,7 +215,10 @@ class SimpleAttrUpdateView(FlaskView):
         user = User.query.filter_by(email = user_email).first()
 
         for key in list(request_json.keys()):
-            setattr(user, key, request_json[key])
+            if type(request_json[key]) != dict:
+                setattr(user, key, request_json[key])
+            else:
+                setattr(user, key, json.dumps(request_json[key]))
 
         db.session.add(user)
         db.session.commit()
