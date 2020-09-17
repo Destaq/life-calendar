@@ -1,3 +1,5 @@
+import { callDB } from "/static/js/readUserContent.js";
+
 const card = document.querySelector("#template-card");
 
 const dueDate = document.querySelector("#goalFinish");
@@ -18,7 +20,14 @@ preCards.forEach((preCard) => {
     setupRadioBackground(preCard);
 });
 
-// TODO: colorize on init
+// read all data and store in LS from DB
+async function main() {
+    await callDB();
+}
+
+main();
+
+// read from LS and create card objs
 
 finishCard.addEventListener("click", function (e) {
     if (dueTime.value === "" || dueDate.value === "") {
@@ -33,13 +42,11 @@ finishCard.addEventListener("click", function (e) {
         }, 2000);
     } else {
         createCard();
-
-        // TODO: send info to DB
     }
     e.preventDefault();
 });
 
-function createCard() {
+async function createCard() {
     const userCard = document.createElement("div");
     userCard.classList.add("card", "bg-light", "col-sm-4", "user-card", "border-dark");
     userCard.id = `userCard-${cardCount}`;
@@ -88,6 +95,60 @@ function createCard() {
         newRow.className = "row";
         outputArea.insertBefore(newRow, document.querySelector("#last"));
         newRow.appendChild(userCard);
+    }
+
+    // send info to localStorage
+    let goals_obj = {
+        [cardCount]: {
+            "title": goalTitle.textContent,
+            "subtitle": goalSubtitle.textContent,
+            "text": goalText.textContent,
+            "duedate": dueDate.value,
+            "duetime": dueTime.value,
+            "radio": "unstarted"
+        }
+    }
+    
+    let finalGoalObj;
+
+    if (localStorage.getItem("goals_text") === null) {
+        localStorage.setItem("goals_text", JSON.stringify(goals_obj));
+        finalGoalObj = JSON.stringify(goals_obj);
+    } else {
+        let previousDict = JSON.parse(localStorage.getItem("goals_text"));
+
+        previousDict[cardCount] = goals_obj[cardCount];
+        localStorage.setItem("goals_text", JSON.stringify(previousDict));
+
+        finalGoalObj = JSON.stringify(previousDict);
+    }
+    
+    // send info to database
+    let current_user;
+
+    // grab custom email
+    await fetch("/api/currentuser/")
+        .then((response) => response.text())
+        .then((data) => {
+            current_user = data;
+        });
+
+    // update database
+    if (current_user !== null) {
+        await fetch(`/api/update_attr/${current_user}/`,
+            {
+                headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+                },
+                method: "POST",
+                body: JSON.stringify({goals_text: {
+                    res: finalGoalObj
+                }})
+            })
+            .then(res => res.json()).then(data => {
+                console.log(data)})
+            // .catch(function(res){ console.log(res) })
     }
 
     // clear values
