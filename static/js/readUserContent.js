@@ -54,7 +54,7 @@ export async function callDB() {
                 for (var key in output_obj) {
                     localStorage.setItem(key, output_obj[key]);
                 }
-            } catch { console.log(user_data.result[key] )}
+            } catch { console.debug(user_data.result[key] )}
         } else if (key === "legend") {
             try {
                 let mydict = user_data.result[key];
