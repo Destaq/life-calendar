@@ -14,7 +14,7 @@ const outputArea = document.querySelector("#user-goals");
 var cardCount = 0;
 
 // setup event listeners for cards already there
-const preCards = document.querySelectorAll(".user-card");
+var preCards = document.querySelectorAll(".user-card");
 preCards.forEach((preCard) => {
     setupEv(preCard);
     setupRadioBackground(preCard);
@@ -59,20 +59,20 @@ async function createCard() {
             <div class="mt-auto special-background">
                 <hr>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio0" value="unstarted" checked>
-                    <label class="form-check-label" for="inlineRadio0">Not Started</label>
+                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio0-${cardCount}" value="unstarted" checked>
+                    <label class="form-check-label" for="inlineRadio0-${cardCount}">Not Started</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="progress">
-                    <label class="form-check-label" for="inlineRadio1">In Progress</label>
+                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1-${cardCount}" value="progress">
+                    <label class="form-check-label" for="inlineRadio1-${cardCount}">In Progress</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="complete">
-                    <label class="form-check-label" for="inlineRadio2">Complete</Complete>
+                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2-${cardCount}" value="complete">
+                    <label class="form-check-label" for="inlineRadio2-${cardCount}">Complete</Complete>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="cancelled">
-                    <label class="form-check-label" for="inlineRadio3">Cancelled</label>
+                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3-${cardCount}" value="cancelled">
+                    <label class="form-check-label" for="inlineRadio3-${cardCount}">Cancelled</label>
                 </div>
             <hr>
             <div class="btn-group">
@@ -144,8 +144,7 @@ async function createCard() {
                 method: "POST",
                 body: JSON.stringify({goals_text: finalGoalObj})
             })
-            .then(res => res.json()).then(data => {
-                console.log(data)})
+            .then(res => res.json()).then(data => { })
             // .catch(function(res){ console.log(res) })
     }
 
@@ -233,7 +232,7 @@ function setupEv(someCard) {
 
 function setupRadioBackground(someCard) {
     someCard.querySelectorAll(".form-check-input").forEach((child) => {
-        child.addEventListener("click", function() {
+        child.addEventListener("change", function() {
             shadeBackground(someCard, child);
         })
     })
@@ -303,8 +302,7 @@ async function shadeBackground(someCard, child) {
                     method: "POST",
                     body: tosend
                 })
-                .then(res => res.json()).then(data => {
-                    console.log(data)})
+                .then(res => res.json()).then(data => { })
                 .catch(function(res){ console.log("some error here") })
         }
 
