@@ -23,6 +23,13 @@ preCards.forEach((preCard) => {
 // read all data and store in LS from DB
 async function main() {
     await callDB();
+
+    // create cards if any in LS
+    let cardDict = JSON.parse(localStorage.getItem("goals_text"));
+    for (var key in JSON.parse(localStorage.getItem("goals_text"))) {
+        cardCount = parseInt(key);
+        await createCard();
+    }
 }
 
 main();

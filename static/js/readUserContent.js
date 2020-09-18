@@ -44,7 +44,7 @@ export async function callDB() {
             localStorage.setItem("birthday", user_data.result[key]);
         } else if (key === "joined") {
             localStorage.setItem("joined", user_data.result[key]);
-        } else if (key === "statistics" || key === "goals") {
+        } else if (key === "statistics") {
             // iterate through dictionary
             try {
                 let mydict = user_data.result[key];
@@ -64,6 +64,11 @@ export async function callDB() {
                 localStorage.setItem("dontModify", JSON.stringify(output_obj["dontModify"]));
                 localStorage.setItem("legendModalColors", JSON.stringify(output_obj["legendModalColors"]));
             } catch { console.log(user_data.result[key] )}
+        } else if (key === "goals") {
+            let mydict = user_data.result[key];
+            let output_obj = JSON.parse(mydict);
+
+            localStorage.setItem("goals_text", JSON.stringify(output_obj));
         }
     }
 }
