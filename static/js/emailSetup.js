@@ -192,39 +192,43 @@ async function createCard(readFromDB=false) {
     userCard.children[0].children[4].children[6].children[0].children[0].addEventListener(
         "click",
         async function (e) {
-            userCard.remove();
-            let modifiedDB = JSON.parse(localStorage.getItem("goals_text"))
-            delete modifiedDB[parseInt(userCard.id.slice(9))];
+            let userConfirm = confirm("Are you sure that you would like to PERMANENTLY delete this goal?");
+            if (userConfirm === true) {
+                userCard.remove();
+                let modifiedDB = JSON.parse(localStorage.getItem("goals_text"))
+                delete modifiedDB[parseInt(userCard.id.slice(9))];
 
-            localStorage.setItem("goals_text", JSON.stringify(modifiedDB));
+                localStorage.setItem("goals_text", JSON.stringify(modifiedDB));
 
-            // send info to database
-            let current_user;
+                // send info to database
+                let current_user;
 
-            // grab custom email
-            await fetch("/api/currentuser/")
-                .then((response) => response.text())
-                .then((data) => {
-                    current_user = data;
-                });
+                // grab custom email
+                await fetch("/api/currentuser/")
+                    .then((response) => response.text())
+                    .then((data) => {
+                        current_user = data;
+                    });
 
-            // update database
-            if (current_user !== null) {
-                await fetch(`/api/simple_update/${current_user}/`,
-                    {
-                        headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
-                        },
-                        method: "POST",
-                        body: JSON.stringify({goals_text: JSON.stringify(modifiedDB)})
-                    })
-                    .then(res => res.json()).then(data => { })
-                    // .catch(function(res){ console.log(res) })
+                // update database
+                if (current_user !== null) {
+                    await fetch(`/api/simple_update/${current_user}/`,
+                        {
+                            headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                            },
+                            method: "POST",
+                            body: JSON.stringify({goals_text: JSON.stringify(modifiedDB)})
+                        })
+                        .then(res => res.json()).then(data => { })
+                        // .catch(function(res){ console.log(res) })
+                }
+
+                // reshuffle cards by reloading page
+                location.reload()
             }
-
-            // reshuffle cards by reloading page
-            location.reload()
+            
             e.preventDefault();
         }
     );
