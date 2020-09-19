@@ -2,12 +2,12 @@ import { callDB } from "/static/js/readUserContent.js";
 
 const card = document.querySelector("#template-card");
 
-const dueDate = document.querySelector("#goalFinish");
-const dueTime = document.querySelector("#goalFinishExact");
-const finishCard = document.querySelector("#addCard");
-const goalTitle = document.querySelector("#goalTitle");
-const goalSubtitle = document.querySelector("#goalSubtitle");
-const goalText = document.querySelector("#goalText");
+var dueDate = document.querySelector("#goalFinish");
+var dueTime = document.querySelector("#goalFinishExact");
+var finishCard = document.querySelector("#addCard");
+var goalTitle = document.querySelector("#goalTitle");
+var goalSubtitle = document.querySelector("#goalSubtitle");
+var goalText = document.querySelector("#goalText");
 
 const outputArea = document.querySelector("#user-goals");
 
@@ -27,7 +27,7 @@ async function main() {
     // create cards if any in LS
     for (var key in JSON.parse(localStorage.getItem("goals_text"))) {
         cardCount = parseInt(key);
-        await createCard();
+        await createCard(true);
     }
 }
 
@@ -52,15 +52,46 @@ finishCard.addEventListener("click", function (e) {
     e.preventDefault();
 });
 
-async function createCard() {
+async function createCard(readFromDB=false) {
     const userCard = document.createElement("div");
-    userCard.classList.add("card", "bg-light", "col-sm-4", "user-card", "border-dark");
+    userCard.classList.add("card", "bg-light", "col-sm-4", "user-card");
     userCard.id = `userCard-${cardCount}`;
     userCard.setAttribute("editing", "false");
+    if (readFromDB === true) {
+        goalTitle.textContent = JSON.parse(localStorage.getItem("goals_text"))[cardCount].title;
+        goalSubtitle.textContent = JSON.parse(localStorage.getItem("goals_text"))[cardCount].subtitle;
+        goalText.textContent = JSON.parse(localStorage.getItem("goals_text"))[cardCount].text;
+        dueDate.textContent = JSON.parse(localStorage.getItem("goals_text"))[cardCount].duedate;
+        dueTime.textContent = JSON.parse(localStorage.getItem("goals_text"))[cardCount].duetime;
+
+        switch (JSON.parse(localStorage.getItem("goals_text"))[cardCount].radio) {
+            case "unstarted":
+                userCard.classList.add("border-dark")
+                break;
+            case "progress":
+                userCard.classList.add("border-warning")
+                break;
+            case "cancelled":
+                userCard.classList.add("border-danger")
+                break;
+            case "complete":
+                userCard.classList.add("border-success")
+                break;
+        
+            default:
+                userCard.classList.add("border-dark")
+                break;
+        }
+    }
     userCard.innerHTML = `
     <div class="card-body d-flex flex-column">
         <h5 class="card-title">${goalTitle.textContent}</h5>
         <h6 class="card-subtitle mb-2 text-muted">${goalSubtitle.textContent}</h6>
+        <center>
+            <div>
+                <strong>Due: <span>${dueDate.value}</span> at <span>${dueTime.value}</span></strong>
+            </div>
+        </center>
         <p class="card-text">${goalText.textContent}</p>
             <div class="mt-auto special-background">
                 <hr>
@@ -121,8 +152,9 @@ async function createCard() {
         finalGoalObj = JSON.stringify(goals_obj);
     } else {
         let previousDict = JSON.parse(localStorage.getItem("goals_text"));
-
-        previousDict[cardCount] = goals_obj[cardCount];
+        if (readFromDB === false) {
+            previousDict[cardCount] = goals_obj[cardCount];
+        }
         localStorage.setItem("goals_text", JSON.stringify(previousDict));
 
         finalGoalObj = JSON.stringify(previousDict);
@@ -153,16 +185,8 @@ async function createCard() {
             // .catch(function(res){ console.log(res) })
     }
 
-    // clear values
-    goalTitle.textContent = "Goal Title";
-    goalSubtitle.textContent = "Goal Subtitle";
-    goalText.textContent =
-        "This is a goal card. You can have any number of them! Fill this out however you want - it's editable - with a goal of yours, and then save it to add it to the list!";
-    dueDate.value = "";
-    dueTime.value = "23:59";
-
     // add event listeners
-    userCard.children[0].children[3].children[6].children[0].children[0].addEventListener(
+    userCard.children[0].children[4].children[6].children[0].children[0].addEventListener(
         "click",
         function (e) {
             userCard.remove();
@@ -175,15 +199,23 @@ async function createCard() {
     setupEv(userCard);
     setupRadioBackground(userCard);
 
+    // clear values
+    goalTitle.textContent = "Goal Title";
+    goalSubtitle.textContent = "Goal Subtitle";
+    goalText.textContent =
+        "This is a goal card. You can have any number of them! Fill this out however you want - it's editable - with a goal of yours, and then save it to add it to the list!";
+    dueDate.value = "";
+    dueTime.value = "23:59";
+
     cardCount += 1;
 }
 
 function setupEv(someCard) {
-    someCard.children[0].children[3].children[6].children[0].children[1].addEventListener(
+    someCard.children[0].children[4].children[6].children[0].children[1].addEventListener(
         "click",
         function (e) {
             if (someCard.getAttribute("editing") === "false") {
-                someCard.children[0].children[3].children[6].children[0].children[1].textContent =
+                someCard.children[0].children[4].children[6].children[0].children[1].textContent =
                     "Save Changes";
                 someCard.children[0].children[0].setAttribute(
                     "contenteditable",
@@ -193,18 +225,29 @@ function setupEv(someCard) {
                     "contenteditable",
                     "true"
                 );
-                someCard.children[0].children[2].setAttribute(
+                // due date
+                someCard.children[0].children[2].children[0].children[0].children[0].setAttribute(
+                    "contenteditable",
+                    "true"
+                );
+                console.log(someCard.children[0].children[2].children[0].children[0].children[0])
+                // due time
+                someCard.children[0].children[2].children[0].children[0].children[1].setAttribute(
+                    "contenteditable",
+                    "true"
+                );
+                someCard.children[0].children[3].setAttribute(
                     "contenteditable",
                     "true"
                 );
 
                 someCard.setAttribute("editing", "true");
 
-                someCard.children[0].children[3].children[6].children[0].children[1].addEventListener(
+                someCard.children[0].children[4].children[6].children[0].children[1].addEventListener(
                     "click",
                     async function () {
                         if (someCard.getAttribute("editing") === "true") {
-                            someCard.children[0].children[3].children[6].children[0].children[1].textContent =
+                            someCard.children[0].children[4].children[6].children[0].children[1].textContent =
                                 "Edit";
                             someCard.children[0].children[0].setAttribute(
                                 "contenteditable",
@@ -214,7 +257,17 @@ function setupEv(someCard) {
                                 "contenteditable",
                                 "false"
                             );
-                            someCard.children[0].children[2].setAttribute(
+                            // due date
+                            someCard.children[0].children[2].children[0].children[0].children[0].setAttribute(
+                                "contenteditable",
+                                "false"
+                            );
+                            // due time
+                            someCard.children[0].children[2].children[0].children[0].children[1].setAttribute(
+                                "contenteditable",
+                                "false"
+                            );
+                            someCard.children[0].children[3].setAttribute(
                                 "contenteditable",
                                 "false"
                             );
@@ -235,7 +288,9 @@ function setupEv(someCard) {
                                 let updated_key = JSON.parse(localStorage.getItem("goals_text"))[key];
                                 updated_key.title = someCard.children[0].children[0].textContent;
                                 updated_key.subtitle = someCard.children[0].children[1].textContent;
-                                updated_key.text = someCard.children[0].children[2].textContent;
+                                updated_key.text = someCard.children[0].children[3].textContent;
+                                updated_key.duedate = someCard.children[0].children[2].children[0].children[0].children[0].textContent;
+                                updated_key.duetime = someCard.children[0].children[2].children[0].children[0].children[1].textContent;
 
                                 copydict[key] = updated_key;
                             }
@@ -328,13 +383,14 @@ async function shadeBackground(someCard, child) {
 
         
         let cardNumber = parseInt(someCard.id.replace("userCard-", ""));
-        cardNumber += 1;
-
+        
         for (var key in userGoals) {
             if (key === cardNumber.toString()) {
                 userGoals[key].radio = updateDB;
             }
         }
+
+        cardNumber += 1;
 
         let tosend = JSON.stringify({goals_text: userGoals});
 
