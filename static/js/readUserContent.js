@@ -68,6 +68,8 @@ export async function callDB() {
             let mydict = user_data.result[key];
             let output_obj = JSON.parse(mydict);
 
+            localStorage.removeItem("goals_text");
+
             localStorage.setItem("goals_text", JSON.stringify(output_obj));
         }
     }

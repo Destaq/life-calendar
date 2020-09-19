@@ -25,7 +25,6 @@ async function main() {
     await callDB();
 
     // create cards if any in LS
-    let cardDict = JSON.parse(localStorage.getItem("goals_text"));
     for (var key in JSON.parse(localStorage.getItem("goals_text"))) {
         cardCount = parseInt(key);
         await createCard();
@@ -91,7 +90,6 @@ async function createCard() {
         </div>
     </div>
     `;
-    cardCount += 1;
 
     if ((cardCount - 1) % 3 !== 0) {
         outputArea.children[Math.floor((cardCount - 1) / 3)].appendChild(
@@ -176,6 +174,8 @@ async function createCard() {
 
     setupEv(userCard);
     setupRadioBackground(userCard);
+
+    cardCount += 1;
 }
 
 function setupEv(someCard) {
@@ -202,7 +202,7 @@ function setupEv(someCard) {
 
                 someCard.children[0].children[3].children[6].children[0].children[1].addEventListener(
                     "click",
-                    function () {
+                    async function () {
                         if (someCard.getAttribute("editing") === "true") {
                             someCard.children[0].children[3].children[6].children[0].children[1].textContent =
                                 "Edit";
@@ -227,7 +227,47 @@ function setupEv(someCard) {
                         someCard.replaceWith(clone);
                         setupEv(clone);
 
-                        // TODO: DB magic
+                        // TODO: LS + DB magic
+                        let copydict = JSON.parse(localStorage.getItem("goals_text"))
+                        for (var key in JSON.parse(localStorage.getItem("goals_text"))) {
+                            if (parseInt(key) === parseInt(someCard.id.slice(9))) {
+                                // update local storage
+                                let updated_key = JSON.parse(localStorage.getItem("goals_text"))[key];
+                                updated_key.title = someCard.children[0].children[0].textContent;
+                                updated_key.subtitle = someCard.children[0].children[1].textContent;
+                                updated_key.text = someCard.children[0].children[2].textContent;
+
+                                copydict[key] = updated_key;
+                            }
+                        }
+
+                        localStorage.setItem("goals_text", JSON.stringify(copydict));
+
+                        // update database
+                        // send info to database
+                        let current_user;
+
+                        // grab custom email
+                        await fetch("/api/currentuser/")
+                            .then((response) => response.text())
+                            .then((data) => {
+                                current_user = data;
+                            });
+
+                        // update database
+                        if (current_user !== null) {
+                            await fetch(`/api/simple_update/${current_user}/`,
+                                {
+                                    headers: {
+                                    'Accept': 'application/json',
+                                    'Content-Type': 'application/json'
+                                    },
+                                    method: "POST",
+                                    body: JSON.stringify({goals_text: JSON.stringify(JSON.parse(localStorage.getItem("goals_text")))})
+                                })
+                                .then(res => res.json()).then(data => { console.log("complete, go check." )})
+                                // .catch(function(res){ console.log(res) })
+                        }
                     }
                 );
             }
