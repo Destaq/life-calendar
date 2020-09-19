@@ -122,6 +122,7 @@ async function createCard(readFromDB=false) {
     </div>
     `;
 
+    cardCount++;
     if ((cardCount - 1) % 3 !== 0) {
         outputArea.children[Math.floor((cardCount - 1) / 3)].appendChild(
             userCard
@@ -132,6 +133,7 @@ async function createCard(readFromDB=false) {
         outputArea.insertBefore(newRow, document.querySelector("#last"));
         newRow.appendChild(userCard);
     }
+    cardCount--;
 
     // send info to localStorage
     let goals_obj = {
@@ -188,9 +190,39 @@ async function createCard(readFromDB=false) {
     // add event listeners
     userCard.children[0].children[4].children[6].children[0].children[0].addEventListener(
         "click",
-        function (e) {
+        async function (e) {
             userCard.remove();
             // TODO: DB magic
+            let modifiedDB = JSON.parse(localStorage.getItem("goals_text"))
+            delete modifiedDB[parseInt(userCard.id.slice(9))];
+
+            localStorage.setItem("goals_text", JSON.stringify(modifiedDB));
+
+            // send info to database
+            let current_user;
+
+            // grab custom email
+            await fetch("/api/currentuser/")
+                .then((response) => response.text())
+                .then((data) => {
+                    current_user = data;
+                });
+
+            // update database
+            if (current_user !== null) {
+                await fetch(`/api/simple_update/${current_user}/`,
+                    {
+                        headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                        },
+                        method: "POST",
+                        body: JSON.stringify({goals_text: JSON.stringify(modifiedDB)})
+                    })
+                    .then(res => res.json()).then(data => { })
+                    // .catch(function(res){ console.log(res) })
+            }
+
             // TODO: reshuffle cards
             e.preventDefault();
         }
