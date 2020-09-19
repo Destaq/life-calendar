@@ -13,6 +13,8 @@ const outputArea = document.querySelector("#user-goals");
 
 var cardCount = 0;
 
+var totalCards = 0;
+
 // setup event listeners for cards already there
 var preCards = document.querySelectorAll(".user-card");
 preCards.forEach((preCard) => {
@@ -53,6 +55,7 @@ finishCard.addEventListener("click", function (e) {
 });
 
 async function createCard(readFromDB=false) {
+    totalCards += 1;
     const userCard = document.createElement("div");
     userCard.classList.add("card", "bg-light", "col-sm-4", "user-card");
     userCard.id = `userCard-${cardCount}`;
@@ -122,9 +125,8 @@ async function createCard(readFromDB=false) {
     </div>
     `;
 
-    cardCount++;
-    if ((cardCount - 1) % 3 !== 0) {
-        outputArea.children[Math.floor((cardCount - 1) / 3)].appendChild(
+    if ((totalCards - 1) % 3 !== 0) {
+        outputArea.children[Math.floor((totalCards - 1) / 3)].appendChild(
             userCard
         );
     } else {
@@ -133,7 +135,6 @@ async function createCard(readFromDB=false) {
         outputArea.insertBefore(newRow, document.querySelector("#last"));
         newRow.appendChild(userCard);
     }
-    cardCount--;
 
     // send info to localStorage
     let goals_obj = {
@@ -192,7 +193,6 @@ async function createCard(readFromDB=false) {
         "click",
         async function (e) {
             userCard.remove();
-            // TODO: DB magic
             let modifiedDB = JSON.parse(localStorage.getItem("goals_text"))
             delete modifiedDB[parseInt(userCard.id.slice(9))];
 
@@ -223,7 +223,8 @@ async function createCard(readFromDB=false) {
                     // .catch(function(res){ console.log(res) })
             }
 
-            // TODO: reshuffle cards
+            // reshuffle cards by reloading page
+            location.reload()
             e.preventDefault();
         }
     );
@@ -321,11 +322,31 @@ function setupEv(someCard) {
                                 updated_key.title = someCard.children[0].children[0].textContent;
                                 updated_key.subtitle = someCard.children[0].children[1].textContent;
                                 updated_key.text = someCard.children[0].children[3].textContent;
-                                updated_key.duedate = someCard.children[0].children[2].children[0].children[0].children[0].textContent;
-                                updated_key.duetime = someCard.children[0].children[2].children[0].children[0].children[1].textContent;
-
+                                let gooddate = checkDate(someCard.children[0].children[2].children[0].children[0].children[0].textContent);
+                                if (gooddate === true) {
+                                    updated_key.duedate = someCard.children[0].children[2].children[0].children[0].children[0].textContent;
+                                } else {
+                                    console.log("invalid date")
+                                    // TODO - let user know
+                                }
+                                let goodtime = checkTime(someCard.children[0].children[2].children[0].children[0].children[1].textContent);
+                                if (goodtime === true) {
+                                    updated_key.duetime = someCard.children[0].children[2].children[0].children[0].children[1].textContent;
+                                } else {
+                                    console.log("invalid time")
+                                }
                                 copydict[key] = updated_key;
                             }
+                        }
+
+                        function checkDate(text) {
+                            let re = /^\d{4}(-|\/)\d{2}(-|\/)\d{2}$/;
+                            return re.test(text);
+                        }
+
+                        function checkTime(text) {
+                            let re = /^\d{2}:\d{2}$/;
+                            return re.test(text);
                         }
 
                         localStorage.setItem("goals_text", JSON.stringify(copydict));
