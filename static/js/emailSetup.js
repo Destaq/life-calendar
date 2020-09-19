@@ -61,8 +61,8 @@ async function createCard(readFromDB=false) {
         goalTitle.textContent = JSON.parse(localStorage.getItem("goals_text"))[cardCount].title;
         goalSubtitle.textContent = JSON.parse(localStorage.getItem("goals_text"))[cardCount].subtitle;
         goalText.textContent = JSON.parse(localStorage.getItem("goals_text"))[cardCount].text;
-        dueDate.textContent = JSON.parse(localStorage.getItem("goals_text"))[cardCount].duedate;
-        dueTime.textContent = JSON.parse(localStorage.getItem("goals_text"))[cardCount].duetime;
+        dueDate.value = JSON.parse(localStorage.getItem("goals_text"))[cardCount].duedate;
+        dueTime.value = JSON.parse(localStorage.getItem("goals_text"))[cardCount].duetime;
 
         switch (JSON.parse(localStorage.getItem("goals_text"))[cardCount].radio) {
             case "unstarted":
