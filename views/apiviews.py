@@ -1,5 +1,7 @@
 import json
 import os
+from time import time
+from flask.templating import render_template
 from flask_login import login_required, current_user
 import yagmail
 import ast
@@ -9,6 +11,7 @@ load_dotenv()
 yag = yagmail.SMTP(os.getenv("SEND_FROM_ADDRESS"), os.getenv("SEND_FROM_PASSWORD"))
 
 from flask_classful import FlaskView
+import jwt
 from flask import request, url_for, abort, jsonify
 from werkzeug.utils import redirect
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -456,3 +459,69 @@ class ContactSubmitView(FlaskView):
         )
 
         return redirect(url_for("ThanksView:index", name=name))
+
+class ForgotPasswordView(FlaskView):
+
+    route_base = "/api/forgot_password/"
+
+    def get(self, email):
+
+        user = User.query.filter_by(email=email)
+
+        generatedlink = self.get_reset_token()
+
+        if user is None:
+            return abort(400)
+        else:
+            # TODO: valid url
+            yag.send(
+                email, "Password reset instructions from Life Calendar", f"""
+                <p>Hi</p>,
+
+                <p>We were asked to email you password reset instructions for Life Calendar. If you don't recall doing this and remember your passwords, you can safely ignore this email.</p>
+
+                <p>If it <strong>was</strong> you, then you can head over <a href="http://localhost:5000/resetpassword/{generatedlink}/">here</a> to reset your password.</p>
+
+                <p>Having trouble clicking the link? Just paste the following link into your browser: http://localhost:5000/resetpassword/{generatedlink}.</p>
+                """
+            )
+
+    def get_reset_token(self, expires=500):
+        return jwt.encode({'reset_password': self.user,
+                        'exp':    time() + expires},
+                        key='super-secret')
+
+
+class ResetPasswordView(FlaskView):
+    route_base = "/resetpassword/"
+
+    def index(self, token):
+        return render_template("other/reset_password.html", error_msg=[])
+
+    def post(self, token):
+
+        user = self.verify_reset_token(token)
+
+        if user is not None:
+            password = request.form.get('password')
+            confirm_password = request.form.get('confirm-password')
+
+            if password != confirm_password:
+                return render_template("other/reset_password.html", error_msg=["Passwords do not match!"])
+
+            user.password_hash = generate_password_hash(password)
+
+            db.session.add(user)
+            db.session.commit()
+            
+        else:
+            return render_template("other/reset_password.html", error_msg=["Your token has expired! Please request another one."])
+
+    def verify_reset_token(self, token):
+        try:
+            email = jwt.decode(token,
+              key='super-secret')
+        except Exception as e:
+            print(e)
+            return
+        return User.query.filter_by(email=email).first()
