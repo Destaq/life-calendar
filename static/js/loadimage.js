@@ -24,11 +24,21 @@ document
         // TODO: take from DB for registered
         const url = `http://localhost:5000/api/makeimage?bday=${localStorage.getItem("birthday")}&expectancy=${localStorage.getItem("age-expectancy")}&auth=nothing&map_type=${mapType}&interval=${interval}`;
 
+        // embed file for downloading
+        const myBtn = document.createElement("a");
+        myBtn.classList.add("btn");
+        myBtn.classList.add("btn-success");
+        myBtn.classList.add("mr-2");
+        myBtn.setAttribute("type", "button");
+        myBtn.setAttribute("download", "life_calendar");
+        myBtn.innerHTML = "Download Image"
+
         http.get(url)
             .then((data) => {
                 image.src = "data:image/png;base64," + data.result;
                 image.style.width = "45%";
                 // image.style.height = "20%";
+                myBtn.setAttribute("href", image.src)
             })
             // TODO: note that something went wrong
             .catch((err) => console.log(err));
@@ -63,14 +73,6 @@ document
         
         <center><div class="btn-group" id="textColBtns"></div></center>
         `;
-
-        // embed file for downloading
-        const myBtn = document.createElement("button");
-        myBtn.classList.add("btn");
-        myBtn.classList.add("btn-success");
-        myBtn.classList.add("mr-2");
-
-        myBtn.innerHTML = `Download Image <a href="${url}" download></a>`;
 
         document.querySelector("#textColBtns").appendChild(myBtn);
 
