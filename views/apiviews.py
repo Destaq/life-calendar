@@ -466,28 +466,29 @@ class ForgotPasswordView(FlaskView):
 
     def get(self, email):
 
-        user = User.query.filter_by(email=email).first()
+        self.user = User.query.filter_by(email=email).first()
 
         generatedlink = self.get_reset_token()
 
-        if user is None:
+        if self.user is None:
             return abort(400)
         else:
             # TODO: valid url
-            yag.send(
-                email, "Password reset instructions from Life Calendar", f"""
-                <p>Hi</p>,
-
+            contents = [f"""
                 <p>We were asked to email you password reset instructions for Life Calendar. If you don't recall doing this and remember your passwords, you can safely ignore this email.</p>
 
-                <p>If it <strong>was</strong> you, then you can head over <a href="http://localhost:5000/resetpassword/{generatedlink}/">here</a> to reset your password.</p>
+                <p>If it <strong>was</strong> you, then you can head over <a href="http://localhost:5000/resetpassword/{generatedlink.decode("utf-8")}/">here</a> to reset your password.</p>
 
-                <p>Having trouble clicking the link? Just paste the following link into your browser: http://localhost:5000/resetpassword/{generatedlink}.</p>
-                """
+                <p>Having trouble clicking the link? Just paste the following link into your browser: http://localhost:5000/resetpassword/{generatedlink.decode("utf-8")}.</p>"""]
+
+            yag.send(
+                email, "Password reset instructions from Life Calendar", contents
             )
 
+            return jsonify(success=True)
+
     def get_reset_token(self, expires=500):
-        return jwt.encode({'reset_password': self.user,
+        return jwt.encode({'reset_password': self.user.email,
                         'exp':    time() + expires},
                         key='super-secret')
 
@@ -513,9 +514,11 @@ class ResetPasswordView(FlaskView):
 
             db.session.add(user)
             db.session.commit()
+
+            return redirect("/login/")
             
         else:
-            return render_template("other/reset_password.html", error_msg=["Your token has expired! Please request another one."])
+            return render_template("other/reset_password.html", error_msg=["Your token has expired! Please <a href='/login'>request another one</a>."])
 
     def verify_reset_token(self, token):
         try:
@@ -524,4 +527,4 @@ class ResetPasswordView(FlaskView):
         except Exception as e:
             print(e)
             return
-        return User.query.filter_by(email=email).first()
+        return User.query.filter_by(email=email['reset_password']).first()
