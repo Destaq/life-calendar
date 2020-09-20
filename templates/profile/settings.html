@@ -346,19 +346,22 @@
                         <hr>
                         <form>
                             <div class="form-group">
+                                <div class="alert alert-warning invisible" id="badEmailMatch" role="alert">Old email does not match your user email!</div>
                                 <label class="d-block">Change Email</label>
                                 <input type="email" id="old-email" class="form-control" placeholder="Old email address" required>
                                 <input type="email" id="new-email" class="form-control mt-1" placeholder="New email address" required>
-                                <button type="submit" id="email-submit" class="form-control btn btn-info mt-2" style="width: 20%; height: 20%">Confirm</button>
+                                <button type="button" id="email-submit" class="form-control btn btn-info mt-2" style="width: 20%; height: 20%">Confirm</button>
                             </div>
                         </form>
                         <form>
                             <div class="form-group">
+                                <div class="alert alert-danger invisible" id="incorrectPassword" role="alert">Old password incorrect!</div>
+                                <div class="alert alert-warning invisible" id="badPasswordMatch" role="alert">Passwords must match!</div>
                                 <label class="d-block">Change Password</label>
                                 <input type="password" id="old-password" class="form-control" placeholder="Enter your old password">
                                 <input type="password" id="new-password" class="form-control mt-1" placeholder="New password">
                                 <input type="password" id="confirm-new-password" class="form-control mt-1" placeholder="Confirm new password">
-                                <button type="submit" id="password-submit" class="form-control btn btn-info mt-2" style="width: 20%; height: 20%">Confirm</button>
+                                <button type="button" id="password-submit" class="form-control btn btn-info mt-2" style="width: 20%; height: 20%">Confirm</button>
                             </div>
                         </form>
                         <hr>

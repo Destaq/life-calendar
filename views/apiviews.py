@@ -130,7 +130,7 @@ class UpdateUserEmailView(FlaskView):
             if current_user.email != check_user.email:
                 return abort(403)
             elif current_user.email != old_email:
-                return abort(400, "incorrect old email!")
+                return abort(400)
         else:
            return abort(403)
 
@@ -150,16 +150,13 @@ class UpdateUserPasswordView(FlaskView):
         request_json = request.get_json()
         old_password = request_json["old_password"]
         new_password = request_json["new_password"]
-        confirm_new_password = request_json["confirm_new_password"]
 
         check_user = User.query.filter_by(email = user_email).first()
         if current_user.is_authenticated:
             if current_user.email != check_user.email:
                 return abort(403)
-            elif new_password != confirm_new_password:
-                return abort(400, "passwords do not match!")
             elif check_user.check_password(old_password) == False:
-                return abort(400, "incorrect old password!")
+                return abort(403)
         else:
            return abort(403)
 

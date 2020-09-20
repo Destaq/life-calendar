@@ -38,23 +38,96 @@ deleteBtn.addEventListener("click", function() {
 emailSubmit.addEventListener("click", async function(e) {
     // make sure that inputted email is correct for user
     let current_user;
-        
+    let status;
+
     await fetch("/api/currentuser/")
         .then((response) => response.text())
         .then((data) => {
             current_user = data;
         });
 
+    // update user email
+    await fetch(`/api/update_email/${current_user}/`, {
+        headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+        },
+        method: "POST",
+        body: JSON.stringify({
+            old_email: oldEmail.value,
+            new_email: newEmail.value,
+        }),
+    })
+        .then((res) => {
+            status = res.status;
+        })
+        .then((data) => {
+            console.log(data.json());
+            location.href = "/login/";
+        })
+        .catch((e) => {
+            if (status === 400 || status === 403) {
+                // emails do not match
+                document
+                    .querySelector("#badEmailMatch")
+                    .classList.remove("invisible");
 
-    // update user email with simple_update
+                setTimeout(() => {
+                    document
+                        .querySelector("#badEmailMatch")
+                        .classList.add("invisible");
+                }, 3000);
+            }
+        });
 
     e.preventDefault();
 })
 
-passwordSubmit.addEventListener("click", function(e) {
+passwordSubmit.addEventListener("click", async function(e) {
     // make sure that inputted password is correct for current user
+    let current_user;
+    let status;
+
+    await fetch("/api/currentuser/")
+        .then((response) => response.text())
+        .then((data) => {
+            current_user = data;
+        });
 
     // make sure that the two passwords match
+    if (newPassword.value != newPasswordConfirm.value) {
+        document.querySelector("#badPasswordMatch").classList.remove("invisible");
+
+        setTimeout(() => {
+            document.querySelector("#badPasswordMatch").classList.add("invisible");
+        }, 3000);
+    } else {
+        await fetch(`/api/update_password/${current_user}/`, {
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+            },
+            method: "POST",
+            body: JSON.stringify({
+                old_password: oldPassword.value,
+                new_password: newPassword.value,
+            }),
+        })
+            .then((res) => {
+                status = res.status;
+            })
+            .then((data) => {
+                location.href = "/login/";
+            }).catch(e => {
+                console.log(e);
+                
+                document.querySelector("#incorrectPassword").classList.remove("invisible");
+
+                setTimeout(() => {
+                    document.querySelector("#incorrectPassword").classList.add("invisible");
+                }, 3000);
+            })
+    }
 
     e.preventDefault();
 })
