@@ -11,6 +11,7 @@ yag = yagmail.SMTP(os.getenv("SEND_FROM_ADDRESS"), os.getenv("SEND_FROM_PASSWORD
 from flask_classful import FlaskView
 from flask import request, url_for, abort, jsonify
 from werkzeug.utils import redirect
+from werkzeug.security import generate_password_hash, check_password_hash
 
 from models.user import db, User
 from models.text import Day, Week, Month, Year, Decade
@@ -115,6 +116,77 @@ class ReadAllView(FlaskView):
         # send to JS to store in local storage
         return {"result": userdata}
 
+class UpdateUserEmailView(FlaskView):
+    route_base = "/api/update_email/"
+
+    def post(self, user_email):
+
+        request_json = request.get_json()
+        old_email = request_json["old_email"]
+        new_email = request_json["new_email"]
+
+        check_user = User.query.filter_by(email = user_email).first()
+        if current_user.is_authenticated:
+            if current_user.email != check_user.email:
+                return abort(403)
+            elif current_user.email != old_email:
+                return abort(400, "incorrect old email!")
+        else:
+           return abort(403)
+
+        check_user.email = new_email
+        
+        db.session.add(check_user)
+        db.session.commit()
+
+        return jsonify(success=True)
+
+
+class UpdateUserPasswordView(FlaskView):
+    route_base = "/api/update_password/"
+
+    def post(self, user_email):
+
+        request_json = request.get_json()
+        old_password = request_json["old_password"]
+        new_password = request_json["new_password"]
+        confirm_new_password = request_json["confirm_new_password"]
+
+        check_user = User.query.filter_by(email = user_email).first()
+        if current_user.is_authenticated:
+            if current_user.email != check_user.email:
+                return abort(403)
+            elif new_password != confirm_new_password:
+                return abort(400, "passwords do not match!")
+            elif check_user.check_password(old_password) == False:
+                return abort(400, "incorrect old password!")
+        else:
+           return abort(403)
+
+        check_user.password_hash = generate_password_hash(new_password)
+        
+        db.session.add(check_user)
+        db.session.commit()
+
+        return jsonify(success=True)
+
+class DeleteUserView(FlaskView):
+
+    route_base = "/api/delete_user/"
+    
+    def post(self, user_email):
+        
+        user_delete = User.query.filter_by(email = user_email).first()
+        if current_user.is_authenticated:
+            if current_user.email != user_delete.email:
+                return abort(403)
+        else:
+            return abort(403)
+
+        db.session.delete(user_delete)
+        db.session.commit()
+
+        return redirect("/signup")
 
 class UpdateBoxView(FlaskView):
     """Updates an existing user box."""

@@ -45,7 +45,10 @@ from views.apiviews import (
     UpdateAttrView,
     ReturnAttrView,
     SimpleAttrUpdateView,
-    ReturnGoalsView
+    ReturnGoalsView,
+    DeleteUserView,
+    UpdateUserEmailView,
+    UpdateUserPasswordView
 )
 
 
@@ -105,7 +108,10 @@ def register_views(app):
         UpdateAttrView,
         ReturnAttrView,
         SimpleAttrUpdateView,
-        ReturnGoalsView
+        ReturnGoalsView,
+        UpdateUserPasswordView,
+        UpdateUserEmailView,
+        DeleteUserView
     ]
 
     for view in views:
