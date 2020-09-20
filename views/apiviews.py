@@ -466,7 +466,7 @@ class ForgotPasswordView(FlaskView):
 
     def get(self, email):
 
-        user = User.query.filter_by(email=email)
+        user = User.query.filter_by(email=email).first()
 
         generatedlink = self.get_reset_token()
 
