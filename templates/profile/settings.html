@@ -26,21 +26,6 @@
                                 </path>
                             </svg>Account Settings
                         </a>
-                        <a href="#security" data-toggle="tab" class="nav-item nav-link has-icon nav-link-faded">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" class="feather feather-shield mr-2">
-                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-                            </svg>Security
-                        </a>
-                        <a href="#notification" data-toggle="tab" class="nav-item nav-link has-icon nav-link-faded">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" class="feather feather-bell mr-2">
-                                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
-                                <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
-                            </svg>Notification
-                        </a>
                         <a href="#" data-toggle="tab" id="logOutLink" style="color: red" class="nav-item nav-link has-icon">
                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" role="img" class="iconify mr-2 iconify--ic" width="24" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" style="transform: rotate(360deg);"><path d="M6 2h9a2 2 0 0 1 2 2v2h-2V4H6v16h9v-2h2v2a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z" fill="currentColor"></path><path d="M16.09 15.59L17.5 17l5-5l-5-5l-1.41 1.41L18.67 11H9v2h9.67z" fill="currentColor"></path></svg>Log out</a>
                                 
@@ -71,23 +56,6 @@
                                     </path>
                                 </svg></a>
                         </li>
-                        <li class="nav-item">
-                            <a href="#security" data-toggle="tab" class="nav-link has-icon"><svg
-                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round" class="feather feather-shield">
-                                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-                                </svg></a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#notification" data-toggle="tab" class="nav-link has-icon"><svg
-                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round" class="feather feather-bell">
-                                    <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
-                                    <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
-                                </svg></a>
-                        </li>
                         <!-- <li class="nav-item">
                             <a href="#billing" data-toggle="tab" class="nav-link has-icon"><svg
                                     xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -104,15 +72,8 @@
                         <h6>ACCOUNT SETTINGS</h6>
                         <hr>
                         <form>
-                            <div class="form-group">
-                                <label for="username">Username</label>
-                                <input type="text" class="form-control" id="username" aria-describedby="usernameHelp"
-                                    placeholder="Enter your username">
-                                <small id="usernameHelp" class="form-text text-muted">After changing your username, your
-                                    old username becomes available for anyone else to claim.</small>
-                            </div>
-                            <hr>
-                            <div class="get-data alert alert-danger d-none"></div>
+                            <center><em>Note: you can also take the quiz <a href="/quiz">here</a>.</em></center>
+                            <div class="get-data alert alert-danger d-none mt-2"></div>
                             <div class="form-group" id="hideOnFormSubmission">
                                 <form>
                                     <div class="form-group age-years">
@@ -374,11 +335,6 @@
                                 </div>
                             </div>
                             <hr>
-                            <div class="form-group">
-                                <label class="d-block text-warning">Restart</label>
-                                <p class="text-muted font-size-sm">You can remove all your data and start from scratch. This is irreviersible, make sure you understand the implications before you restart if you choose to do so.</p>
-                            </div>
-                            <button class="btn btn-warning" id="restartAccount" type="button">Restart Account</button>
                             <div class="form-group mt-3">
                                 <label class="d-block text-danger">Delete Account</label>
                                 <p class="text-muted font-size-sm">Once you delete your account, there is no going back.
@@ -387,86 +343,25 @@
                             <button class="btn btn-danger" id="deleteAccount" type="button">Delete Account</button>
                         </form>
                     </div>
-                    <div class="tab-pane" id="security">
-                        <h6>SECURITY SETTINGS</h6>
                         <hr>
                         <form>
                             <div class="form-group">
                                 <label class="d-block">Change Email</label>
-                                <input type="text" class="form-control" placeholder="Old email address">
-                                <input type="text" class="form-control mt-1" placeholder="New email address">
-                                <button type="submit" class="form-control btn btn-info mt-2" style="width: 20%; height: 20%">Confirm</button>
+                                <input type="email" id="old-email" class="form-control" placeholder="Old email address" required>
+                                <input type="email" id="new-email" class="form-control mt-1" placeholder="New email address" required>
+                                <button type="submit" id="email-submit" class="form-control btn btn-info mt-2" style="width: 20%; height: 20%">Confirm</button>
                             </div>
                         </form>
-                        <hr>
                         <form>
                             <div class="form-group">
                                 <label class="d-block">Change Password</label>
-                                <input type="text" class="form-control" placeholder="Enter your old password">
-                                <input type="text" class="form-control mt-1" placeholder="New password">
-                                <input type="text" class="form-control mt-1" placeholder="Confirm new password">
-                                <button type="submit" class="form-control btn btn-info mt-2" style="width: 20%; height: 20%">Confirm</button>
+                                <input type="password" id="old-password" class="form-control" placeholder="Enter your old password">
+                                <input type="password" id="new-password" class="form-control mt-1" placeholder="New password">
+                                <input type="password" id="confirm-new-password" class="form-control mt-1" placeholder="Confirm new password">
+                                <button type="submit" id="password-submit" class="form-control btn btn-info mt-2" style="width: 20%; height: 20%">Confirm</button>
                             </div>
                         </form>
                         <hr>
-                        <form>
-                            <div class="form-group">
-                                <label class="d-block">Two Factor Authentication</label>
-                                <button class="btn btn-info" type="button">Enable two-factor authentication</button>
-                                <p class="small text-muted mt-2">Two-factor authentication adds an additional layer of
-                                    security to your account by requiring more than just a password to log in.</p>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="tab-pane" id="notification">
-                        <h6>NOTIFICATION SETTINGS</h6>
-                        <!-- Check/uncheck these labels based on user input -->
-                        <hr>
-                        <form>
-                            <div class="form-group">
-                                <label class="d-block mb-0">Email Updates</label>
-                                <div class="small text-muted mb-3">Emails concerning your progress, goals, and achievements.</div>
-                                <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" id="customCheck1">
-                                    <label class="custom-control-label" for="customCheck1">I want to receive email updates about my progress.</label>
-                                </div>
-                                <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" id="customCheck2">
-                                    <label class="custom-control-label" for="customCheck2">I want to receive email updates about this site (updates, new features, etc.).</label>
-                                </div>
-                            </div>
-                            <div class="form-group mb-0">
-                                <label class="d-block" aria-describedby="describeEmails">Email Notification Frequency</label>
-                                <div class="small text-muted mb-3">Strictly related to emails about your progress and life journey.</div>
-                                <ul class="list-group list-group-sm">
-                                    <li class="list-group-item has-icon">
-                                        Daily Summary
-                                        <div class="custom-control custom-control-nolabel custom-switch ml-auto">
-                                            <input type="checkbox" class="custom-control-input" id="customSwitch1"
-                                            >
-                                            <label class="custom-control-label" for="customSwitch1"></label>
-                                        </div>
-                                    </li>
-                                    <li class="list-group-item has-icon">
-                                        Weekly Summary
-                                        <div class="custom-control custom-control-nolabel custom-switch ml-auto">
-                                            <input type="checkbox" class="custom-control-input" id="customSwitch2">
-                                            <label class="custom-control-label" for="customSwitch2"></label>
-                                        </div>
-                                    </li>
-                                    <li class="list-group-item has-icon">
-                                        Monthly Summary
-                                        <div class="custom-control custom-control-nolabel custom-switch ml-auto">
-                                            <input type="checkbox" class="custom-control-input" id="customSwitch3"
-                                            >
-                                            <label class="custom-control-label" for="customSwitch3"></label>
-                                        </div>
-                                    </li>
-                                </ul>
-                                <button type="button" class="btn btn-primary form-control mt-2">Save Changes</button>
-                            </div>
-                        </form>
-                    </div>
                     <!-- <div class="tab-pane" id="billing">
                         <h6>BILLING SETTINGS</h6>
                         <hr>
@@ -487,6 +382,33 @@
             </div>
         </div>
     </div>
+</div>
+
+<!-- Hidden Delete Account Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteLabel">Delete Account</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure that you would like to delete your account? There is no going back!
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" id="trueDeleteBtn">Delete Account</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 </div>
+
+<script src="/static/js/expectancyQuiz.js"></script>
+<script src="/static/js/submitAgeForm.js"></script>
+<script src="/static/js/settingsUpdate.js"></script>
 {% endblock %}

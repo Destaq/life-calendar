@@ -174,7 +174,7 @@ class DeleteUserView(FlaskView):
 
     route_base = "/api/delete_user/"
     
-    def post(self, user_email):
+    def get(self, user_email):
         
         user_delete = User.query.filter_by(email = user_email).first()
         if current_user.is_authenticated:
@@ -186,7 +186,7 @@ class DeleteUserView(FlaskView):
         db.session.delete(user_delete)
         db.session.commit()
 
-        return redirect("/signup")
+        return jsonify(success=True)
 
 class UpdateBoxView(FlaskView):
     """Updates an existing user box."""
