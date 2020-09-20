@@ -6,6 +6,7 @@ from flask_login import login_required, current_user
 import yagmail
 import ast
 from dotenv import load_dotenv
+from threading import Thread
 
 load_dotenv()
 yag = yagmail.SMTP(os.getenv("SEND_FROM_ADDRESS"), os.getenv("SEND_FROM_PASSWORD"))
@@ -474,16 +475,10 @@ class ForgotPasswordView(FlaskView):
             return abort(400)
         else:
             # TODO: valid url
-            contents = [f"""
-                <p>We were asked to email you password reset instructions for Life Calendar. If you don't recall doing this and remember your passwords, you can safely ignore this email.</p>
+            contents = [f'<p>We were asked to email you password reset instructions for Life Calendar. If you don\'t recall doing this and remember your passwords, you can safely ignore this email.</p><p>If it <strong>was</strong> you, then you can head over <a href="http://localhost:5000/resetpassword/{generatedlink.decode("utf-8")}/">here</a> to reset your password.</p><p>Having trouble clicking the link? Just paste the following link into your browser: http://localhost:5000/resetpassword/{generatedlink.decode("utf-8")}.</p>']
 
-                <p>If it <strong>was</strong> you, then you can head over <a href="http://localhost:5000/resetpassword/{generatedlink.decode("utf-8")}/">here</a> to reset your password.</p>
-
-                <p>Having trouble clicking the link? Just paste the following link into your browser: http://localhost:5000/resetpassword/{generatedlink.decode("utf-8")}.</p>"""]
-
-            yag.send(
-                email, "Password reset instructions from Life Calendar", contents
-            )
+            # free up user through async threading
+            Thread(target=self.send_email, args=(email, "Password reset instructions from Life Calendar", contents)).start()
 
             return jsonify(success=True)
 
@@ -491,6 +486,9 @@ class ForgotPasswordView(FlaskView):
         return jwt.encode({'reset_password': self.user.email,
                         'exp':    time() + expires},
                         key='super-secret')
+
+    def send_email(self, to, subject, content):
+        yag.send(to, subject, content)
 
 
 class ResetPasswordView(FlaskView):
