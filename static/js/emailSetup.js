@@ -192,8 +192,8 @@ async function createCard(readFromDB=false) {
     userCard.children[0].children[4].children[6].children[0].children[0].addEventListener(
         "click",
         async function (e) {
-            let userConfirm = confirm("Are you sure that you would like to PERMANENTLY delete this goal?");
-            if (userConfirm === true) {
+            $("#goalModal").modal("show");
+            document.querySelector("#deleteGoalConfirm").addEventListener("click", async function() {
                 userCard.remove();
                 let modifiedDB = JSON.parse(localStorage.getItem("goals_text"))
                 delete modifiedDB[parseInt(userCard.id.slice(9))];
@@ -227,7 +227,7 @@ async function createCard(readFromDB=false) {
 
                 // reshuffle cards by reloading page
                 location.reload()
-            }
+            })
             
             e.preventDefault();
         }
