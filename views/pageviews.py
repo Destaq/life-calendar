@@ -93,7 +93,7 @@ class SignupView(FlaskView):
 
                 login_user(new_user)
 
-                return redirect(url_for("View:index"))
+                return redirect("/quiz")
 
         else:
             return abort(500)
