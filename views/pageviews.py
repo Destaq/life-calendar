@@ -58,6 +58,10 @@ class ThanksView(FlaskView):
     def index(self):
         return render_template("jinja/thanks.jinja")
 
+class FAQView(FlaskView):
+    def index(self):
+        return render_template("other/faq.html")
+        
 
 ### ADVANCED PAGEVIEWS ###
 class SignupView(FlaskView):
