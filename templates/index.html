@@ -12,7 +12,21 @@
 <script type="module" src="/static/js/legend.js"></script>
 
 <script>
-    localStorage.clear();
+    async function setupReading() {
+        let current_user;
+
+        await fetch("/api/currentuser/")
+            .then((response) => response.text())
+            .then((data) => {
+                current_user = data;
+            });
+
+        if (current_user !== "") {
+            localStorage.clear();
+        }
+    }
+
+    setupReading();
 </script>
 
 </script>

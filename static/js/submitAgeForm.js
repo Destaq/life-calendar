@@ -79,7 +79,7 @@ finished_button.addEventListener("click", async function (e) {
             });
     
         // add information to database
-        if (current_user !== null) {
+        if (current_user !== "") {
             await fetch(`/api/simple_update/${current_user}/`,
                 {
                     headers: {
@@ -119,7 +119,7 @@ finished_button.addEventListener("click", async function (e) {
             .catch( () => { });
 
         // update database with new values
-        if (current_user !== null) {
+        if (current_user !== "") {
             await fetch(`/api/update_attr/${current_user}/`,
                 {
                     headers: {
@@ -237,7 +237,7 @@ async function updateDatabase(age_expectancy, dob) {
             current_user = data;
         });
 
-    if (current_user != "") {
+    if (current_user !== "") {
         await fetch(`/api/updateuser/${current_user}/`,
             {
                 headers: {
@@ -266,7 +266,9 @@ async function checkDBJoin() {
         });
 
     let result;
-    await fetch(`/api/read_attr/${current_user}`).then(data => data.json()).then(res => result = res.result);
+    if (current_user !== "") {
+        await fetch(`/api/read_attr/${current_user}`).then(data => data.json()).then(res => result = res.result);
+    }
 
     return result;
 }
