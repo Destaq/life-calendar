@@ -33,7 +33,8 @@ from views.pageviews import (
     GoalsView,
     GrabCurrentUserView,
     LogOutView,
-    FAQView
+    FAQView,
+    TutorialView
 )
 from views.apiviews import (
     JSONDataView,
@@ -117,7 +118,8 @@ def register_views(app):
         DeleteUserView,
         ResetPasswordView,
         ForgotPasswordView,
-        FAQView
+        FAQView,
+        TutorialView
     ]
 
     for view in views:

@@ -62,6 +62,10 @@ class FAQView(FlaskView):
     def index(self):
         return render_template("other/faq.html")
         
+class TutorialView(FlaskView):
+    def index(self):
+        return render_template("other/tutorial.html")
+
 
 ### ADVANCED PAGEVIEWS ###
 class SignupView(FlaskView):
