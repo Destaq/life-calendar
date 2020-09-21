@@ -1,0 +1,362 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="jumbotron">
+    <center>
+        <h2 class="mb-3">FREQUENTLY ASKED QUESTIONS</h2>
+    </center>
+    <p>Not sure about something? Need to find out more? Other than <a href="/tutorial">the tutorial page</a>, here is
+        your best bet. If you're still not sure, feel free to <a href="/contact">contact us</a>.</p>
+    <hr>
+    <!-- General Queries -->
+    <div class="accordion" id="accordionGeneral">
+        <center>
+            <h3>Common Questions</h3>
+        </center>
+        <div class="card z-depth-0 bordered">
+            <div class="card-header" id="headingThree">
+                <h5 class="mb-0">
+                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                        data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                        How will Life Calendar help me?
+                    </button>
+                </h5>
+            </div>
+            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionGeneral">
+                <div class="card-body">
+                    Life Calendar is helpful by providing a minimal, yet aesthetic and clear place to see your life's
+                    direction. By tracking what you've done over periods of your life, I firmly believe that it is
+                    beneficial by encouraging you to <em>make use of the time you have</em>. Likewise, you can see how
+                    you've progressed in hobbies or aspects of your life over time, stay accountable by creating goals
+                    for yourself, and use it as your personal diary.
+                </div>
+            </div>
+        </div>
+        <div class="card z-depth-0 bordered">
+            <div class="card-header" id="headingOne">
+                <h5 class="mb-0">
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne"
+                        aria-expanded="true" aria-controls="collapseOne">
+                        Do I need an account to access Life Calendar?
+                    </button>
+                </h5>
+            </div>
+            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionGeneral">
+                <div class="card-body">
+                    No, you do not need an account to be able to use Life Calendar. You can still access your life
+                    calendar and statistics page. However, all of your information will disappear once your computer
+                    restarts or you close the browser!<br><br>
+                    While it may good to use an anonymous account for a couple minutes to see how it looks, we highly
+                    recommend you register. This will allow you to have your data securely stored with us and you can
+                    login everywhere.
+                </div>
+            </div>
+        </div>
+        <div class="card z-depth-0 bordered">
+            <div class="card-header" id="headingEleven">
+                <h5 class="mb-0">
+                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                        data-target="#collapseEleven" aria-expanded="false" aria-controls="collapseEleven">
+                        How does shading buttons work?
+                    </button>
+                </h5>
+            </div>
+            <div id="collapseEleven" class="collapse" aria-labelledby="headingEleven" data-parent="#accordionGeneral">
+                <div class="card-body">
+                    The ability to shade buttons is one of the most critical features of Life Calendar. You can select a
+                    button number on the home page, and then the color to shade/unshade it with, and the button will
+                    <em>magically</em> get a stripe (or have it removed) from that color!
+                    <br><br>
+                    The purpose of this is for you to color various boxes based on key, repeated events that happened
+                    throughout your life or things you've done. For example, you could shade the day with a light purple
+                    bar if you went out with friends, or dark brown if you were sick.
+                    <br><br>
+                    I recommend sticking to about a maximum of nine colors per box, because beyond that you won't be
+                    able to see the stripes (even though it will be saved to the legend).
+                </div>
+            </div>
+        </div>
+        <div class="card z-depth-0 bordered">
+            <div class="card-header" id="headingTwelve">
+                <h5 class="mb-0">
+                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                        data-target="#collapseTwelve" aria-expanded="false" aria-controls="collapseTwelve">
+                        What is the statistics page?
+                    </button>
+                </h5>
+            </div>
+            <div id="collapseTwelve" class="collapse" aria-labelledby="headingTwelve" data-parent="#accordionGeneral">
+                <div class="card-body">
+                    The statistics page is a fun little web page that shows you some details about your life and usage
+                    of Life Calendar. You can skip over this entirely or check it every once in a while to see how
+                    you've been doing. It includes statistics such as when you registered, what percent of the way you
+                    are through your life, how many words you've inputted to boxes, what colors you use most frequently,
+                    and a lot more.
+                </div>
+            </div>
+        </div>
+        <div class="card z-depth-0 bordered">
+            <div class="card-header" id="headingThirteen">
+                <h5 class="mb-0">
+                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                        data-target="#collapseThirteen" aria-expanded="false" aria-controls="collapseThirteen">
+                        Can I share my life calendar with others?
+                    </button>
+                </h5>
+            </div>
+            <div id="collapseThirteen" class="collapse" aria-labelledby="headingThirteen"
+                data-parent="#accordionGeneral">
+                <div class="card-body">
+                    Because of the intensely personal nature of Life Calendar - this is meant to be more of a personal
+                    diary than social media site - there is no dedicated social media integration. However, you can
+                    download or print your personalized life calendar at <a href="/download">the download page</a> or
+                    take screenshots of your statistics to compare with others.
+                </div>
+            </div>
+        </div>
+        <div class="card z-depth-0 bordered">
+            <div class="card-header" id="headingSix">
+                <h5 class="mb-0">
+                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                        data-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+                        How much does Life Calendar cost?
+                    </button>
+                </h5>
+            </div>
+            <div id="collapseSix" class="collapse" aria-labelledby="headingSix" data-parent="#accordionGeneral">
+                <div class="card-body">
+                    Despite costs associated with the domain name, web hosting, and database storage, at the moment Life
+                    Calendar is 100% free. We may introduce premium plans in the future to help cover the costs
+                    associated with app maintenance, but if that ever does happen you will still have access to all of
+                    your information.
+                </div>
+            </div>
+        </div>
+        <div class="card z-depth-0 bordered">
+            <div class="card-header" id="headingTen">
+                <h5 class="mb-0">
+                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                        data-target="#collapseTen" aria-expanded="false" aria-controls="collapseTen">
+                        Can I financially support the project?
+                    </button>
+                </h5>
+            </div>
+            <div id="collapseTen" class="collapse" aria-labelledby="headingTen" data-parent="#accordionGeneral">
+                <div class="card-body">
+                    Financial support is more than welcome to help keep the project going, supporting its users and
+                    opening their eyes to their lives. You can <a href="https://github.com/Destaq/life-calendar">donate
+                        on GitHub</a>, <a href="/donate">through Stripe</a>, or <a href="/tobefixed">buy me a
+                        coffee</a>.
+                </div>
+            </div>
+        </div>
+        <div class="card z-depth-0 bordered">
+            <div class="card-header" id="headingSeventeen">
+                <h5 class="mb-0">
+                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                        data-target="#collapseSeventeen" aria-expanded="false" aria-controls="collapseSeventeen">
+                        I'm still confused. Where can I find out more?
+                    </button>
+                </h5>
+            </div>
+            <div id="collapseSeventeen" class="collapse" aria-labelledby="headingSeventeen"
+                data-parent="#accordionGeneral">
+                <div class="card-body">
+                    If you're still not sure how things work, you can take a look at the <a href="/tutorial">text
+                        tutorial</a> or hop onto YouTube to see the <a href="/toaddlink">video demo</a>.
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="accordion mt-4" id="accordionAdvanced">
+        <center>
+            <h3>Advanced Questions</h3>
+        </center>
+        <br>
+        <div class="card z-depth-0 bordered">
+            <div class="card-header" id="headingFive">
+                <h5 class="mb-0">
+                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                        data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                        What does the goals page do?
+                    </button>
+                </h5>
+            </div>
+            <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordionAdvanced">
+                <div class="card-body">
+                    On the goals page, you can set goals for yourself and hold yourself accountable to them. You can
+                    give the goals title, subtitles, and some text, and then a due date and due time. Although you
+                    <em>do not</em> receive an email when the due date expires, you can still shade the goals (in
+                    progress, cancelled, etc.) and visually overview all the major goals you've gone through in your
+                    life.
+                </div>
+            </div>
+        </div>
+        <div class="card z-depth-0 bordered">
+            <div class="card-header" id="headingTwo">
+                <h5 class="mb-0">
+                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                        data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        How does the legend work?
+                    </button>
+                </h5>
+            </div>
+            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionAdvanced">
+                <div class="card-body">
+                    The "legend" is the area above the home page where you can view all of the colors that you use to
+                    shade your buttons. The primary benefit of the legend is that you can modify it to save the meanings
+                    of each of the colors that you use to modify your life calendar boxes with.<br><br>You can also use
+                    the legend to find colors and meaning that you have used before, with their color codes - if you
+                    click on the color as well, it will copy to the color picker.
+                </div>
+            </div>
+        </div>
+        <div class="card z-depth-0 bordered">
+            <div class="card-header" id="headingNine">
+                <h5 class="mb-0">
+                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                        data-target="#collapseNine" aria-expanded="false" aria-controls="collapseNine">
+                        What is Markdown Mode?
+                    </button>
+                </h5>
+            </div>
+            <div id="collapseNine" class="collapse" aria-labelledby="headingNine" data-parent="#accordionAdvanced">
+                <div class="card-body">
+                    While most may use Fancy Mode for creating life calendars, there is an option to use Markdown. <a
+                        href="https://en.wikipedia.org/wiki/Markdown#:~:text=Markdown%20is%20a%20lightweight%20markup,using%20a%20plain%20text%20editor.">Markdown</a>
+                    is one of the simplest formatting languages out there yet likewise one of the most popular, without
+                    any of the extra fluff. You can create tables, italiczed text, and more simply from monospaced font.
+                    <br><br>
+                    Examples:
+                    <ul>
+                        <li>*italicize*</li>
+                        <li>**bold**</li>
+                        <li>:heart:</li>
+                        <li>[google link](https://www.google.com)</li>
+                    </ul>
+                    <br><br>
+                    It's completely fine do go on using the Fancy Mode, but if you're a programmer or want to be even
+                    more minimalist you can use the Markdown Mode. A great guide can be accessed <a
+                        href="https://www.markdownguide.org/getting-started/">here</a>.
+                </div>
+            </div>
+        </div>
+        <div class="card z-depth-0 bordered">
+            <div class="card-header" id="headingFifteen">
+                <h5 class="mb-0">
+                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                        data-target="#collapseFifteen" aria-expanded="false" aria-controls="collapseFifteen">
+                        Why does the text look weird after moving between Markdown and Fancy Mode?
+                    </button>
+                </h5>
+            </div>
+            <div id="collapseFifteen" class="collapse" aria-labelledby="headingFifteen"
+                data-parent="#accordionAdvanced">
+                <div class="card-body">
+                    Because of the way that Markdown is built, you might have some trouble moving between it and Fancy
+                    Mode - I recommend using only one or the other for each box. Fancy Mode uses dynamically generated
+                    HTML and images, which often display as raw when converted to HTML. However, it is safe to move
+                    <em>from</em> Markdown <em>to</em> Fancy Mode.
+                </div>
+            </div>
+        </div>
+        <div class="card z-depth-0 bordered">
+            <div class="card-header" id="headingEight">
+                <h5 class="mb-0">
+                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                        data-target="#collapseEight" aria-expanded="false" aria-controls="collapseEight">
+                        Is my information safe?
+                    </button>
+                </h5>
+            </div>
+            <div id="collapseEight" class="collapse" aria-labelledby="headingEight" data-parent="#accordionAdvanced">
+                <div class="card-body">
+                    We know that you trust us to store what's most important to you - your memories. At Life Calendar,
+                    we take that trust very seriously. Not even <em>we</em> can see your data, and your password is
+                    securely encrypted and stored in our off-site database.
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="accordion mt-4" id="accordionTech">
+        <center>
+            <h3>Tech Questions</h3>
+        </center>
+        <div class="card z-depth-0 bordered">
+            <div class="card-header" id="headingSeven">
+                <h5 class="mb-0">
+                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                        data-target="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">
+                        Can I access the source code?
+                    </button>
+                </h5>
+            </div>
+            <div id="collapseSeven" class="collapse" aria-labelledby="headingSeven" data-parent="#accordionTech">
+                <div class="card-body">
+                    Yes! Life Calendar is open source. It was written predominantly in Python and JavaScript, with the
+                    Flask library and Jinja templating. The GitHub repository is over <a
+                        href="https://www.github.com/Destaq/life-calendar">here</a>.
+                </div>
+            </div>
+        </div>
+        <div class="card z-depth-0 bordered">
+            <div class="card-header" id="headingFour">
+                <h5 class="mb-0">
+                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                        data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                        Is Life Calendar coming to mobile?
+                    </button>
+                </h5>
+            </div>
+            <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionTech">
+                <div class="card-body">
+                    Currently, Life Calendar has no plans of coming to mobile - a mobile app is a whole new ball game.
+                    However, the website is mobile optimized and you can visit our site just as easily on a mobile web
+                    browser.
+                </div>
+            </div>
+        </div>
+        <div class="card z-depth-0 bordered">
+            <div class="card-header" id="headingFourteen">
+                <h5 class="mb-0">
+                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                        data-target="#collapseFourteen" aria-expanded="false" aria-controls="collapseFourteen">
+                        Is there an API?
+                    </button>
+                </h5>
+            </div>
+            <div id="collapseFourteen" class="collapse" aria-labelledby="headingFourteen" data-parent="#accordionTech">
+                <div class="card-body">
+                    The site does use an application programming interface (API) to handle user box requests. However,
+                    it's pretty bare-bones at the moment and most of the routes are protected and require a dedicated
+                    login.
+                    <br><br>
+                    If there is interest in the future, however, we will strongly consider implementing an API to
+                    interact with the database. This would bring benefits for tech-savvy users, by allowing them to
+                    program integration with Google Calendar, emails, etc.
+                </div>
+            </div>
+        </div>
+        <div class="card z-depth-0 bordered">
+            <div class="card-header" id="headingSixteen">
+                <h5 class="mb-0">
+                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                        data-target="#collapseSixteen" aria-expanded="false" aria-controls="collapseSixteen">
+                        I found a bug. What do I do?
+                    </button>
+                </h5>
+            </div>
+            <div id="collapseSixteen" class="collapse" aria-labelledby="headingSixteen" data-parent="#accordionTech">
+                <div class="card-body">
+                    No one likes bugs! If you found a bug, please make sure to let us know! You can <a
+                        href="https://www.github.com/Destaq/life-calendar/issues">open an issue on Github</a> or <a
+                        href="/contact">shoot us an email</a>.
+                    <br><br>
+                    If you think you can <em>solve</em> the issue, even better! You can open a pull request <a
+                        href="https://www.github.com/Destaq/life-calendar">at the repo</a>.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
