@@ -174,7 +174,7 @@ async function createCard(readFromDB=false) {
         });
 
     // update database
-    if (current_user !== null) {
+    if (current_user !== "") {
         await fetch(`/api/simple_update/${current_user}/`,
             {
                 headers: {
@@ -211,7 +211,7 @@ async function createCard(readFromDB=false) {
                     });
 
                 // update database
-                if (current_user !== null) {
+                if (current_user !== "") {
                     await fetch(`/api/simple_update/${current_user}/`,
                         {
                             headers: {
@@ -367,7 +367,7 @@ function setupEv(someCard) {
                             });
 
                         // update database
-                        if (current_user !== null) {
+                        if (current_user !== "") {
                             await fetch(`/api/simple_update/${current_user}/`,
                                 {
                                     headers: {
@@ -452,7 +452,7 @@ async function shadeBackground(someCard, child) {
         let tosend = JSON.stringify({goals_text: userGoals});
 
         // update database
-        if (current_user !== null) {
+        if (current_user !== "") {
             await fetch(`/api/simple_update/${current_user}/`,
                 {
                     headers: {

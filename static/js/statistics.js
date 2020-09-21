@@ -41,7 +41,7 @@ async function updateDatabase() {
         });
 
     // update database with new values
-    if (current_user !== null) {
+    if (current_user !== "") {
         await fetch(`/api/update_attr/${current_user}/`,
             {
                 headers: {

@@ -111,7 +111,7 @@ $("#legendModal").on('hidden.bs.modal', async function() {
 
     // add information to database
     console.log(dontModify, "as unmodifiable")
-    if (current_user !== null) {
+    if (current_user !== "") {
         await fetch(`/api/update_attr/${current_user}/`,
             {
                 headers: {
@@ -226,7 +226,7 @@ export async function modifyLegend(rgb, shade, isSecond) {
 
     // add information to database
     console.log(dontModify, "as unmodifiable")
-    if (current_user !== null) {
+    if (current_user !== "") {
         await fetch(`/api/update_attr/${current_user}/`,
             {
                 headers: {
