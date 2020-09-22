@@ -3,4 +3,3 @@
 *.pyc
 .todo
 data.sqlite
-/migrations
