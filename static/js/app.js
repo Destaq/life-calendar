@@ -92,7 +92,6 @@ async function runGetServer() {
         `;
     } else {
         // TODO: if registered user, use XOR with data from DB
-        console.log(age_expectancy, birthdate_value)
         readFromUrl();
         createMap(is_new_user, current_view);
 
@@ -190,6 +189,9 @@ async function createMap(is_new, gran_level, e) {
     modifier = calculateModifier(gran_level);
 
     let maximal_amount; // the highest number of the button to be displayed
+    if (current_view_value === -1) {
+        current_view_value += 1; // support those who have yet to reach their first year
+    }
     let navbar_view = current_view_value + 1; // the active button for the pagination navigation bar
     if (
         (current_view_value + 1) * 150 >
@@ -216,11 +218,17 @@ async function createMap(is_new, gran_level, e) {
 
     // generate the pagination bar from pagination.js if applicable
     if (maximal_amount > 149) {
+        if (navbar_view === 1 || navbar_view === 0) {
+            // support 0-day
+            minimal_amount -= 1;
+        }
         generateBottomBar(age_expectancy, modifier, navbar_view);
     } else {
         document
             .querySelector("#bottom-pagination-navbar")
             .classList.add("invisible");
+        // support for 0-day in years and decades
+        minimal_amount -= 1;
     }
 
     // make navbar previous + next clickable
@@ -251,7 +259,6 @@ async function createMap(is_new, gran_level, e) {
     numberInput.setAttribute("max", maximal_amount);
     numberInput.setAttribute("value", minimal_amount + 1);
     numberInput.setAttribute("style", "width: 5.5em");
-
     // create the buttons for that page
     for (let i = minimal_amount; i < maximal_amount; i++) {
         const newBtn = document.createElement("button");
@@ -422,7 +429,10 @@ function shadeButtons(age_expectancy, birthday) {
             }
         } catch {}
     }
-
+    // support for *very* small ages
+    if (amount === -1) {
+        amount += 1;
+    }
     if (amount <= (current_view_value + 1) * 150) {
         try {
             if (localStorage.getItem(`${current_view}-${amount}-background`) != null) {
