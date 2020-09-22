@@ -127,9 +127,7 @@ class LogOutView(FlaskView):
 
     @login_required
     def post(self):
-        print(current_user, current_user.is_authenticated)
         logout_user()
-        print(current_user, current_user.is_authenticated)
         return redirect("/login")
 
 class GrabCurrentUserView(FlaskView):

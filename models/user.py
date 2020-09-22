@@ -57,7 +57,6 @@ class User(db.Model, UserMixin):
         return self.email  # satisfy Flask-Login
 
     def update_attribute(self, attribute: str, attr_text: str):
-        print(attribute, attribute in self.user_modifiable_attrs)
         if attribute in self.user_modifiable_attrs:
             setattr(self, attribute, attr_text)
 

@@ -330,7 +330,6 @@ class UpdateAttrView(FlaskView):
                 send_result = {}
             for req_key in req_lst:
                 # update only newly added attributes
-                print(req_key, request_json[key][req_key])
                 send_result[req_key] = request_json[key][req_key]
 
             User.update_attribute(user, key, str(send_result))
