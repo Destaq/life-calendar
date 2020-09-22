@@ -56,21 +56,18 @@ from views.apiviews import (
 )
 
 
-def load_settings(app: Flask):
-    basedir = os.path.abspath(os.path.dirname(__file__))
+basedir = os.path.abspath(os.path.dirname(__file__))
 
-    app.config["SECRET_KEY"] = os.getenv("APP_CONFIG_KEY")
-    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + os.path.join(
-        basedir, "data.sqlite"
-    )
-    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+app.config["SECRET_KEY"] = os.getenv("APP_CONFIG_KEY")
+app.config["SQLALCHEMY_DATABASE_URI"] = os.environ["DATABASE_URL"]
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
-    CORS(app, resources={r"/api/*": {"origins": "*"}})
+CORS(app, resources={r"/api/*": {"origins": "*"}})
 
-    db.init_app(app)
-    Migrate(app, db)
+db.init_app(app)
+Migrate(app, db)
 
-    load_dotenv()
+load_dotenv()
 
 
 def form_application() -> Flask:
@@ -78,7 +75,6 @@ def form_application() -> Flask:
     def page_not_found(e):
         return render_template("404.html"), 404
 
-    load_settings(app)
     register_views(app)
 
     return app

@@ -19,7 +19,7 @@ class User(db.Model, UserMixin):
 
     id = db.Column(db.Integer, primary_key=True)
 
-    email = db.Column(db.String(64), unique=True, index=True)
+    email = db.Column(db.Text, unique=True, index=True)
     password_hash = db.Column(db.String(256))
 
     age_expectancy = db.Column(db.Integer)

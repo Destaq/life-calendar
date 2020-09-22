@@ -81,7 +81,7 @@ class Decade(db.Model):
     colors = db.Column(db.Text)
 
     # connect day to user
-    user_email = db.Column(db.Integer, db.ForeignKey("users.email"))
+    user_email = db.Column(db.Text, db.ForeignKey("users.email"))
 
     def __init__(self, textcontent, user_email, number, colors):
         self.textcontent = textcontent

@@ -1,5 +1,4 @@
 import json
-import os
 from time import time
 from flask.templating import render_template
 from flask_login import login_required, current_user
@@ -9,7 +8,7 @@ from dotenv import load_dotenv
 from threading import Thread
 
 load_dotenv()
-yag = yagmail.SMTP(os.getenv("SEND_FROM_ADDRESS"), os.getenv("SEND_FROM_PASSWORD"))
+yag = yagmail.SMTP("destaq.coding@gmail.com", "America!")
 
 from flask_classful import FlaskView
 import jwt
