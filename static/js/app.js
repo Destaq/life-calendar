@@ -258,6 +258,7 @@ async function createMap(is_new, gran_level, e) {
     numberInput.setAttribute("min", minimal_amount + 1);
     numberInput.setAttribute("max", maximal_amount);
     numberInput.setAttribute("value", minimal_amount + 1);
+    numberInput.value = minimal_amount + 1;
     numberInput.setAttribute("style", "width: 5.5em");
     // create the buttons for that page
     for (let i = minimal_amount; i < maximal_amount; i++) {
