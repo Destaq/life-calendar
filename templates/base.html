@@ -20,7 +20,10 @@
     <link rel="stylesheet" href="/static/styles/footer.css">
     <script src="https://unpkg.com/showdown/dist/showdown.min.js"></script>
     <link rel="stylesheet" href="/static/styles/main.css">
+    {% block page_info %}
+    
     <title>Life Calendar</title>
+    {% endblock %}
     <script type="text/javascript">
         $(document).ready(function () {
             $('[data-toggle="tooltip"]').tooltip({
