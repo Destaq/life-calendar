@@ -1,0 +1,196 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="jumbotron">
+    <center>
+        <h1 class="mt-n4">Tutorial</h1>
+        <p><em>Learn all about how to use Life Calendar here (or <a href="/needstobeadded">watch the video</a>)!</em>
+        </p>
+    </center>
+    <hr>
+    <h2>Introduction to Life Calendar</h2>
+    <p>Welcome to Life Calendar! With Life Calendar, you see the biggest picture you have - your life.</p>
+    <p>Here you can - <em>completely for free</em> - track your life in "boxes" from days to decades, planning out what
+        you want to accomplish or writing down what happened. With simple formatting, you can save what's been going on
+        in your life, set goals or milestones for yourself and - quite literally - shade your life through images,
+        notes, and more!</p>
+    <p>Likewise, we provide interesting infographics and visualizations about <em>your</em> unique life, including
+        downloadable posters and beautiful <a href="/statistics">statistics</a>.</p>
+    <p>Sounds interesting? We hope so! It's super-simple to <a href="/tutorial#first-steps">get started</a>, which is
+        what we'll be covering next. You can also move down to view some of <a href="/tutorial#basic-features">basic</a>
+        or <a href="/tutorial#advanced-features">advanced</a> features.</p>
+    <h2 id="getting-started">Getting Started</h2>
+    <h3 id="first-steps">First Steps</h3>
+    <p>While Life Calendar can be used without registering, we <strong>strongly recommend</strong> that you do. The only
+        time that we'll send you emails is when you choose to reset your password, and this allows you to login and view
+        your Life Calendar anywhere! Without signing up, you're data will be lost as soon as your computer shuts down.
+        You can sign up at the <a href="/signup">signup page</a>.</p>
+    <p>With that out of the way, it's time for you to submit your age expectancy quiz! As soon as you have successfully
+        registered, you'll be redirected to a page where you can input your date of birth and life expectancy (which we
+        can't see and won't share with anyone). If you aren't sure about what your life expectancy <em>is</em>, you can
+        take our quick quiz with the click of a button or find a more in-depth online one.</p>
+    <p>Once you've submitted, you'll be redirected to the home page! Keep reading for an outline of how to use it!</p>
+    <h3 id="usage">Using the Site</h3>
+    <center><iframe width="400" name="videoDemo" height="225"
+            src="https://www.youtube.com/embed/u_izSzis3Mw"></iframe><br><small for="videoDemo">Video Tutorial</small>
+    </center>
+    <br>
+    <p>Life Calendar is really easy to grasp and use. Let's go over how it works.</p>
+    <p>The core part of the website is at the <a href="/">hompage</a>. If you head over there, you'll see a ton of colored boxes, as well as a couple of buttons at the top - something like the image below.</p>
+    <p>These boxes are <em>life boxes</em>, and they represent stages of your life. You can switch between different views by going to the 'Granularity' button at the top, and choosing what level you'd like to view your life at.</p>
+    <p>For the sake of this example, we will be looking at the weeks view. I'll head over to weeks by selecting it under 'Granularity'. Go ahead and try this as well - you should see 150 colored life boxes. At first, life boxes can only be green, yellow, or red. Green boxes represent life that you have left to live, yellow boxes the current box you're living, and red boxes what you've already gone through. At the bottom, you'll have the option to click back and forth between 'views' for larger pages. If you ever get too far ahead, you can click the home button to get back to the page you are currently living in. You can shade these boxes as well, but we'll get onto that in a little bit.</p>
+    <p>The true magic shows when you <em>click</em> on a box. At first, it will be empty, with buttons saying 'delete', 'edit', and 'cancel'. At the bottom. Let's try editing - we'll get a beautiful text interface!</p>
+    <p>I've chosen to edit my current week, and I'll type in my life box what I've accomplished and what I plan to accomplish this week - something like a diary or calendar planner.</p>
+    <p>Once I'm done, I'll click 'Save Changes' - and voilà, my life box now has on it what I've written!</p>
+    <p>Now, let's get into some of the other features! We'll only be looking at these very briefly, because you can find out a lot more about each specific one under the <a href="/tutorial#basic-features">basic</a> and <a href="/tutorial#advanced-features">advanced</a> feature explanation.</p>
+    <p>So another cool feature is the ability to shade boxes. By selecting a number and a color, I can click shade (or unshade) to shade/unshade boxes, which can be used to represent parts of my life such as having vacation, having a good week, or being at a job. See image below.</p>
+    <p>Once you have shaded buttons with some colors, they will show up when you click the black 'Show Legend' button on the home page. There, you can see each color, a meaning, the hexadecimal code, and a clipboard button. You can edit the meaning (make sure to save your changes) and click the clipboard button to change the color of the color picker.</p>
+    <p>There are also a few other cool pages, such as the statistics and downloads page, which are self-explanatory (you can keep on reading for more details).</p>
+    <p>Another big page is the 'Goals' page, where you can set yourself goals. Again, it's fairly intuitive, and I won't go into too many details for the sake of brevity. You can read more <a href="/tutorial#goals-description">at the feature explanation</a>.</p>
+    <p>That's pretty much the gist of it! I'll outline some of the other features in more details below, but the real, personal magic is these little boxes that represent your life!</p>
+    <h4 id="basic-features">Basic Features</h4>
+    <h5>Shade Buttons</h5>
+    <p>With Life Calendar, you can shade boxes based on what happened during those timeframes! This can be anything from
+        it being a day/week etc. you went out with friends to something more abstract such as a time when you learned
+        something. In order to shade buttons, you need to go to the top of the home page and type in the number of the
+        box for your current view (days, weeks, etc.) that you'd like to shade (or unshade).</p>
+    <p>Then, you can use the colored box on the right to select the color that you would like to use, and then shade or
+        unshade the box with that color! This color will then be added to the legend, which you can read about more <a
+            href="/tutorial#legend-description">here</a> under Advanced Features.</p>
+    <h5>Granularity</h5>
+    <p>With the homepage 'Granularity' dropdown button, you can choose at which 'level' you view your life. The levels available are days, weeks, months, years, and decades. Each level has its own individual boxes, with unique box text and color tracking. This can be useful for whether you want to write out something that just happened on one day, shade that you had a bad week, or store your homework for the month, etc.</p>
+    <h5>Card Interaction</h5>
+    <p>Simply put, if you click on a box, you'll see three buttons at the bottom - edit, delete, and cancel. They,
+        unsurprisingly, do what they say they do - add the ability to edit, delete, or cancel cards. If you choose to
+        delete a card you'll be asked for confirmation as it is irreversible, and editing a card will allow you to enter
+        the editing mode (default is Fancy).</p>
+        <p><em>Note: deleting cards only <strong>clears the content</strong>, and doesn't actually remove that life box.</em></p>
+    <h5>Fancy Mode</h5>
+    <p>Fancy Mode is the default mode that is used for editing cards. It is a smooth, modern editor with a lot of
+        features, which are outlined below:</p>
+    <ul>
+        <li>Image upload</li>
+        <li>Links and tables</li>
+        <li>Text size and orientation adjustment</li>
+        <li>Text and background highlighting</li>
+        <li>...and lots, lots more. Have a look around and you'll find out some more cool features!</li>
+    </ul>
+    <h5>The 'Home' Button</h5>
+    <p>This button is fairly self-explanatory. If you are in a larger 'view', such as days or weeks, and click far ahead
+        (for example, to see the last expected week of your life), it is frustrating to click the Previous button
+        multiple times to get to where you need to be. So, you can just click the 'Home' button to be able to get to the
+        'page' of your current life calendar view that has the box with which you are currently living.</p>
+    <p>We promise it will make more sense when you try it out. Perceptive users may also notice that the link on the
+        homepage contains the current page and view (for example, <code>/?view=weeks&page=35</code>. You can also
+        just the number after <code>page</code> to navigate to your desired page.</p>
+    <h4 id="advanced-features">Advanced Features</h4>
+    <h5 id="legend-description">Legend</h5>
+    <p>The legend is the nifty little feature that keeps track of all button color shading. You can open it up by clicking the 'Legend' button, and should see something like the image below with all colors and hex codes.</p>
+    <p>The main benefit of the legend is that you are able to click the 'set picker' button next to each color to change the color of the color picker used for shading/unshading. You can also manually type in the hexadecimal code.</p>
+    <p>Another important advantage of the legend feature is that (except for the first three representing past, present, and future parts of your life - change the meaning of each color. Simply go to the cell for the meaning of that color, and type in something. Make sure to save your changes!</p>
+    <h5>Markdown Mode</h5>
+    <p>Markdown Mode is the minimalist version of Fancy Mode. You can easily switch between it and Fancy Mode with the link at the top of a life box when you edit it. Don't be discouraged by the lack of visual aids - Markdown is actually a very powerful markup language. It supports almost everything Fancy Mode does - links, images, tables, bold/italicized text, emojis - and is most suitable to those familiar with it or programmers. An awesome cheatsheet is available <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">here</a> that will have you be a Markdown pro in minutes.</p>
+    <h5>Adding Images</h5>
+    <p>Adding images <em>is</em> supported, although uploading custom images - for the time being - is not (due to costs associated with storing the images on our off-site server and this being a fully free site). You can add images in Fancy Mode by going to a life box -> edit -> insert -> image, then adding an image link.</p>
+    <p>In Markdown Mode, this could be done with <code>![](https://my-image-link.com/my_image.png)</code>.</p>
+    <h2 id="other-pages">Other Life Calendar Pages</h2>
+    <h3 id="statistics">Statistics</h3>
+    <p>The <a href="/statistics">statistics</a> page holds a plethora of statistics related to your account and
+        usage of
+        life calendar - it's especially useful for registered users. This is the information that you can view:
+    </p>
+    <ul>
+        <li><strong>Initially inputted values</strong></li>
+        <ul>
+            <li>Age expectancy</li>
+            <li>Birthdate</li>
+            <li>Date joined Life Calendar</li>
+        </ul>
+        <li><strong>Usage statistics</strong></li>
+        <ul>
+            <li>Total number of boxes you have modified</li>
+            <li>Total number of words you have every typed in boxes</li>
+            <li>The date that you joined Life Calendar</li>
+        </ul>
+        <li><strong>Generated statistics</strong></li>
+        <ul>
+            <li>Days, weeks, months, years, and decades <em>passed</em> in life</li>
+            <li>Days, weeks, months, years, and decades <em>left</em> in life</li>
+            <li>Percentage of the way through life</li>
+            <li>Percentage of the way through life as a visual color bar</li>
+        </ul>
+        <li><strong>Legend statistics</strong></li>
+        <ul>
+            <li>All legend colors used</li>
+            <li>All legend tags/meanings</li>
+            <li>The number of times that you have used each legend color</li>
+        </ul>
+    </ul>
+    <h3 id="goals-description">Goals</h3>
+    <p>The <a href="/goals">goals</a> page is where you can set and track goals for your life. It's (hopefully)
+        very intuitive, but we'll quickly outline how it works for the sake of clarity.</p>
+    <p>When you first go to the page, you'll be greeted by a relatively-empty looking area with a single,
+        centered card. This card is your <em>template card</em>, and it's like a best friend - it will always be
+        there for you at the bottom of the page. You can use it to generate goals for yourself. Let's take a
+        look at how we might generate our very first goal! I've been learning Mandarin Chinese this summer, so
+        I'll use a level of language attainment for mine.</p>
+    <ol>
+        <li>First off, we come up with a title, optional subtitle, and details for our goal. In my case, I'm
+            going to put that I'd like to be able to read an A1 level text in Simplified Chinese within the next
+            two months.<br><br>Try to make sure that your goals are S.M.A.R.T. - specific, manageable,
+            attainable, relevant, and time-based. This will help you stay motivated and not set too big of a
+            goal for yourself.
+        </li>
+        <br>
+        <li>Next, we need to come up with a due date and optional due time (set to 11:59 PM by default).
+            Although you won't get a warning when you pass these limits, it's still useful for when you
+            periodically visit life calendar or want to see when you created a goal or if something is overdue.
+            I think I'll be able to reach A1 reading quite quickly, so I'll set mine to the 1st of November,
+            2020.</li>
+        <br>
+        <li>Lastly, we submit! You should know see your beautiful first goal card having popped up in front of
+            the 'template card'. This goal card is fully editable - you can change the title, subtitle, text,
+            and everything else by clicking 'Edit' at the bottom and then 'Save Changes'. Likewise, you can
+            delete the card - but ensure that you want to do this, it is irreversible!</li>
+    </ol>
+
+    <p>One last thing to note is the radio buttons at the bottom of the card. There are four options - 'not
+        started', 'in progress', 'complete', and 'cancelled'. You can select whichever one of these you want,
+        and the card will be outlined in that respective color. This is yet another visual way to see your life
+        and your goals at a glance.</p>
+    <h3 id="download">Download</h3>
+    <p>The <a href="/download">download</a> page is where you can download your very own life calendar! This can
+        be
+        printed out or simply saved digitally to your device.</p>
+    <p>There are further instructions on the actual page, but essentially, you have the options outline below
+        (for both
+        print and download, scaleable). A 'colored' calendar means that it is outlined based on your current
+        life
+        calendar (without custom shading) and 'blank' means that it provides only boxes for you to annotate
+        yourself.
+    </p>
+    <ul>
+        <li>Colored + Blank Week Calendar</li>
+        <li>Colored + Blank Month Calendar</li>
+        <li>Colored + Blank Years Calendar</li>
+    </ul>
+    <p>Days and decades have not been included as they would either be too small or too big to fit into an
+        aesthetically
+        pleasing image.</p>
+    <h2 id="closing-notes">Closing Notes</h2>
+    <p>To conclude, Life Calendar is your diary, todo planner, and bucket list all wrapped into one. You can
+        easily
+        access it anywhere, and we sincerely hope that you'll find this useful and gain a new perspective on
+        your life.
+    </p>
+    <p>If you have any more questions about the site, you can head over to the <a href="/faq">Frequently Asked
+            Questions
+            page</a> or <a href="/contact">send us an email</a>.</p>
+    <p>Likewise, if you find the site useful, you can <a href="/donate">donate</a> to keep it afloat. You're
+        name will
+        be displayed as a means of thanks, and you'll have the warm fuzzy feeling of keeping this site going for
+        its
+        users - yourself included.</p>
+</div>
+{% endblock %}
