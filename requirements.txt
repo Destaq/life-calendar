@@ -14,3 +14,4 @@ Flask_Cors==3.0.8
 Flask_Login==0.5.0
 PyJWT==1.7.1
 python-dotenv==0.14.0
+psycopg2==2.8.6
