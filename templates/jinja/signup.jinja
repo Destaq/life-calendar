@@ -10,19 +10,23 @@
     <hr>
     <form method="POST">
     {% if sameerror == True %}
-        <div class="alert alert-warning" role="alert">A user with that email address already exists!</div>
+        <div class="alert alert-danger" role="alert">A user with that email address already exists!</div>
+    {% else %}
+        {% if sameerror == "bad_password" %}
+            <div class="alert alert-warning" role="alert">Please make sure your passwords match!</div>
+        {% endif %}
     {% endif %}
     <p class="form-text text-muted">Not a new user? You can <a href="/login">log in here</a> instead.</p>
     <div class="form-group">
         {{ form.hidden_tag() }}
         {{ form.email.label(id="emailLabel")}} {{ form.email(class_="form-control", **{"aria-describedby": "emailHelp"}) }}
-        <small id="emailHelp" class="form-text text-muted">We won't share your email with anyone else or send you emails without your permission.</small>
+        <small id="emailHelp" class="form-text text-muted">We won't share your email with anyone else or only send you emails for password resets.</small>
     </div>
     <div class="form-group">
         {{ form.password.label }} {{ form.password(class_="form-control") }}
     </div>
     <div class="form-group">
-        {{ form.subscribe(class_="form-check-label mr-2") }} {{ form.subscribe.label }}
+        {{ form.password_confirm.label }} {{ form.password_confirm(class_="form-control") }}
     </div>
     <div class="form-group">
         {{ form.submit(class_="form-control", style="background-color: #cccccc") }}

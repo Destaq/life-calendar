@@ -1,13 +1,13 @@
 from wtforms import StringField, SubmitField, PasswordField, BooleanField
-from wtforms.validators import DataRequired
+from wtforms.validators import DataRequired, EqualTo
 from flask_wtf import FlaskForm
 
 ### REGISTRATION/LOGIN HANDLING ###
 
 class SignupForm(FlaskForm):
-    password = PasswordField("Password", validators=[DataRequired()])
-    subscribe = BooleanField("I want to receive email updates about my progress", validators=[])
-    email = StringField("Email Address", validators=[])
+    password = PasswordField("Password", validators=[DataRequired(), EqualTo('password_confirm', message="Passwords must match!")])
+    password_confirm = PasswordField("Confirm Password", validators=[DataRequired()])
+    email = StringField("Email Address", validators=[DataRequired()])
     submit = SubmitField("Submit")
 
 

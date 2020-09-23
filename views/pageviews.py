@@ -76,26 +76,28 @@ class SignupView(FlaskView):
 
     def post(self):
         form = SignupForm()
+        user = User.query.filter_by(email = form.email.data).first()
+
+        if user is not None:
+            return render_template("jinja/signup.jinja", form=form, sameerror=True)
+
         if form.validate_on_submit():
             session["password"] = form.password.data
-            session["subscribe"] = form.subscribe.data
+            session["password_confirm"] = form.password_confirm.data
             session["email"] = form.email.data
 
-            user = User.query.filter_by(email = session["email"]).first()
+            # if implementing email subscription, eventually modify this
+            new_user = User(session["email"], session["password"], subscribe = False)
+            db.session.add(new_user)
+            db.session.commit()
 
-            if user is not None:
-                return render_template("jinja/signup.jinja", form=form, sameerror=True)
+            login_user(new_user)
 
-            else:
-                new_user = User(session["email"], session["password"], subscribe = session["subscribe"])
-                db.session.add(new_user)
-                db.session.commit()
-
-                login_user(new_user)
-
-                return redirect("/quiz")
+            return redirect("/quiz")
 
         else:
+            if form.password.data != form.password_confirm.data:
+                return render_template("jinja/signup.jinja", form=form, sameerror="bad_password")
             return abort(500)
 
 class LoginView(FlaskView):
