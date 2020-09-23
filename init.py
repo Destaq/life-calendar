@@ -58,7 +58,7 @@ from views.apiviews import (
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
-app.config["SECRET_KEY"] = os.getenv("APP_CONFIG_KEY")
+app.config["SECRET_KEY"] = os.environ["APP_CONFIG_KEY"]
 app.config["SQLALCHEMY_DATABASE_URI"] = os.environ["DATABASE_URL"]
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
