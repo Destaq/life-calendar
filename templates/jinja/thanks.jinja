@@ -1,4 +1,9 @@
 {% extends "base.html" %}
+
+{% block page_info %}
+<title>Thanks - Life Calendar</title>
+{% endblock %}
+
 {% block content %}
 <h1>Successfully sent email!</h1>
 <p>{{ request.args.get('name') }}, thanks for reaching out! We've received your emai and will try to respond within a few days.</h1>
