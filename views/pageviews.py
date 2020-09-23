@@ -116,10 +116,11 @@ class LoginView(FlaskView):
                     return redirect(url_for("View:index"))
     
                 elif user.check_password(form.password.data) == False and user is not None:
-                    return render_template("jinja/login.jinja", form=form, error="Incorrect password!")
+                    return render_template("jinja/login.jinja", form=form, error="Incorrect email or password!")
 
             else:
-                return render_template("jinja/login.jinja", form=form, error="A user with this email does not exist!")
+                # same error so user doesn't know if another user already registered under that email
+                return render_template("jinja/login.jinja", form=form, error="Incorrect email or password!")
 
         return render_template("jinja/login.jinja", form=form, error=None)
 

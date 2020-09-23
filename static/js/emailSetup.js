@@ -150,7 +150,7 @@ async function createCard(readFromDB=false) {
     
     let finalGoalObj;
 
-    if (localStorage.getItem("goals_text") === null) {
+    if (JSON.parse(localStorage.getItem("goals_text")) === null) {
         localStorage.setItem("goals_text", JSON.stringify(goals_obj));
         finalGoalObj = JSON.stringify(goals_obj);
     } else {
