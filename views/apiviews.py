@@ -253,6 +253,13 @@ class ReturnAttrView(FlaskView):
 
         return {"result": user.joined}
 
+class TotalUsersView(FlaskView):
+    route_base = "/api/usercount/"
+
+    # return number of users for shields.io and interested parties
+    def get(self):
+        return {"user_count": User.query.count()}
+
 # TODO: merge into one view with the above
 class ReturnGoalsView(FlaskView):
 

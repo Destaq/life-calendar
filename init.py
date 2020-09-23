@@ -52,7 +52,8 @@ from views.apiviews import (
     UpdateUserEmailView,
     UpdateUserPasswordView,
     ResetPasswordView,
-    ForgotPasswordView
+    ForgotPasswordView,
+    TotalUsersView
 )
 
 
@@ -123,7 +124,8 @@ def register_views(app):
         ResetPasswordView,
         ForgotPasswordView,
         FAQView,
-        TutorialView
+        TutorialView,
+        TotalUsersView  
     ]
 
     for view in views:
