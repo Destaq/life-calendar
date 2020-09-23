@@ -8,7 +8,8 @@ from dotenv import load_dotenv
 from threading import Thread
 
 load_dotenv()
-yag = yagmail.SMTP("destaq.coding@gmail.com", "America!")
+# updated passwords for all accounts when other one was compromised
+yag = yagmail.SMTP("fake@fake-email.com", "fake!") 
 
 from flask_classful import FlaskView
 import jwt
