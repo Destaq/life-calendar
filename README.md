@@ -126,3 +126,15 @@ An easy way to contribute is to fork the project, add some beautiful code, and t
 ## Last Note
 
 This project has been inspired by [this post](https://waitbutwhy.com/2014/05/life-weeks.html) on [waitbutwhy.com](http://www.waitbutwhy.com), which demonstrated a simple, printable calendar of an average life in weeks. Thanks for introducing the world to this, Tim Urban.
+
+<hr>
+<h2 id="todo">Todo</h2>
+<p>Want to contribute but not sure where to start? Interested to see what the project's direction is? Search no further.</p>
+
+<p>Once a task has been completed, it is removed from the below task list.</p>
+
+- [ ] SendGrid custom email address | **@critical @in-progress**
+- [ ] Multiple language support | **@medium @much-work**
+- [ ] Build API for users to interact with | **@medium @much-work**
+- [ ] Add ability to set Markdown/Fancy Mode preference in settings | **@low**
+- [ ] Brainstorm alternative solution to `localStorage` dumping | **@low @much-work @future**
