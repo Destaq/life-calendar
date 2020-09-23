@@ -258,8 +258,10 @@ class TotalUsersView(FlaskView):
 
     # return number of users for shields.io and interested parties
     def get(self):
-        return {"user_count": User.query.count()}
-
+        return {"schemaVersion": 1,
+                "label": "users",
+                "message": str(User.query.count())
+        }
 # TODO: merge into one view with the above
 class ReturnGoalsView(FlaskView):
 
