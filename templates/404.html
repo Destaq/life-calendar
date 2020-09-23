@@ -1,10 +1,16 @@
 {% extends "base.html" %}
 
 {% block page_info %}
-<title>404 - Life Calendar</title>
+<title>Page not Found - Life Calendar</title>
 <meta name="description" content="Uh oh! Seems like you're trying to go somewhere that doesn't exist.">
 {% endblock %}
 
 {% block content %}
-<h3>You seem to be trying to go somewhere that doesn't exist.</h3>
+<div class="jumbotron">
+    <h3>Page not found!</h3>
+    <hr>
+    <p>You seem to be trying to go somewhere that doesn't exist. Sorry about that!</p>
+
+    <p>Would you like to go back <a href="/">home</a>?</p>
+</div>
 {% endblock %}
