@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 from flask import Flask, render_template
 from flask_cors import CORS
 from flask_login import LoginManager
+from flask_talisman import Talisman
 
 app = Flask(__name__)
 
@@ -67,6 +68,9 @@ CORS(app, resources={r"/api/*": {"origins": "*"}})
 
 db.init_app(app)
 Migrate(app, db)
+
+# force serving over HTTPS
+Talisman(app)
 
 load_dotenv()
 
