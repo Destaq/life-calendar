@@ -70,7 +70,7 @@ db.init_app(app)
 Migrate(app, db)
 
 # force serving over HTTPS
-Talisman(app)
+Talisman(app, content_security_policy=None)
 
 load_dotenv()
 
