@@ -1,15 +1,19 @@
 import json
+import os
 from time import time
 from flask.templating import render_template
 from flask_login import login_required, current_user
-import yagmail
 import ast
 from dotenv import load_dotenv
 from threading import Thread
 
+import sendgrid
+from sendgrid.helpers.mail import Mail, Email, To, Content
+
 load_dotenv()
-# updated passwords for all accounts when other one was compromised
-yag = yagmail.SMTP("fake@fake-email.com", "fake!") 
+
+# setup email
+sg = sendgrid.SendGridAPIClient(api_key=os.environ['SENDGRID_API_KEY'])
 
 from flask_classful import FlaskView
 import jwt
@@ -447,9 +451,14 @@ class ContactSubmitView(FlaskView):
         details = [value for key, value in request.form.items()]
         name = details[0]
 
-        contents = [
+        to_email = To("info@onlinelifecalendar.com")
+        from_email = Email("info@onlinelifecalendar.com", name="Online Life Calendar")
+        subject = "New Contact Message from Life Calendar"
+
+
+        content = Content("text/plain", 
             f"""
-        Hi Simon, you had someone contact you through the automated messaging service on lifecalendar. You can view the details below: 
+        Hi Simon, you had someone contact you through the automated messaging service at onlinelifecalendar.com. You can view the details below: 
         
         Name: {details[0]}
                     
@@ -457,17 +466,22 @@ class ContactSubmitView(FlaskView):
 
         Subject: {details[2]}
 
-        Message: {details[3]}
+        Message:
+        {details[3]}
 
         Make sure to get back to them soon!
-                    """
-        ]
-
-        yag.send(
-            "simon@simonilincev.com", "New Contact Message from Life Calendar", contents
+            """
         )
 
+        Thread(target=self.send_contact_mail, args=(from_email, to_email, subject, content)).start()
+
         return redirect(url_for("ThanksView:index", name=name))
+
+    def send_contact_mail(self, from_email, to_email, subject, content):
+        mail = Mail(from_email, to_email, subject, content)
+        json_mail = mail.get()
+        response = sg.client.mail.send.post(request_body=json_mail)
+
 
 class ForgotPasswordView(FlaskView):
 
@@ -477,33 +491,38 @@ class ForgotPasswordView(FlaskView):
 
         self.user = User.query.filter_by(email=email).first()
 
-        generatedlink = self.get_reset_token()
-
         if self.user is None:
-            return abort(400)
+            return jsonify(success=True)
         else:
-            # TODO: valid url
-            contents = [f'<p>We were asked to email you password reset instructions for Life Calendar. If you don\'t recall doing this and remember your passwords, you can safely ignore this email.</p><p>If it <strong>was</strong> you, then you can head over <a href="http://localhost:5000/resetpassword/{generatedlink.decode("utf-8")}/">here</a> to reset your password.</p><p>Having trouble clicking the link? Just paste the following link into your browser: http://localhost:5000/resetpassword/{generatedlink.decode("utf-8")}.</p>']
+            generatedlink = self.get_reset_token()
+
+            to_email = To(email)
+            from_email = Email("info@onlinelifecalendar.com", name="Online Life Calendar")
+            subject = "Password reset instructions from Life Calendar"
+            
+            content = Content("text/html", f'<p>We were asked to email you password reset instructions for Life Calendar. If you don\'t recall doing this and remember your passwords, you can safely ignore this email.</p><p>If it <strong>was</strong> you, then you can head over <a href="https://www.onlinelifecalendar.com/resetpassword/{generatedlink.decode("utf-8")}/">here</a> to reset your password.</p><p>Having trouble clicking the link? Just paste the following link into your browser: https://www.onlinelifecalendar.com/resetpassword/{generatedlink.decode("utf-8")}.</p><p><strong>Note: this token will expire one hour from when it has been sent.</strong> If it has expired, please try to reset your password again.</p>')
 
             # free up user through async threading
-            Thread(target=self.send_email, args=(email, "Password reset instructions from Life Calendar", contents)).start()
+            Thread(target=self.send_email, args=(from_email, to_email, subject, content)).start()
 
             return jsonify(success=True)
 
-    def get_reset_token(self, expires=500):
+    def get_reset_token(self, expires=3600):
         return jwt.encode({'reset_password': self.user.email,
                         'exp':    time() + expires},
-                        key='super-secret')
+                        key=os.environ['JWT_EMAIL_ENCODE_KEY'])
 
-    def send_email(self, to, subject, content):
-        yag.send(to, subject, content)
+    def send_email(self, from_email, to_email, subject, content):
+        mail = Mail(from_email, to_email, subject, content)
+        json_mail = mail.get()
+        response = sg.client.mail.send.post(request_body=json_mail)
 
 
 class ResetPasswordView(FlaskView):
     route_base = "/resetpassword/"
 
     def index(self, token):
-        return render_template("other/reset_password.html", error_msg=[])
+        return render_template("other/reset_password.html", error_msg=[], success_msg=[])
 
     def post(self, token):
 
@@ -514,22 +533,22 @@ class ResetPasswordView(FlaskView):
             confirm_password = request.form.get('confirm-password')
 
             if password != confirm_password:
-                return render_template("other/reset_password.html", error_msg=["Passwords do not match!"])
+                return render_template("other/reset_password.html", error_msg=["Passwords do not match!"], success_msg=[])
 
             user.password_hash = generate_password_hash(password)
 
             db.session.add(user)
             db.session.commit()
 
-            return redirect("/login/")
+            return render_template("other/reset_password.html", success_msg=["Your password has been reset! You will now be redirected to log in."], error_msg=[])
             
         else:
-            return render_template("other/reset_password.html", error_msg=["Your token has expired! Please <a href='/login'>request another one</a>."])
+            return render_template("other/reset_password.html", error_msg=['Your token has expired! Please resend yourself the verification email.'], success_msg=[])
 
     def verify_reset_token(self, token):
         try:
             email = jwt.decode(token,
-              key='super-secret')
+              key=os.environ["JWT_EMAIL_ENCODE_KEY"])
         except Exception as e:
             print(e)
             return
