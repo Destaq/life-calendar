@@ -92,10 +92,17 @@ $ python3 -m pip install -r requirements.txt
 
 Nearly there! We just need to set some environment variables and get our PostgreSQL database running. We can create a PostgreSQL database with `createdb life_calendar` (you can name this whatever you want, as long as you haven't used it before).
 
-Now onto the environment variables - we are going to need to set two. The below commands work for Linux and Mac. If you're a Windows user, refer to [this](https://www.schrodinger.com/kb/1842) guide to setting environment variables.
+Now onto the environment variables - we are going to need to set four. The below commands work for Linux and Mac. If you're a Windows user, refer to [this](https://www.schrodinger.com/kb/1842) guide to setting environment variables.
 ```bash
 export APP_CONFIG_KEY="super-secret"
 export DATABASE_URL="postgresql://localhost/life_calendar"
+```
+
+We also need to export the keys for SendGrid emailing. You can set these to whatever you want; the program won't run without them but unless you're working on the contact page or forgot password page you should be fine.
+
+```bash
+export JWT_EMAIL_ENCODE_KEY="super-random"
+export SENDGRID_API_KEY="not-important"
 ```
 
 You can verify that these are set with `echo $APP_CONFIG_KEY` and `echo $DATABASE_URL`, if they don't show up you can just try setting them again.
