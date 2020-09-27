@@ -32,12 +32,12 @@ class User(db.Model, UserMixin):
     statistics_text = db.Column(db.Text)
     joined = db.Column(db.String(16))
 
-    day_info = db.relationship("Day", backref="user", lazy="dynamic")
-    week_info = db.relationship("Week", backref="user", lazy="dynamic")
-    month_info = db.relationship("Month", backref="user", lazy="dynamic")
-    year_info = db.relationship("Year", backref="user", lazy="dynamic")
-    decade_info = db.relationship("Decade", backref="user", lazy="dynamic")
-    goals = db.relationship("Goals", backref="user", lazy="dynamic")
+    day_info = db.relationship("Day", backref="user", lazy="dynamic", cascade="all, delete-orphan")
+    week_info = db.relationship("Week", backref="user", lazy="dynamic", cascade="all, delete-orphan")
+    month_info = db.relationship("Month", backref="user", lazy="dynamic", cascade="all, delete-orphan")
+    year_info = db.relationship("Year", backref="user", lazy="dynamic", cascade="all, delete-orphan")
+    decade_info = db.relationship("Decade", backref="user", lazy="dynamic", cascade="all, delete-orphan")
+    goals = db.relationship("Goals", backref="user", lazy="dynamic", cascade="all, delete-orphan")
 
 
     user_modifiable_attrs = ["legend_text", "goals_text", "statistics_text", "dob", "subscribe", "age_expectancy"]
