@@ -128,7 +128,18 @@ An easy way to contribute is to fork the project, add some beautiful code, and t
 
 ## Donation
 
-[Life Calendar](https://online-life-calendar.herokuapp.com) is free (cue background sounds of happiness). Problem is, server hosting, the PostgreSQL database, and domain name *aren't*. We live on donations, and you can help out by sponsoring the project here or donating [on Stripe](https://online-life-calendar.herokuapp.com/donate/).
+[Life Calendar](https://online-life-calendar.herokuapp.com) is free (cue background sounds of happiness). Problem is, server hosting, the PostgreSQL database, and domain name *aren't*. We live on donations, and you can help out by sponsoring the project here on GitHub or through PayPal.
+
+If you head over to the top you press the heart button to sponsor the project or simply donate below through PayPal.
+
+<center>
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_s-xclick" />
+<input type="hidden" name="hosted_button_id" value="QAL9PWB9AZ8Z4" />
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" />
+<img alt="" border="0" src="https://www.paypal.com/en_CZ/i/scr/pixel.gif" width="1" height="1" />
+</form>
+</center>
 
 ## Last Note
 
@@ -140,8 +151,7 @@ This project has been inspired by [this post](https://waitbutwhy.com/2014/05/lif
 
 <p>Once a task has been completed, it is removed from the below task list.</p>
 
-- [ ] SendGrid custom email address | **@critical @in-progress**
 - [ ] Multiple language support | **@medium @much-work**
 - [ ] Build API for users to interact with | **@medium @much-work**
-- [ ] Add ability to set Markdown/Fancy Mode preference in settings | **@low**
+- [ ] Add ability to set Markdown/Fancy Mode preference in settings | **@low** **@maybe-not**
 - [ ] Brainstorm alternative solution to `localStorage` dumping | **@low @much-work @future**
