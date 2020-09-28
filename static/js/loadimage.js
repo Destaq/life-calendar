@@ -21,7 +21,7 @@ document
             mapType = "blank";
         }
 
-        const url = `https://onlinelifecalendar.com/api/makeimage?bday=${localStorage.getItem("birthday")}&expectancy=${localStorage.getItem("age-expectancy")}&auth=nothing&map_type=${mapType}&interval=${interval}`;
+        const url = `/api/makeimage?bday=${localStorage.getItem("birthday")}&expectancy=${localStorage.getItem("age-expectancy")}&auth=nothing&map_type=${mapType}&interval=${interval}`;
 
         // embed file for downloading
         const myBtn = document.createElement("a");

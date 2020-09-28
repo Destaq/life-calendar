@@ -69,7 +69,7 @@ CORS(app, resources={r"/api/*": {"origins": "*"}})
 db.init_app(app)
 Migrate(app, db)
 
-# force serving over HTTPS
+# force serving over HTTPS - DISABLE FOR TESTING
 Talisman(app, content_security_policy=None)
 
 load_dotenv()

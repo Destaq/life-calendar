@@ -59,11 +59,11 @@ class EmptyMap:
 
             if (self.expectancy / 7).is_integer() == False:
                 self.surface = cairo.ImageSurface(
-                    cairo.FORMAT_ARGB32, 558, math.ceil((self.expectancy / 7) * 80) + 64
+                    cairo.FORMAT_ARGB32, 558, math.ceil((self.expectancy / 7) * 80) + 64 - (((self.expectancy % 7) + 1) ** 2)
                 )
                 self.ctx = cairo.Context(self.surface)
                 self.ctx.rectangle(
-                    0, 0, 558, math.ceil((self.expectancy / 7 * 80) + 64)
+                    0, 0, 558, math.ceil((self.expectancy / 7) * 80) + 64 - (((self.expectancy % 7) + 1) ** 2)
                 )
 
             else:
@@ -206,11 +206,11 @@ class Map:
                 self.surface = cairo.ImageSurface(
                     cairo.FORMAT_ARGB32,
                     558,
-                    math.ceil((self.age_expectancy / 7) * 80) + 68,
+                    math.ceil((self.age_expectancy / 7) * 80) + 64 - (((self.age_expectancy % 7) + 1) ** 2),
                 )
                 self.ctx = cairo.Context(self.surface)
                 self.ctx.rectangle(
-                    0, 0, 558, math.ceil((self.age_expectancy / 7 * 80) + 68)
+                    0, 0, 558, math.ceil((self.age_expectancy / 7 * 80) + 64 - (((self.age_expectancy % 7) + 1) ** 2))
                 )
 
             else:
