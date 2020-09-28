@@ -111,6 +111,8 @@ You can verify that these are set with `echo $APP_CONFIG_KEY` and `echo $DATABAS
 
 Of course, if you didn't name your database `life_calendar`, you're going to have to change the database URL.
 
+Finally, make sure to comment out line 73 of `init.py` (the Talisman wrapper)! Talisman forces serving over HTTPS, but since localhost is insecure, this will cause an error! You'll need to disable it for the app to run properly in localhost, otherwise you'll get an `HTTPStatus.BAD_REQUEST`.
+
 So now it's time to run the application. All will work as it does on the [official website](https://onlinelifecalendar.com) except for sending emails and getting password verification, as those are managed by the Heroku host, not the code.
 
 ```bash
@@ -153,7 +155,7 @@ This project has been inspired by [this post](https://waitbutwhy.com/2014/05/lif
 
 <p>Once a task has been completed, it is removed from the below task list.</p>
 
-- [ ] Multiple language support | **@medium @much-work**
+- [ ] Multiple language support | **@medium**
 - [ ] Build API for users to interact with | **@medium @much-work**
 - [ ] Add ability to set Markdown/Fancy Mode preference in settings | **@low** **@maybe-not**
 - [ ] Brainstorm alternative solution to `localStorage` dumping | **@low @much-work @future**
