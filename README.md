@@ -1,7 +1,7 @@
 <h1 align="center">Life Calendar</h1>
 <p align="center">
-    <a href="https://online-life-calendar.herokuapp.com" alt="Life Calendar website">
-        <img src="https://img.shields.io/endpoint?style=for-the-badge&url=https%3A%2F%2Fonline-life-calendar.herokuapp.com%2Fapi%2Fusercount%2F" alt="number of users" /></a>
+    <a href="https://onlinelifecalendar.com" alt="Life Calendar website">
+        <img src="https://img.shields.io/endpoint?style=for-the-badge&url=https%3A%2F%2Fonlinelifecalendar.com%2Fapi%2Fusercount%2F" alt="number of users" /></a>
     <a href="#" alt="star">
          <img src="https://img.shields.io/github/stars/Destaq/life-calendar?style=for-the-badge" /></a>
     <a href="#" alt="Repo Size">
@@ -15,7 +15,7 @@ With `life-calendar`, you can view your lifetime at a glance - seeing it anywher
 The goal of `life-calendar` is, and always has been, to serve as a means to help people grow more productive and utilize their time better. Our time here is limited, and we should make the most of it. This calendar acts as a life planner, journal, and accountability app all in one.
 
 ## Web App Overview
-The best way to see what the web app can do is to go directly to the [site](https://online-life-calendar.herokuapp.com) but here's a visual overview for those who want to stay on GitHub.
+The best way to see what the web app can do is to go directly to the [site](https://onlinelifecalendar.com) but here's a visual overview for those who want to stay on GitHub.
 <br>
 <p align="center">
     <img src="/static/images/appdemo.gif" alt="gif demonstrating core functionality">
@@ -58,24 +58,24 @@ This is the place to set customizable goals for yourself. Title, subtitle, and t
 ## Tutorial
 You can click the image below to be directed to a YouTube video tutorial of the application, explaining core features and app usage.
 
-If you are more of a reader, there is already a *very* detailed tutorial [on the official site](https://online-life-calendar.herokuapp.com/tutorial/) which you are more than welcome to check out. It creating an account, basic and advanced features of Life Calendar, and all the other hidden goodies that haven't been mentioned here.
+If you are more of a reader, there is already a *very* detailed tutorial [on the official site](https://onlinelifecalendar.com/tutorial/) which you are more than welcome to check out. It creating an account, basic and advanced features of Life Calendar, and all the other hidden goodies that haven't been mentioned here.
 
 The website itself should be intuitive, but it's always helpful to have a tutorial around to reference. You can access individual parts of the site tutorial using the Table of Contents below.
 
-- [Introduction](https://online-life-calendar.herokuapp.com/tutorial#introduction)
-- [Getting Started](https://online-life-calendar.herokuapp.com/tutorial#getting-started)
-    - [First Steps](https://online-life-calendar.herokuapp.com/tutorial#first-steps)
-    - [Using the Site](https://online-life-calendar.herokuapp.com/tutorial#usage)
-    - [Basic Features](https://online-life-calendar.herokuapp.com/tutorial#basic-features)
-    - [Advanced Features](https://online-life-calendar.herokuapp.com/tutorial#advanced-features)
-- [Other Pages](https://online-life-calendar.herokuapp.com/tutorial#other-pages)
-   - [Statistics](https://online-life-calendar.herokuapp.com/tutorial#statistics)
-   - [Goals](https://online-life-calendar.herokuapp.com/tutorial#goals-description)
-   - [Download](https://online-life-calendar.herokuapp.com/tutorial#download)
-- [Closing Notes](https://online-life-calendar.herokuapp.com/tutorial#closing-notes)
+- [Introduction](https://onlinelifecalendar.com/tutorial#introduction)
+- [Getting Started](https://onlinelifecalendar.com/tutorial#getting-started)
+    - [First Steps](https://onlinelifecalendar.com/tutorial#first-steps)
+    - [Using the Site](https://onlinelifecalendar.com/tutorial#usage)
+    - [Basic Features](https://onlinelifecalendar.com/tutorial#basic-features)
+    - [Advanced Features](https://onlinelifecalendar.com/tutorial#advanced-features)
+- [Other Pages](https://onlinelifecalendar.com/tutorial#other-pages)
+   - [Statistics](https://onlinelifecalendar.com/tutorial#statistics)
+   - [Goals](https://onlinelifecalendar.com/tutorial#goals-description)
+   - [Download](https://onlinelifecalendar.com/tutorial#download)
+- [Closing Notes](https://onlinelifecalendar.com/tutorial#closing-notes)
 
 ## Running Locally
-It's super easy to get this app up and running on your local machine. While we recommend the [site](https://online-life-calendar.herokuapp.com) if you plan on using this long-term, it is beneficial to see how the app works locally, especially if you plan on forking or [contributing](#contributing).
+It's super easy to get this app up and running on your local machine. While we recommend the [site](https://onlinelifecalendar.com) if you plan on using this long-term, it is beneficial to see how the app works locally, especially if you plan on forking or [contributing](#contributing).
 
 Make sure that you have Python>=3.4 installed, as well as PostgreSQL (handy guide [here](https://www.postgresqltutorial.com/install-postgresql/).
 
@@ -109,7 +109,7 @@ You can verify that these are set with `echo $APP_CONFIG_KEY` and `echo $DATABAS
 
 Of course, if you didn't name your database `life_calendar`, you're going to have to change the database URL.
 
-So now it's time to run the application. All will work as it does on the [official website](https://online-life-calendar.herokuapp.com) except for sending emails and getting password verification, as those are managed by the Heroku host, not the code.
+So now it's time to run the application. All will work as it does on the [official website](https://onlinelifecalendar.com) except for sending emails and getting password verification, as those are managed by the Heroku host, not the code.
 
 ```bash
 $ python3 manage.py db init
@@ -124,11 +124,11 @@ It will now be running on your localhost. You can go ahead and head over to [por
 
 Contributions are welcome! The JavaScript code is far from efficient, and more features to make Life Calendar better are wonderful.
 
-An easy way to contribute is to fork the project, add some beautiful code, and then [open a pull request](https://www.github.com/Destaq/life-calendar/pulls). You'll be credited on the [contributions page](https://online-life-calendar.herokuapp.com/contribute/) with your name and GitHub profile link (and will get the warm fuzzy feeling of building a better free product for users).
+An easy way to contribute is to fork the project, add some beautiful code, and then [open a pull request](https://www.github.com/Destaq/life-calendar/pulls). You'll be credited on the [contributions page](https://onlinelifecalendar.com/contribute/) with your name and GitHub profile link (and will get the warm fuzzy feeling of building a better free product for users).
 
 ## Donation
 
-[Life Calendar](https://online-life-calendar.herokuapp.com) is free (cue background sounds of happiness). Problem is, server hosting, the PostgreSQL database, and domain name *aren't*. We live on donations, and you can help out by sponsoring the project here on GitHub or through PayPal.
+[Life Calendar](https://onlinelifecalendar.com) is free (cue background sounds of happiness). Problem is, server hosting, the PostgreSQL database, and domain name *aren't*. We live on donations, and you can help out by sponsoring the project here on GitHub or through PayPal.
 
 If you head over to the top you press the heart button to sponsor the project or simply donate below through PayPal.
 
