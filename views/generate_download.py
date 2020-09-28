@@ -291,6 +291,11 @@ class Map:
 def image_to_bytes(image_path):
     encoded_img = base64.b64encode(open(f"{image_path}", "rb").read()).decode()
 
+    print(encoded_img)  # trouble - returned as none
+    file = open(image_path)
+    print(file, "exists")
+    print(file.readlines())
+
     os.remove(image_path)
     return encoded_img
 
@@ -298,6 +303,7 @@ def image_to_bytes(image_path):
 class MakeImageView(FlaskView):
     route_base = "/makeimage"
 
+    # TODO: route custom urls for individual users
     def get(self):
         args = request.args
         bday = args["bday"]
