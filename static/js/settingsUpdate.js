@@ -30,6 +30,9 @@ deleteBtn.addEventListener("click", function() {
                     console.log(data)})
                 .catch(function(res){ console.log(res) })
 
+            // clear localStorage
+            localStorage.clear();
+
             location.href = "/signup/"
         }
     })
