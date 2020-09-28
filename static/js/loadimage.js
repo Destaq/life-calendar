@@ -2,10 +2,15 @@ const http = new SimpleHTTP();
 const radios = document.getElementsByName("gridRadios");
 const blankMapCheck = document.querySelector("#checkBlankCalendar");
 
+import { callDB } from "/static/js/readUserContent.js";
+
 // submit button
 document
     .querySelector("#submitCalendarInfo")
-    .addEventListener("click", function (e) {
+    .addEventListener("click", async function (e) {
+        // if this is the first page they go to, grab user info
+        await callDB();
+        
         document.querySelector(".output").innerHTML = "";
         var image = new Image();
         let interval = "weeks";
