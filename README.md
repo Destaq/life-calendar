@@ -58,7 +58,7 @@ This is the place to set customizable goals for yourself. Title, subtitle, and t
 ## Tutorial
 You can click the image below to be directed to a YouTube video tutorial of the application, explaining core features and app usage.
 
-[![Video Tutorial](/static/images/videopreview.png)](https://www.youtube.com/embed/8w8YWZGgqMs)
+[![Video Tutorial](/static/images/videopreview.png)](https://www.youtube.com/watch?v=8w8YWZGgqMs)
 
 If you are more of a reader, there is already a *very* detailed tutorial [on the official site](https://onlinelifecalendar.com/tutorial/) which you are more than welcome to check out. It creating an account, basic and advanced features of Life Calendar, and all the other hidden goodies that haven't been mentioned here.
 
