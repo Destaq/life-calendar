@@ -428,10 +428,10 @@ class UpdateUserInfoView(FlaskView):
            return abort(403)        
         
         if 'age_expectancy' in request_json.keys() and 'dob' in request_json.keys():
-            user.age_expectancy = int(request_json['age_expectancy'])
+            user.age_expectancy = float(request_json['age_expectancy'])
             user.dob = request_json['dob']
         elif 'age_expectancy' in request_json.keys():
-            user.age_expectancy = int(request_json['age_expectancy'])
+            user.age_expectancy = float(request_json['age_expectancy'])
         elif 'dob' in request_json.keys():
             user.dob = request_json['dob']
         else:

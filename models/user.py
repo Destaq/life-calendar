@@ -22,7 +22,7 @@ class User(db.Model, UserMixin):
     email = db.Column(db.Text, unique=True, index=True)
     password_hash = db.Column(db.String(256))
 
-    age_expectancy = db.Column(db.Integer)
+    age_expectancy = db.Column(db.Float)
     dob = db.Column(db.String(32))
     subscribe = db.Column(db.Boolean)
 
@@ -31,6 +31,7 @@ class User(db.Model, UserMixin):
     goals_text = db.Column(db.Text)
     statistics_text = db.Column(db.Text)
     joined = db.Column(db.String(16))
+    settings = db.Column(db.Text)  # stores user settings, not used now
 
     day_info = db.relationship("Day", backref="user", lazy="dynamic", cascade="all, delete-orphan")
     week_info = db.relationship("Week", backref="user", lazy="dynamic", cascade="all, delete-orphan")

@@ -39,7 +39,7 @@ export async function callDB() {
                 }
             }
         } else if (key === "age_expectancy") {
-            localStorage.setItem("age-expectancy", parseInt(user_data.result[key]));
+            localStorage.setItem("age-expectancy", parseFloat(user_data.result[key]));
         } else if (key === "dob") {
             localStorage.setItem("birthday", user_data.result[key]);
         } else if (key === "joined") {
