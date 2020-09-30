@@ -365,9 +365,9 @@ function calculateAmount(birthday, cview) {
     let th_amount;
 
     function YearDiff(d1, d2) {
-        var years;
-        years = d2.getFullYear() - d1.getFullYear();
-        return years;
+        var ageDifMs = Date.now() - dob.getTime();
+        var ageDate = new Date(ageDifMs); // miliseconds from epoch
+        return Math.abs(ageDate.getUTCFullYear() - 1970);
     }
 
     function MonthDiff(d1, d2) {
@@ -384,7 +384,7 @@ function calculateAmount(birthday, cview) {
             break;
 
         case "Years":
-            th_amount = YearDiff(dob, c_time) - 1;
+            th_amount = YearDiff();
             break;
 
         case "Months":

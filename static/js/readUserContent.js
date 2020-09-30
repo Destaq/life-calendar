@@ -63,7 +63,7 @@ export async function callDB() {
 
                 localStorage.setItem("dontModify", JSON.stringify(output_obj["dontModify"]));
                 localStorage.setItem("legendModalColors", JSON.stringify(output_obj["legendModalColors"]));
-            } catch { console.log(user_data.result[key] )}
+            } catch {}
         } else if (key === "goals") {
             let mydict = user_data.result[key];
             let output_obj = JSON.parse(mydict);

@@ -165,5 +165,4 @@ This project has been inspired by [this post](https://waitbutwhy.com/2014/05/lif
 
 <ul>
     <li>Color-coding boxes does not work on Firefox 81.</li>
-    <li>Incorrect year is shaded yellow (as current year) if birthday in spring/summer.</li>
 </ul>
