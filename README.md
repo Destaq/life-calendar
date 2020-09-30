@@ -159,3 +159,11 @@ This project has been inspired by [this post](https://waitbutwhy.com/2014/05/lif
 - [ ] Build API for users to interact with | **@medium @much-work**
 - [ ] Add ability to set Markdown/Fancy Mode preference in settings | **@low** **@maybe-not**
 - [ ] Brainstorm alternative solution to `localStorage` dumping | **@low @much-work @future**
+
+<h2 id="known-issues">Known Issues</h2>
+<p>Below are issues that have been reported by users, but were not previously discovered in testing. They are being given high priority and worked on.</p>
+
+<ul>
+    <li>Color-coding boxes does not work on Firefox 81.</li>
+    <li>Incorrect year is shaded yellow (as current year) if birthday in spring/summer.</li>
+</ul>
