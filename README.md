@@ -23,7 +23,7 @@ The best way to see what the web app can do is to go directly to the [site](http
 
 Essentially, these are the three pages that you'll be visiting the most often.
 ### The Life Calendar
-This is where the real magic happens. You get an automatically generated list of paginated boxes which you can edit (images, tables, etc. all supported). You can likewise shade buttons and add their meanings to a legend.
+This is where the real magic happens. You get an automatically generated list of paginated boxes which you can edit (images, tables, etc. all supported). You can likewise color-code buttons and add their meanings to a legend.
 <br>
 <p align="center">
 <img src="/static/images/homepage.png" width="65%" alt="homepage screenshot">
@@ -46,7 +46,7 @@ This is the place to set customizable goals for yourself. Title, subtitle, and t
 ## Features
 
 - View your life in days, weeks, months, years, and decades
-- Shade life boxes to demonstrate specific events in your life
+- Color-code life boxes to demonstrate specific events in your life
 - Use Markdown or Fancy Mode to write down what and remember what happened or you want to accomplish
 - Setand track colored, detailed goals for yourself
 - Download or print your own life calendar
