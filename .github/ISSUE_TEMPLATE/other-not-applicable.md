@@ -1,10 +1,8 @@
 ---
 name: Other/Not Applicable
-about: Describe this issue template's purpose here.
+about: A blank template for anything that isn't a request or bug
 title: ''
 labels: ''
 assignees: ''
 
 ---
-
-If you have an issue that is neither a bug or a feature request, please use this blank template.
