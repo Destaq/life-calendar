@@ -5,57 +5,61 @@ const blankMapCheck = document.querySelector("#checkBlankCalendar");
 import { callDB } from "/static/js/readUserContent.js";
 
 // submit button
-document
-    .querySelector("#submitCalendarInfo")
-    .addEventListener("click", async function (e) {
-        // if this is the first page they go to, grab user info
-        await callDB();
-        
-        document.querySelector(".output").innerHTML = "";
-        var image = new Image();
-        let interval = "weeks";
-        for (let i = 0; i < radios.length; i++) {
-            if (radios[i].checked) {
-                interval = radios[i].value;
-                break;
+async function main() {
+    await callDB();
+
+    document
+        .querySelector("#submitCalendarInfo")
+        .addEventListener("click", function (e) {
+            document.querySelector(".output").innerHTML = "";
+            var image = new Image();
+            let interval = "weeks";
+            for (let i = 0; i < radios.length; i++) {
+                if (radios[i].checked) {
+                    interval = radios[i].value;
+                    break;
+                }
             }
-        }
 
-        let mapType = "full";
-        if (blankMapCheck.checked == true) {
-            mapType = "blank";
-        }
+            let mapType = "full";
+            if (blankMapCheck.checked == true) {
+                mapType = "blank";
+            }
 
-        const url = `/api/makeimage?bday=${localStorage.getItem("birthday")}&expectancy=${localStorage.getItem("age-expectancy")}&auth=nothing&map_type=${mapType}&interval=${interval}`;
+            const url = `/api/makeimage?bday=${localStorage.getItem(
+                "birthday"
+            )}&expectancy=${localStorage.getItem(
+                "age-expectancy"
+            )}&auth=nothing&map_type=${mapType}&interval=${interval}`;
 
-        // embed file for downloading
-        const myBtn = document.createElement("a");
-        myBtn.classList.add("btn");
-        myBtn.classList.add("btn-success");
-        myBtn.classList.add("mr-2");
-        myBtn.setAttribute("type", "button");
-        myBtn.setAttribute("download", "life_calendar");
-        myBtn.innerHTML = "Download Image"
+            // embed file for downloading
+            const myBtn = document.createElement("a");
+            myBtn.classList.add("btn");
+            myBtn.classList.add("btn-success");
+            myBtn.classList.add("mr-2");
+            myBtn.setAttribute("type", "button");
+            myBtn.setAttribute("download", "life_calendar");
+            myBtn.innerHTML = "Download Image";
 
-        http.get(url)
-            .then((data) => {
-                image.src = "data:image/png;base64," + data.result;
-                image.style.width = "45%";
-                // image.style.height = "20%";
-                myBtn.setAttribute("href", image.src)
-            })
-            // TODO: note that something went wrong
-            .catch((err) => console.log(err));
+            http.get(url)
+                .then((data) => {
+                    image.src = "data:image/png;base64," + data.result;
+                    image.style.width = "45%";
+                    // image.style.height = "20%";
+                    myBtn.setAttribute("href", image.src);
+                })
+                // TODO: note that something went wrong
+                .catch((err) => console.log(err));
 
-        // add another hr
-        document.querySelector(".output").innerHTML +=
-            '<hr><div class="row"><div class="col" id="imageCol"></div><div class="col" id="textCol"></div></div>';
+            // add another hr
+            document.querySelector(".output").innerHTML +=
+                '<hr><div class="row"><div class="col" id="imageCol"></div><div class="col" id="textCol"></div></div>';
 
-        // add image preview
-        document.querySelector("#imageCol").appendChild(image);
+            // add image preview
+            document.querySelector("#imageCol").appendChild(image);
 
-        // add special printing message
-        document.querySelector("#textCol").innerHTML += `
+            // add special printing message
+            document.querySelector("#textCol").innerHTML += `
         <p>You can view a preview of your calendar to the left.</p>
 
         <p>Likewise, you can download it as a PNG image to your device or print it out immediately.</p>
@@ -78,27 +82,30 @@ document
         <center><div class="btn-group" id="textColBtns"></div></center>
         `;
 
-        document.querySelector("#textColBtns").appendChild(myBtn);
+            document.querySelector("#textColBtns").appendChild(myBtn);
 
-        // embed file for printing
-        const printBtn = document.createElement("button");
-        printBtn.classList.add("btn");
-        printBtn.classList.add("btn-primary");
-        printBtn.setAttribute("id", "printingButton");
+            // embed file for printing
+            const printBtn = document.createElement("button");
+            printBtn.classList.add("btn");
+            printBtn.classList.add("btn-primary");
+            printBtn.setAttribute("id", "printingButton");
 
-        printBtn.innerHTML = "Print";
+            printBtn.innerHTML = "Print";
 
-        document.querySelector("#textColBtns").appendChild(printBtn);
+            document.querySelector("#textColBtns").appendChild(printBtn);
 
-        printBtn.addEventListener("click", function (e) {
-            PrintImage(image.src);
+            printBtn.addEventListener("click", function (e) {
+                PrintImage(image.src);
+            });
+
+            function PrintImage(source) {
+                var myWindow = window.open("", "Image");
+                myWindow.document.write(`<img src='${source}'>`);
+                myWindow.print();
+            }
+
+            e.preventDefault();
         });
+}
 
-        function PrintImage(source) {
-            var myWindow = window.open("", "Image");
-            myWindow.document.write(`<img src='${source}'>`);
-            myWindow.print();
-        }
-
-        e.preventDefault();
-    });
+main();
