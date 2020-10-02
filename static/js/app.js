@@ -380,7 +380,7 @@ function calculateAmount(birthday, cview) {
 
     switch (cview) {
         case "Decades":
-            th_amount = Math.floor((YearDiff(dob, c_time) - 1) / 10);
+            th_amount = Math.floor(YearDiff() / 10);
             break;
 
         case "Years":
