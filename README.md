@@ -157,7 +157,9 @@ This project has been inspired by [this post](https://waitbutwhy.com/2014/05/lif
 
 - [ ] Multiple language support | **@medium**
 - [ ] Build API for users to interact with | **@medium @much-work**
+- [ ] Email reminders for goals *(and site pop-up reminders)* | **@easy @under-consideration**
 - [ ] Add ability to set Markdown/Fancy Mode preference in settings | **@low** **@maybe-not**
+- [ ] Goals duedate integration with calendar page | **@low**
 - [ ] Brainstorm alternative solution to `localStorage` dumping | **@low @much-work @future**
 
 <h2 id="known-issues">Known Issues</h2>
