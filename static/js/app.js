@@ -587,7 +587,7 @@ async function rewriteModal(i) {
                         `#what-did-${i}-markdown`
                     ).value = oldUserText;
                 } else {
-                    var converter = new showdown.Converter(),
+                    var converter = new showdown.Converter({tables: true, strikethrough: true, tasklists: true, simpleLineBreaks: true, emoji: true}),
                     htmlText = document.querySelector(`#user-text-${i}`)
                         .innerHTML,
                     markdown = converter.makeMarkdown(htmlText);
@@ -783,7 +783,7 @@ async function rewriteModal(i) {
 function checkSavedText(i) {
     if (localStorage.getItem(`${current_view}-${i + 1}`) != null) {
         const markdown = localStorage.getItem(`${current_view}-${i + 1}`);
-        var converter = new showdown.Converter(),
+        var converter = new showdown.Converter({tables: true, strikethrough: true, tasklists: true, simpleLineBreaks: true, emoji: true}),
             text = markdown,
             html = converter.makeHtml(text);
         document.querySelector(`#user-text-${i + 1}`).innerHTML = html;
