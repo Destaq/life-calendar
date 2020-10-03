@@ -90,7 +90,7 @@ async function runGetServer() {
     if (age_expectancy == null || birthdate_value == null || age_expectancy === 0 || birthdate_value === "") {
         // they need to head over to /quiz to find out!
         document.querySelector("#missingData").innerHTML = `
-        <p><strong>You haven't filled out your data!</strong> Please head over to the <a href="/quiz/">quiz page</a> to submit your life expectancy so that we can generate your life calendar.</p><p>You'll then be able to access your own calendar, similar to the one below!</p><img class="img-fluid rounded mx-auto d-block d-small" alt="Online Life Calendar home page preview" src="/static/images/videopreview.png" style="max-width: 80%">
+        <p><strong>You haven't filled out your data!</strong> Please head over to the <a href="/quiz/">quiz page</a> to submit your life expectancy so that we can generate your life calendar.</p><p>You'll then be able to access your own calendar, similar to the one below!</p><img class="img-fluid rounded mx-auto d-block d-small" alt="Life Calendar home page preview" src="/static/images/videopreview.png" style="max-width: 80%">
         `;
     } else {
         // TODO: if registered user, use XOR with data from DB

@@ -37,8 +37,8 @@ Tells me the problem that you have found, and the pull request shows me the acti
 * It reads well
 * For English language contributions: Has a good score on [Grammarly](grammarly.com) or [Hemingway App](http://www.hemingwayapp.com/)
 
-### Does it move this repository closer to Online Life Calendar's aims?
-The aims of Online Life Calendar are to:
+### Does it move this repository closer to Life Calendar's aims?
+The aims of Life Calendar are to:
 
 * Inform and educate users about their life
 * Encourage productivity and motivation of users
