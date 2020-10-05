@@ -1,5 +1,9 @@
 # Contributing
 
+## What should I contribute?
+
+If you head over to the [the todo part of the README page](https://www.github.com/Destaq/life-calendar#todo), you can see what is next for Life Calendar. Each feature has some tags describing its difficulty, implementation, and community support, and bugs clearly state what issues there are.
+
 ## Issues
 
 Issues are very valuable to this project.
