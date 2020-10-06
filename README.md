@@ -166,6 +166,7 @@ This project has been inspired by [this post](https://waitbutwhy.com/2014/05/lif
 <p>Below are issues that have been reported by users, but were not previously discovered in testing. They are being given high priority and worked on.</p>
 
 <ul>
+    <li>Edge Browser completely unsupported.</li>
     <li>Once a box you have shaded in the future is reached, it doesn't change from green to yellow.</li>
     <li>Color-coding boxes does not work on Firefox 81.</li>
 </ul>
