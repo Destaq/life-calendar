@@ -438,7 +438,7 @@ function shadeButtons(age_expectancy, birthday) {
     }
     if (amount <= (current_view_value + 1) * 150) {
         try {
-            if ((localStorage.getItem(`${current_view}-${amount}-background`) != null) && (localStorage.getItem(`${current_view}-${amount}-background`) != "repeating-linear-gradient(45deg, rgb(255, 193, 7), rgb(255, 193, 7) 10px")) {
+            if ((localStorage.getItem(`${current_view}-${amount}-background`) != null)) {
                 // error to be avoided: yellow is highlighted two times for days
                 document
                     .querySelector(`#${current_view}-${amount}`)
@@ -457,7 +457,7 @@ function shadeButtons(age_expectancy, birthday) {
             try {
                 if (document
                         .querySelector(`#${current_view}-${x}`)
-                        .style.background == "" && (localStorage.getItem(`${current_view}-${x}-background`) != null) && localStorage.getItem(`${current_view}-${x}-background`) != "repeating-linear-gradient(45deg, rgb(40, 167, 69), rgb(40, 167, 69) 10px") {
+                        .style.background == "" && (localStorage.getItem(`${current_view}-${x}-background`) != null) && localStorage.getItem(`${current_view}-${x}-background`) != "repeating-linear-gradient(45deg, rgb(255, 193, 7), rgb(255, 193, 7) 10px") {
                         document
                             .querySelector(`#${current_view}-${x}`)
                             .style.background = localStorage.getItem(`${current_view}-${x}-background`)
