@@ -167,7 +167,6 @@ This project has been inspired by [this post](https://waitbutwhy.com/2014/05/lif
 
 <ul>
     <li>Edge Browser completely unsupported.</li>
-    <li>Once a box you have shaded in the future is reached, it doesn't change from green to yellow.</li>
-    <li>Past boxes that you have lived through do not change color (from yellow to red).</li>
+    <li>Once a box you have shaded in the future is reached, it doesn't change from green to yellow. Instead, it remains green with the shaded stripes it had.</li>
     <li>Color-coding boxes does not work on Firefox 81.</li>
 </ul>

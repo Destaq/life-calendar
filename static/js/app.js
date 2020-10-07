@@ -420,8 +420,7 @@ function shadeButtons(age_expectancy, birthday) {
     ) {
         // only if lower than the amount of x units left till end of life...
         try {
-            if (x < amount && (localStorage.getItem(`${current_view}-${x}-background`) == null)) {
-
+            if (x < amount && ((localStorage.getItem(`${current_view}-${x}-background`) == null) || localStorage.getItem(`${current_view}-${x}-background`) === "repeating-linear-gradient(45deg, rgb(255, 193, 7), rgb(255, 193, 7) 10px")) {
                     document
                         .querySelector(`#${current_view}-${x}`)
                         .style.background = "repeating-linear-gradient(45deg, #dc3545, #dc3545 10px)"
@@ -436,13 +435,15 @@ function shadeButtons(age_expectancy, birthday) {
     if (amount === -1) {
         amount += 1;
     }
+
+    // at this point, past buttons *are* shaded
     if (amount <= (current_view_value + 1) * 150) {
         try {
             if ((localStorage.getItem(`${current_view}-${amount}-background`) != null)) {
                 // error to be avoided: yellow is highlighted two times for days
                 document
                     .querySelector(`#${current_view}-${amount}`)
-                    .style.background = localStorage.getItem(`${current_view}-${amount}-background`)
+                    .style.background = localStorage.getItem(`${current_view}-${amount}-background`);
             } else {
                 document
                     .querySelector(`#${current_view}-${amount}`)
@@ -457,13 +458,19 @@ function shadeButtons(age_expectancy, birthday) {
             try {
                 if (document
                         .querySelector(`#${current_view}-${x}`)
-                        .style.background == "" && (localStorage.getItem(`${current_view}-${x}-background`) != null) && localStorage.getItem(`${current_view}-${x}-background`) != "repeating-linear-gradient(45deg, rgb(255, 193, 7), rgb(255, 193, 7) 10px") {
+                        .style.background == "" && (localStorage.getItem(`${current_view}-${x}-background`) != null) && localStorage.getItem(`${current_view}-${x}-background`) != "repeating-linear-gradient(45deg, rgb(255, 193, 7), rgb(255, 193, 7) 10px)") {
                         document
                             .querySelector(`#${current_view}-${x}`)
                             .style.background = localStorage.getItem(`${current_view}-${x}-background`)
                 } else if (document
                     .querySelector(`#${current_view}-${x}`)
-                    .style.background == "") {
+                        .style.background === "" 
+                        || 
+                    ((localStorage.getItem(`${current_view}-${x}-background`)
+                    === "repeating-linear-gradient(45deg, rgb(255, 193, 7), rgb(255, 193, 7) 10px") && (document
+                        .querySelector(`#${current_view}-${x}`)
+                            .style.background == "repeating-linear-gradient(45deg, #dc3545, #dc3545 10px)"))) {
+
                     document
                         .querySelector(`#${current_view}-${x}`)
                         .style.background = "repeating-linear-gradient(45deg, #28a745, #28a745 10px)"
