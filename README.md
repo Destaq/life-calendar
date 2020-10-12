@@ -79,14 +79,36 @@ The website itself should be intuitive, but it's always helpful to have a tutori
 ## Running Locally
 It's super easy to get this app up and running on your local machine. While we recommend the [site](https://onlinelifecalendar.com) if you plan on using this long-term, it is beneficial to see how the app works locally, especially if you plan on forking or [contributing](#contributing).
 
-Make sure that you have Python>=3.4 installed, as well as PostgreSQL (handy guide [here](https://www.postgresqltutorial.com/install-postgresql/).
+Make sure that you have Python>=3.4 installed, as well as PostgreSQL (handy guide [here](https://www.postgresqltutorial.com/install-postgresql/)).
 
 First off, go ahead and either clone or fork the repo. You can easily clone it with the below command:
 ```bash
 $ git clone https://github.com/Destaq/life-calendar.git
 ```
 
-Next up, let's install all the requirements. There's quite a lot, so be prepared to wait for a minute or two!
+Now, we need to create out development environment. You can either do everything with `bash` and our handy `setup.sh` file, or do it manually for the explanations and a better understanding.
+
+### Automatic Method: Shell Command
+If you'd like us to handle all the pesky requirements installations and database creation, simply navigate to the folder where `life-calendar` was installed.
+```bash
+cd life-calendar
+```
+
+**Before you run the script, make sure you have [PostgreSQL](https://www.postgresqltutorial.com/install-postgresql/) and [Python](https://www.python.org/downloads/) installed!**
+
+Alright now that we've got that out of the way you can run the following in your terminal (make sure you're in the `life-calendar` directory):
+```bash
+sh setup.sh
+```
+
+After a couple minutes you should have all dependencies installed and the database created. You can then simply run `python3 app.py` to start the development server.
+
+*Note: you may receive red text when `psycopg2`. This is expected for Mac/Linux users, and another requirement, `psycopg2-binary`, takes care of this for you.*
+
+### Manual Method: Multiple Commands
+If you'd like to install and setup everything manually, it's outlined below.
+
+First we need to install all the requirements. There's quite a lot, so be prepared to wait for a minute or two!
 ```bash
 $ cd life-calendar
 $ python3 -m pip install -r requirements.txt
