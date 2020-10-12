@@ -98,8 +98,10 @@ cd life-calendar
 
 Alright now that we've got that out of the way you can run the following in your terminal (make sure you're in the `life-calendar` directory):
 ```bash
-sh setup.sh
+source setup.sh
 ```
+
+*The `source` part is very important! If it doesn't work, you can try `. setup.sh`.*
 
 After a couple minutes you should have all dependencies installed and the database created. You can then simply run `python3 app.py` to start the development server.
 
@@ -138,6 +140,7 @@ Finally, make sure to comment out line 73 of `init.py` (the Talisman wrapper)! T
 So now it's time to run the application. All will work as it does on the [official website](https://onlinelifecalendar.com) except for sending emails and getting password verification, as those are managed by the Heroku host, not the code.
 
 ```bash
+rm -r migrations
 $ python3 manage.py db init
 $ python3 manage.py db migrate
 $ python3 manage.py db upgrade
