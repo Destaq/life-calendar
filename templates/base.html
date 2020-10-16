@@ -145,6 +145,7 @@
             </div>
         </div>
     </footer>
+
     <!-- Hidden Logout Modal -->
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="logoutLabel"
         aria-hidden="true">
@@ -166,6 +167,35 @@
             </div>
         </div>
     </div>
+
+    <!-- Hidden Donation Modal -->
+    <div class="modal fade" id="donationModal" tabindex="-1" role="dialog" aria-labelledby="donateLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="donateLabel">Donate to the Project</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p><strong>If you find Life Calendar useful, please consider donating to keep it going.</strong></p>
+                    <hr>
+                    <p>Running Life Calendar costs money, but the site is free. Help us keep it that way by donating below.</p>
+                    <center>
+                        <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top" class="mb-2">
+                            <input type="hidden" name="cmd" value="_s-xclick" />
+                            <input type="hidden" name="hosted_button_id" value="QAL9PWB9AZ8Z4" />
+                            <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" />
+                            <img alt="" border="0" src="https://www.paypal.com/en_CZ/i/scr/pixel.gif" width="1" height="1" />
+                        </form>
+                        <script type='text/javascript' src='https://ko-fi.com/widgets/widget_2.js'></script><script type='text/javascript'>kofiwidget2.init('Support on Ko-fi', '#29abe0', 'I2I82AUTE');kofiwidget2.draw();</script> 
+                    </center>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="/static/js/logout.js"></script>
 </body>
 

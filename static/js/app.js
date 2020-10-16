@@ -29,6 +29,12 @@ $(document).on('focusin', function(e) {
 	}
 });
 
+// add donation request (for users only)
+if ((sessionStorage.getItem("askedDonation") === null) && (localStorage.getItem("age-expectancy") !== null)) {
+    sessionStorage.setItem("askedDonation", true);
+    $("#donationModal").modal("show");
+}
+
 // read the current view (months, weeks, years, etc.) and the current page (for pagination) - from the URL
 function readFromUrl() {
     let urlGoTo = false; // modify current page if "page" not in URL
