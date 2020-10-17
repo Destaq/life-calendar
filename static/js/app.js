@@ -431,9 +431,19 @@ function shadeButtons(age_expectancy, birthday) {
                         .querySelector(`#${current_view}-${x}`)
                         .style.background = "repeating-linear-gradient(45deg, #dc3545, #dc3545 10px)"
             } else if (localStorage.getItem(`${current_view}-${x}-background`) != null) {
+
+                
+                let background_code = localStorage.getItem(`${current_view}-${x}-background`);
+
+                // change from yellow (present) to red (past)
+                background_code = background_code.replace("rgb(255, 193, 7), rgb(255, 193, 7) 10px", "rgb(220, 53, 69), rgb(220, 53, 69) 10px");
+
+                // change from green (future) to red (past)
+                background_code = background_code.replace("rgb(40, 167, 69), rgb(40, 167, 69) 10px", "rgb(220, 53, 69), rgb(220, 53, 69) 10px");
+
                 document
                     .querySelector(`#${current_view}-${x}`)
-                    .style.background = localStorage.getItem(`${current_view}-${x}-background`)
+                    .style.background = background_code;
             }
         } catch {}
     }
@@ -444,12 +454,18 @@ function shadeButtons(age_expectancy, birthday) {
 
     // at this point, past buttons *are* shaded
     if (amount <= (current_view_value + 1) * 150) {
+        // build yellow color
         try {
             if ((localStorage.getItem(`${current_view}-${amount}-background`) != null)) {
-                // error to be avoided: yellow is highlighted two times for days
+                let background_code = localStorage.getItem(`${current_view}-${amount}-background`);
+
+                // change from green (future) to yellow (present)
+                background_code = background_code.replace("rgb(40, 167, 69), rgb(40, 167, 69) 10px", "rgb(255, 193, 7), rgb(255, 193, 7) 10px");
+
+                // set background
                 document
                     .querySelector(`#${current_view}-${amount}`)
-                    .style.background = localStorage.getItem(`${current_view}-${amount}-background`);
+                    .style.background = background_code;
             } else {
                 document
                     .querySelector(`#${current_view}-${amount}`)
