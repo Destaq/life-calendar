@@ -195,7 +195,7 @@ async function shadeCustomizedButton(rgba, shade) {
             urlParams.get("view").slice(0, 1).toUpperCase() +
             urlParams.get("view").slice(1);
     } else {
-        current_view = "Years"; // it is always years by default
+        current_view = "Weeks"; // it is always weeks by default
     }
 
     const buttonToShade = document.querySelector(
