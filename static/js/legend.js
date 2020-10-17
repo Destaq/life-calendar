@@ -44,8 +44,12 @@ if (localStorage.getItem("legendModalColors") != null) {
 if (localStorage.getItem("dontModify") != null) {
     dontModify = JSON.parse(localStorage.getItem("dontModify"))
     for (let i = 4; i < Object.keys(dontModify).length + 4; i++) {
-        const tableToModify = Object.keys(dontModify)[i - 4]
-        document.querySelector(`#${tableToModify}`).textContent = dontModify[tableToModify][0]
+        const tableToModify = Object.keys(dontModify)[i - 4];
+        try {
+            document.querySelector(`#${tableToModify}`).textContent = dontModify[tableToModify][0]
+        } catch {
+            // user inputted a color, but then never used it
+        }
     }
 }
 
@@ -110,7 +114,6 @@ $("#legendModal").on('hidden.bs.modal', async function() {
         });
 
     // add information to database
-    console.log(dontModify, "as unmodifiable")
     if (current_user !== "") {
         await fetch(`/api/update_attr/${current_user}/`,
             {
@@ -225,7 +228,6 @@ export async function modifyLegend(rgb, shade, isSecond) {
         });
 
     // add information to database
-    console.log(dontModify, "as unmodifiable")
     if (current_user !== "") {
         await fetch(`/api/update_attr/${current_user}/`,
             {

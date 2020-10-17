@@ -128,7 +128,11 @@ async function main() {
     
     var connectedNames = JSON.parse(localStorage.getItem("dontModify"));
     for (let i = 0; i < Object.keys(connectedNames).length; i++) {
-        sortable[i].push(connectedNames[Object.keys(connectedNames)[i]][0]);
+        try {
+            sortable[i].push(connectedNames[Object.keys(connectedNames)[i]][0]);
+        } catch {
+            // an error that is currently being investigated
+        }
     }
     
     sortable.sort(function(a, b) {
