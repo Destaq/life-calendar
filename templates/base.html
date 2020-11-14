@@ -1,202 +1,318 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
-        integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
-        crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"
-        integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
-        crossorigin="anonymous"></script>
-    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
-    <link rel="stylesheet" href="/static/styles/footer.css">
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
+      integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"
+      integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
+      crossorigin="anonymous"
+    ></script>
+    <link
+      rel="shortcut icon"
+      href="{{ url_for('static', filename='favicon.ico') }}"
+    />
+    <link rel="stylesheet" href="/static/styles/footer.css" />
     <script src="https://unpkg.com/showdown/dist/showdown.min.js"></script>
-    <link rel="stylesheet" href="/static/styles/main.css">
+    <link rel="stylesheet" href="/static/styles/main.css" />
     {% block page_info %}
-    
+
     <title>Life Calendar</title>
     {% endblock %}
     <script type="text/javascript">
-        $(document).ready(function () {
-            $('[data-toggle="tooltip"]').tooltip({
-                container: 'body'
-            })
-        })
+      $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip({
+          container: "body",
+        });
+      });
     </script>
-</head>
+  </head>
 
-<body class="d-flex flex-column min-vh-100">
+  <body class="d-flex flex-column min-vh-100">
     <nav class="navbar-dark navbar-expand-lg bg-dark navbar mb-2">
-        <a class="navbar-brand mb-1" href="/">Life Calendar</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+      <a class="navbar-brand mb-1" href="/">Life Calendar</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="/statistics">Statistics</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link mb-1" href="/download">Download</a>
-                </li>
-            </ul>
-            <ul class="navbar-nav ml-auto">
-                {% if current_user.is_authenticated %}
-                    <li class="nav-item mr-3">
-                        <a href="/goals" class="nav-link">Goals</a>
-                    </li>
-                    <li class="nav-item mr-4">
-                        <a class="nav-link" href="/settings">Settings</a>
-                    </li>
-                    <li class="nav-item mr-auto">
-                        <button type="button" class="btn btn-outline-danger nav-link" href="#" id="logUserOut">&nbsp;&nbsp;&nbsp;Log Out&nbsp;&nbsp;&nbsp;</button>
-                    </li>
-                {% else %}
-                    <li class="nav-item mr-2">
-                        <a href="/goals" class="nav-link">Goals</a>
-                    </li>
-                    <li class="nav-item mr-4">
-                        <a class="nav-link" href="/settings">Settings</a>
-                    </li>
-                    <li class="nav-item mr-3 mb-1">
-                        <button type="button" class="btn btn-outline-success nav-link" href="/register/" id="registerUser">&nbsp;&nbsp;&nbsp;Sign Up&nbsp;&nbsp;&nbsp;</button>
-                    </li>
-                    <li class="nav-item mr-auto">
-                        <button type="button" class="btn btn-outline-warning nav-link" href="/login/" id="logUserIn">&nbsp;&nbsp;&nbsp;Log In&nbsp;&nbsp;&nbsp;</button>
-                    </li>
-                {% endif %}
-                
-            </ul>
-        </div>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="/statistics">Statistics</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link mb-1" href="/download">Download</a>
+          </li>
+        </ul>
+        <ul class="navbar-nav ml-auto">
+          {% if current_user.is_authenticated %}
+          <li class="nav-item mr-3">
+            <a href="/goals" class="nav-link">Goals</a>
+          </li>
+          <li class="nav-item mr-4">
+            <a class="nav-link" href="/settings">Settings</a>
+          </li>
+          <li class="nav-item mr-auto">
+            <button
+              type="button"
+              class="btn btn-outline-danger nav-link"
+              href="#"
+              id="logUserOut"
+            >
+              &nbsp;&nbsp;&nbsp;Log Out&nbsp;&nbsp;&nbsp;
+            </button>
+          </li>
+          {% else %}
+          <li class="nav-item mr-2">
+            <a href="/goals" class="nav-link">Goals</a>
+          </li>
+          <li class="nav-item mr-4">
+            <a class="nav-link" href="/settings">Settings</a>
+          </li>
+          <li class="nav-item mr-3 mb-1">
+            <button
+              type="button"
+              class="btn btn-outline-success nav-link"
+              href="/register/"
+              id="registerUser"
+            >
+              &nbsp;&nbsp;&nbsp;Sign Up&nbsp;&nbsp;&nbsp;
+            </button>
+          </li>
+          <li class="nav-item mr-auto">
+            <button
+              type="button"
+              class="btn btn-outline-warning nav-link"
+              href="/login/"
+              id="logUserIn"
+            >
+              &nbsp;&nbsp;&nbsp;Log In&nbsp;&nbsp;&nbsp;
+            </button>
+          </li>
+          {% endif %}
+        </ul>
+      </div>
     </nav>
     <div class="container wrapper flex-grow-1">
-        {% block content %}
-
-        {% endblock %}
+      {% block content %} {% endblock %}
     </div>
-    <hr>
+    <hr />
     <!-- Site footer -->
     <footer class="site-footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-12 col-md-6">
-                    <h6>About</h6>
-                    <p class="text-justify">Life Calendar is committed to informing you about your time and helping
-                        you
-                        utilize it to its fullest. By showing the big picture, it helps retrospection, building good
-                        habits, and motivates you to
-                        make the most of the time you have.
-                    </p>
-                </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-12 col-md-6">
+            <h6>About</h6>
+            <p class="text-justify">
+              Life Calendar is committed to informing you about your time and
+              helping you utilize it to its fullest. By showing the big picture,
+              it helps retrospection, building good habits, and motivates you to
+              make the most of the time you have.
+            </p>
+          </div>
 
-                <div class="col-xs-6 col-md-3">
-                    <h6>More Info</h6>
-                    <ul class="footer-links">
-                        <li><a href="/faq">FAQ</a></li>
-                        <li><a href="/contribute">Contribute</a></li>
-                        <li><a href="/contact">Contact Us</a></li>
-                        <li><a href="/donate">Donate</a></li>
-                    </ul>
-                </div>
-                <div class="col-xs-6 col-md-3">
-                    <h6>Quick Links</h6>
-                    <ul class="footer-links">
-                        <li><a href="/tutorial">Tutorial</a></li>
-                        <li><a href="/statistics">Statistics</a></li>
-                        <li><a href="/download">Download</a></li>
-                        <li><a href="/quiz">Take the Quiz</a></li>
-                    </ul>
-                </div>
-
-            </div>
-            <hr>
+          <div class="col-xs-6 col-md-3">
+            <h6>More Info</h6>
+            <ul class="footer-links">
+              <li><a href="/faq">FAQ</a></li>
+              <li><a href="/contribute">Contribute</a></li>
+              <li><a href="/contact">Contact Us</a></li>
+              <li><a href="/donate">Donate</a></li>
+            </ul>
+          </div>
+          <div class="col-xs-6 col-md-3">
+            <h6>Quick Links</h6>
+            <ul class="footer-links">
+              <li><a href="/tutorial">Tutorial</a></li>
+              <li><a href="/statistics">Statistics</a></li>
+              <li><a href="/download">Download</a></li>
+              <li><a href="/quiz">Take the Quiz</a></li>
+            </ul>
+          </div>
         </div>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-8 col-sm-6 col-xs-12">
-                    <p class="copyright-text">
-                        Copyright &copy; 2020
-                        <a href="https://www.simonilincev.com/">Simon Ilincev</a>.
-                        Site icon from <a href="https://www.icons8.com">icons8</a>.
-                    </p>
-                </div>
+        <hr />
+      </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-8 col-sm-6 col-xs-12">
+            <p class="copyright-text">
+              Copyright &copy; 2020
+              <a href="https://www.simonilincev.com/">Simon Ilincev</a>. Site
+              icon from <a href="https://www.icons8.com">icons8</a>.
+            </p>
+          </div>
 
-                <div class="col-md-4 col-sm-6 col-xs-12">
-                    <ul class="social-icons">
-                        <li><a class="github" href="https://www.github.com/Destaq"><i class="fa fa-github"></i></a>
-                        </li>
-                        <li><a class="website" href="https://www.simonilincev.com"><i class="fa fa-link"></i></a></li>
-                        <li><a class="email" href="mailto:info@onlinelifecalendar.com"><i class="fa fa-envelope"></i></a>
-                        </li>
-                        <li><a class="stackoverflow" href="https://stackoverflow.com/users/12876940/destaq"><i
-                                    class="fa fa-stack-overflow"></i></a></li>
-                    </ul>
-                </div>
-            </div>
+          <div class="col-md-4 col-sm-6 col-xs-12">
+            <ul class="social-icons">
+              <li>
+                <a class="github" href="https://www.github.com/Destaq"
+                  ><i class="fa fa-github"></i
+                ></a>
+              </li>
+              <li>
+                <a class="website" href="https://www.simonilincev.com"
+                  ><i class="fa fa-link"></i
+                ></a>
+              </li>
+              <li>
+                <a class="email" href="mailto:simon@simonilincev.com"
+                  ><i class="fa fa-envelope"></i
+                ></a>
+              </li>
+              <li>
+                <a
+                  class="stackoverflow"
+                  href="https://stackoverflow.com/users/12876940/destaq"
+                  ><i class="fa fa-stack-overflow"></i
+                ></a>
+              </li>
+            </ul>
+          </div>
         </div>
+      </div>
     </footer>
 
     <!-- Hidden Logout Modal -->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="logoutLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="logoutLabel">Log Out</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    Are you sure that you would like to log out?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" id="logoutFinalButton">Log out</button>
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
-                </div>
-            </div>
+    <div
+      class="modal fade"
+      id="logoutModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="logoutLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="logoutLabel">Log Out</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            Are you sure that you would like to log out?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" id="logoutFinalButton">
+              Log out
+            </button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal">
+              Cancel
+            </button>
+          </div>
         </div>
+      </div>
     </div>
 
     <!-- Hidden Donation Modal -->
-    <div class="modal fade" id="donationModal" tabindex="-1" role="dialog" aria-labelledby="donateLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="donateLabel">Donate to the Project</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p><strong>If you find Life Calendar useful, please consider donating to keep it going.</strong></p>
-                    <hr>
-                    <p>Running Life Calendar costs money, but the site is free. Help us keep it that way by donating below.</p>
-                    <center>
-                        <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top" class="mb-2">
-                            <input type="hidden" name="cmd" value="_s-xclick" />
-                            <input type="hidden" name="hosted_button_id" value="QAL9PWB9AZ8Z4" />
-                            <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" />
-                            <img alt="" border="0" src="https://www.paypal.com/en_CZ/i/scr/pixel.gif" width="1" height="1" />
-                        </form>
-                        <script type='text/javascript' src='https://ko-fi.com/widgets/widget_2.js'></script><script type='text/javascript'>kofiwidget2.init('Support on Ko-fi', '#29abe0', 'I2I82AUTE');kofiwidget2.draw();</script> 
-                    </center>
-                </div>
-            </div>
+    <div
+      class="modal fade"
+      id="donationModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="donateLabel"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="donateLabel">Donate to the Project</h5>
+            <button
+              class="close"
+              type="button"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>
+              <strong
+                >If you find Life Calendar useful, please consider donating to
+                keep it going.</strong
+              >
+            </p>
+            <hr />
+            <p>
+              Running Life Calendar costs money, but the site is free. Help us
+              keep it that way by donating below.
+            </p>
+            <center>
+              <form
+                action="https://www.paypal.com/cgi-bin/webscr"
+                method="post"
+                target="_top"
+                class="mb-2"
+              >
+                <input type="hidden" name="cmd" value="_s-xclick" />
+                <input
+                  type="hidden"
+                  name="hosted_button_id"
+                  value="QAL9PWB9AZ8Z4"
+                />
+                <input
+                  type="image"
+                  src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif"
+                  border="0"
+                  name="submit"
+                  title="PayPal - The safer, easier way to pay online!"
+                  alt="Donate with PayPal button"
+                />
+                <img
+                  alt=""
+                  border="0"
+                  src="https://www.paypal.com/en_CZ/i/scr/pixel.gif"
+                  width="1"
+                  height="1"
+                />
+              </form>
+              <script
+                type="text/javascript"
+                src="https://ko-fi.com/widgets/widget_2.js"
+              ></script>
+              <script type="text/javascript">
+                kofiwidget2.init("Support on Ko-fi", "#29abe0", "I2I82AUTE");
+                kofiwidget2.draw();
+              </script>
+            </center>
+          </div>
         </div>
+      </div>
     </div>
 
     <script src="/static/js/logout.js"></script>
-</body>
-
+  </body>
 </html>

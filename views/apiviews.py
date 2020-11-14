@@ -451,8 +451,8 @@ class ContactSubmitView(FlaskView):
         details = [value for key, value in request.form.items()]
         name = details[0]
 
-        to_email = To("info@onlinelifecalendar.com")
-        from_email = Email("info@onlinelifecalendar.com", name="Online Life Calendar")
+        to_email = To("simon@simonilincev.com")
+        from_email = Email("simon@simonilincev.com", name="Online Life Calendar")
         subject = "New Contact Message from Life Calendar"
 
 
@@ -497,7 +497,7 @@ class ForgotPasswordView(FlaskView):
             generatedlink = self.get_reset_token()
 
             to_email = To(email)
-            from_email = Email("info@onlinelifecalendar.com", name="Online Life Calendar")
+            from_email = Email("simon@simonilincev.com", name="Online Life Calendar")
             subject = "Password reset instructions from Life Calendar"
             
             content = Content("text/html", f'<p>We were asked to email you password reset instructions for Life Calendar. If you don\'t recall doing this and remember your passwords, you can safely ignore this email.</p><p>If it <strong>was</strong> you, then you can head over <a href="https://www.onlinelifecalendar.com/resetpassword/{generatedlink.decode("utf-8")}/">here</a> to reset your password.</p><p>Having trouble clicking the link? Just paste the following link into your browser: https://www.onlinelifecalendar.com/resetpassword/{generatedlink.decode("utf-8")}.</p><p><strong>Note: this token will expire one hour from when it has been sent.</strong> If it has expired, please try to reset your password again.</p>')
