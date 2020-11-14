@@ -48,7 +48,7 @@ This is the place to set customizable goals for yourself. Title, subtitle, and t
 - View your life in days, weeks, months, years, and decades
 - Color-code life boxes to demonstrate specific events in your life
 - Use Markdown or Fancy Mode to write down what and remember what happened or you want to accomplish
-- Setand track colored, detailed goals for yourself
+- Set and track colored, detailed goals for yourself
 - Download or print your own life calendar
 - View insightful statistics about your life
 
