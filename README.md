@@ -10,6 +10,8 @@
 
 *Currently 95 users.*
 
+<h4 style="color: red; text-transform: uppercase">NOTE: website has been deactivated, as spammers and web crawlers were eating into hosting costs, and there were no donations. You can still clone the repo and run locally.</h4>
+
 With `life-calendar`, you can view your lifetime at a glance - seeing it anywhere from days to decades. These timeframes are represented by 'life boxes', which you can color-code, annotate, and edit with fancily or with Markdown to plan your goals or remember your achievements.
 
 The goal of `life-calendar` is, and always has been, to serve as a means to help people grow more productive and utilize their time better. Our time here is limited, and we should make the most of it. This calendar acts as a life planner, journal, and accountability app all in one.
