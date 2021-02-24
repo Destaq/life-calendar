@@ -1,14 +1,14 @@
 <h1 align="center">Life Calendar</h1>
 <p align="center">
     <a href="https://onlinelifecalendar.com" alt="Life Calendar website">
-        <img src="https://img.shields.io/endpoint?style=for-the-badge&url=https%3A%2F%2Fonlinelifecalendar.com%2Fapi%2Fusercount%2F" alt="number of users" /></a>
-    <a href="#" alt="star">
          <img src="https://img.shields.io/github/stars/Destaq/life-calendar?style=for-the-badge" /></a>
     <a href="#" alt="Repo Size">
          <img src="https://img.shields.io/github/repo-size/Destaq/life-calendar?style=for-the-badge" /></a>
     <a href="#" alt="Languages">
         <img src="https://img.shields.io/github/languages/count/Destaq/life-calendar?style=for-the-badge" /></a>
 </p>
+
+*Currently 95 users.*
 
 With `life-calendar`, you can view your lifetime at a glance - seeing it anywhere from days to decades. These timeframes are represented by 'life boxes', which you can color-code, annotate, and edit with fancily or with Markdown to plan your goals or remember your achievements.
 
