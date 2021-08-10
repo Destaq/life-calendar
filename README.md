@@ -1,6 +1,6 @@
 <h1 align="center">Life Calendar</h1>
 <p align="center">
-    <a href="https://onlinelifecalendar.com" alt="Life Calendar website">
+    <a href="https://onlinelifecalendar.herokuapp.com" alt="Life Calendar website">
          <img src="https://img.shields.io/github/stars/Destaq/life-calendar?style=for-the-badge" /></a>
     <a href="#" alt="Repo Size">
          <img src="https://img.shields.io/github/repo-size/Destaq/life-calendar?style=for-the-badge" /></a>
@@ -8,16 +8,12 @@
         <img src="https://img.shields.io/github/languages/count/Destaq/life-calendar?style=for-the-badge" /></a>
 </p>
 
-*Currently 95 users.*
-
-<h4 style="color: red; text-transform: uppercase">NOTE: website has been deactivated, as spammers and web crawlers were eating into hosting costs, and there were no donations. You can still clone the repo and run locally.</h4>
-
 With `life-calendar`, you can view your lifetime at a glance - seeing it anywhere from days to decades. These timeframes are represented by 'life boxes', which you can color-code, annotate, and edit with fancily or with Markdown to plan your goals or remember your achievements.
 
 The goal of `life-calendar` is, and always has been, to serve as a means to help people grow more productive and utilize their time better. Our time here is limited, and we should make the most of it. This calendar acts as a life planner, journal, and accountability app all in one.
 
 ## Web App Overview
-The best way to see what the web app can do is to go directly to the [site](https://onlinelifecalendar.com) but here's a visual overview for those who want to stay on GitHub.
+The best way to see what the web app can do is to go directly to the [site](https://onlinelifecalendar.herokuapp.com) but here's a visual overview for those who want to stay on GitHub.
 <br>
 <p align="center">
     <img src="/static/images/appdemo.gif" alt="gif demonstrating core functionality">
@@ -66,20 +62,20 @@ If you are more of a reader, there is already a *very* detailed tutorial [on the
 
 The website itself should be intuitive, but it's always helpful to have a tutorial around to reference. You can access individual parts of the site tutorial using the Table of Contents below.
 
-- [Introduction](https://onlinelifecalendar.com/tutorial#introduction)
-- [Getting Started](https://onlinelifecalendar.com/tutorial#getting-started)
-    - [First Steps](https://onlinelifecalendar.com/tutorial#first-steps)
-    - [Using the Site](https://onlinelifecalendar.com/tutorial#usage)
-    - [Basic Features](https://onlinelifecalendar.com/tutorial#basic-features)
-    - [Advanced Features](https://onlinelifecalendar.com/tutorial#advanced-features)
-- [Other Pages](https://onlinelifecalendar.com/tutorial#other-pages)
-   - [Statistics](https://onlinelifecalendar.com/tutorial#statistics)
-   - [Goals](https://onlinelifecalendar.com/tutorial#goals-description)
-   - [Download](https://onlinelifecalendar.com/tutorial#download)
-- [Closing Notes](https://onlinelifecalendar.com/tutorial#closing-notes)
+- [Introduction](https://onlinelifecalendar.herokuapp.com/tutorial#introduction)
+- [Getting Started](https://onlinelifecalendar.herokuapp.com/tutorial#getting-started)
+    - [First Steps](https://onlinelifecalendar.herokuapp.com/tutorial#first-steps)
+    - [Using the Site](https://onlinelifecalendar.herokuapp.com/tutorial#usage)
+    - [Basic Features](https://onlinelifecalendar.herokuapp.com/tutorial#basic-features)
+    - [Advanced Features](https://onlinelifecalendar.herokuapp.com/tutorial#advanced-features)
+- [Other Pages](https://onlinelifecalendar.herokuapp.com/tutorial#other-pages)
+   - [Statistics](https://onlinelifecalendar.herokuapp.com/tutorial#statistics)
+   - [Goals](https://onlinelifecalendar.herokuapp.com/tutorial#goals-description)
+   - [Download](https://onlinelifecalendar.herokuapp.com/tutorial#download)
+- [Closing Notes](https://onlinelifecalendar.herokuapp.com/tutorial#closing-notes)
 
 ## Running Locally
-It's super easy to get this app up and running on your local machine. While we recommend the [site](https://onlinelifecalendar.com) if you plan on using this long-term, it is beneficial to see how the app works locally, especially if you plan on forking or [contributing](#contributing).
+It's super easy to get this app up and running on your local machine. While we recommend the [site](https://onlinelifecalendar.herokuapp.com) if you plan on using this long-term, it is beneficial to see how the app works locally, especially if you plan on forking or [contributing](#contributing).
 
 Make sure that you have Python>=3.4 installed, as well as PostgreSQL (handy guide [here](https://www.postgresqltutorial.com/install-postgresql/)).
 
@@ -139,7 +135,7 @@ Of course, if you didn't name your database `life_calendar`, you're going to hav
 
 Finally, make sure to comment out line 73 of `init.py` (the Talisman wrapper)! Talisman forces serving over HTTPS, but since localhost is insecure, this will cause an error! You'll need to disable it for the app to run properly in localhost, otherwise you'll get an `HTTPStatus.BAD_REQUEST`.
 
-So now it's time to run the application. All will work as it does on the [official website](https://onlinelifecalendar.com) except for sending emails and getting password verification, as those are managed by the Heroku host, not the code.
+So now it's time to run the application. All will work as it does on the [official website](https://onlinelifecalendar.herokuapp.com) except for sending emails and getting password verification, as those are managed by the Heroku host, not the code.
 
 ```bash
 rm -r migrations
@@ -159,9 +155,9 @@ An easy way to contribute is to fork the project, add some beautiful code, and t
 
 ## Donation
 
-[Life Calendar](https://onlinelifecalendar.com) is free (cue background sounds of happiness). Problem is, server hosting, the PostgreSQL database, and domain name *aren't*. We live on donations, and you can help out by sponsoring the project here on GitHub or through PayPal.
+[Life Calendar](https://onlinelifecalendar.herokuapp.com) is free (cue background sounds of happiness). Problem is, server hosting and the PostgreSQL database, and domain name *aren't*. We live on donations, and you can help out by sponsoring the project here through PayPal.
 
-If you head over to the top you press the heart button to sponsor the project or simply donate below through PayPal.
+If you find this repository or the tool useful to you, please consider donating.
 
 <center>
 <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
