@@ -10,7 +10,7 @@ Flask_SQLAlchemy==2.4.4
 Flask_Classful==0.14.2
 Flask==1.1.2
 alembic==1.4.2
-Flask_Cors==3.0.8
+Flask_Cors==3.0.9
 Flask_Login==0.5.0
 PyJWT==1.7.1
 python-dotenv==0.14.0
