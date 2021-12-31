@@ -104,12 +104,6 @@ async function runGetServer() {
                 .classList.remove("dontShowAtStart");
         } catch {}
     }
-
-    // add donation request (for users only)
-    if ((sessionStorage.getItem("askedDonation") === null) && (localStorage.getItem("age-expectancy") !== null)) {
-        sessionStorage.setItem("askedDonation", true);
-        $("#donationModal").modal("show");
-}
 }
 
 runGetServer();
