@@ -43,11 +43,6 @@ class ContributeView(FlaskView):
     def index(self):
         return render_template("other/contribute.html", contributors = self.contributors)
 
-class DonateView(FlaskView):
-    donators = {}
-    def index(self):
-        return render_template("other/donate.html", donators = self.donators)
-
 class PrivacyPolicyView(FlaskView):
     route_base = "/privacy-policy"
 
