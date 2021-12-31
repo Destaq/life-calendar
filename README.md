@@ -153,21 +153,6 @@ Contributions are welcome! The JavaScript code is far from efficient, and more f
 
 An easy way to contribute is to fork the project, add some beautiful code, and then [open a pull request](https://www.github.com/Destaq/life-calendar/pulls). You'll be credited on the [contributions page](https://onlinelifecalendar.com/contribute/) with your name and GitHub profile link (and will get the warm fuzzy feeling of building a better free product for users).
 
-## Donation
-
-[Life Calendar](https://onlinelifecalendar.herokuapp.com) is free (cue background sounds of happiness). Problem is, server hosting and the PostgreSQL database, and domain name *aren't*. We live on donations, and you can help out by sponsoring the project here through PayPal.
-
-If you find this repository or the tool useful to you, please consider donating.
-
-<center>
-<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-<input type="hidden" name="cmd" value="_s-xclick" />
-<input type="hidden" name="hosted_button_id" value="QAL9PWB9AZ8Z4" />
-<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" />
-<img alt="" border="0" src="https://www.paypal.com/en_CZ/i/scr/pixel.gif" width="1" height="1" />
-</form>
-</center>
-
 ## Last Note
 
 This project has been inspired by [this post](https://waitbutwhy.com/2014/05/life-weeks.html) on [waitbutwhy.com](http://www.waitbutwhy.com), which demonstrated a simple, printable calendar of an average life in weeks. Thanks for introducing the world to this, Tim Urban.
@@ -186,7 +171,7 @@ This project has been inspired by [this post](https://waitbutwhy.com/2014/05/lif
 - [ ] Brainstorm alternative solution to `localStorage` dumping | **@low @much-work @future**
 
 <h2 id="known-issues">Known Issues</h2>
-<p>Below are issues that have been reported by users, but were not previously discovered in testing. They are being given high priority and worked on.</p>
+<p>Below are issues that have been reported by users, but were not previously discovered in testing. Please consider using alternate browsers to get around the respective bugs.</p>
 
 <ul>
     <li>Edge Browser completely unsupported.</li>
