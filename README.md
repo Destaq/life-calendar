@@ -13,7 +13,7 @@ With `life-calendar`, you can view your lifetime at a glance - seeing it anywher
 The goal of `life-calendar` is, and always has been, to serve as a means to help people grow more productive and utilize their time better. Our time here is limited, and we should make the most of it. This calendar acts as a life planner, journal, and accountability app all in one.
 
 ## Web App Overview
-The best way to see what the web app can do is to go directly to the [site](https://onlinelifecalendar.herokuapp.com) but here's a visual overview for those who want to stay on GitHub.
+Due to [the removal of Heroku's free tier](https://help.heroku.com/RSBRUH58/removal-of-heroku-free-product-plans-faq), there's no longer a hosted version of the site. As such, here's a visual overview for those who want to run things locally.
 <br>
 <p align="center">
     <img src="/static/images/appdemo.gif" alt="gif demonstrating core functionality">
@@ -58,24 +58,24 @@ You can click the image below to be directed to a YouTube video tutorial of the 
 
 [![Video Tutorial](/static/images/videopreview.png)](https://www.youtube.com/watch?v=8w8YWZGgqMs)
 
-If you are more of a reader, there is already a *very* detailed tutorial [on the official site](https://onlinelifecalendar.com/tutorial/) which you are more than welcome to check out. It creating an account, basic and advanced features of Life Calendar, and all the other hidden goodies that haven't been mentioned here.
+If you are more of a reader, there is already a *very* detailed tutorial [on my site](https://simonilincev.com/projects/life-calendar-tutorial) which you are more than welcome to check out. It creating an account, basic and advanced features of Life Calendar, and all the other hidden goodies that haven't been mentioned here.
 
-The website itself should be intuitive, but it's always helpful to have a tutorial around to reference. You can access individual parts of the site tutorial using the Table of Contents below.
+You can access individual parts of the site tutorial using the Table of Contents below. Running locally will also generate a `/tutorial` page which has all of this information as well.
 
-- [Introduction](https://onlinelifecalendar.herokuapp.com/tutorial#introduction)
-- [Getting Started](https://onlinelifecalendar.herokuapp.com/tutorial#getting-started)
-    - [First Steps](https://onlinelifecalendar.herokuapp.com/tutorial#first-steps)
-    - [Using the Site](https://onlinelifecalendar.herokuapp.com/tutorial#usage)
-    - [Basic Features](https://onlinelifecalendar.herokuapp.com/tutorial#basic-features)
-    - [Advanced Features](https://onlinelifecalendar.herokuapp.com/tutorial#advanced-features)
-- [Other Pages](https://onlinelifecalendar.herokuapp.com/tutorial#other-pages)
-   - [Statistics](https://onlinelifecalendar.herokuapp.com/tutorial#statistics)
-   - [Goals](https://onlinelifecalendar.herokuapp.com/tutorial#goals-description)
-   - [Download](https://onlinelifecalendar.herokuapp.com/tutorial#download)
-- [Closing Notes](https://onlinelifecalendar.herokuapp.com/tutorial#closing-notes)
+- [Introduction](https://simonilincev.com/projects/life-calendar-tutorial#introduction)
+- [Getting Started](https://simonilincev.com/projects/life-calendar-tutorial#getting-started)
+    - [First Steps](https://simonilincev.com/projects/life-calendar-tutorial#first-steps)
+    - [Using the Site](https://simonilincev.com/projects/life-calendar-tutorial#usage)
+    - [Basic Features](https://simonilincev.com/projects/life-calendar-tutorial#basic-features)
+    - [Advanced Features](https://simonilincev.com/projects/life-calendar-tutorial#advanced-features)
+- [Other Pages](https://simonilincev.com/projects/life-calendar-tutorial#other-pages)
+   - [Statistics](https://simonilincev.com/projects/life-calendar-tutorial#statistics)
+   - [Goals](https://simonilincev.com/projects/life-calendar-tutorial#goals-description)
+   - [Download](https://simonilincev.com/projects/life-calendar-tutorial#download)
+- [Closing Notes](https://simonilincev.com/projects/life-calendar-tutorial#closing-notes)
 
 ## Running Locally
-It's super easy to get this app up and running on your local machine. While we recommend the [site](https://onlinelifecalendar.herokuapp.com) if you plan on using this long-term, it is beneficial to see how the app works locally, especially if you plan on forking or [contributing](#contributing).
+It's super easy to get this app up and running on your local machine.
 
 Make sure that you have Python>=3.4 installed, as well as PostgreSQL (handy guide [here](https://www.postgresqltutorial.com/install-postgresql/)).
 
@@ -135,7 +135,7 @@ Of course, if you didn't name your database `life_calendar`, you're going to hav
 
 Finally, make sure to comment out line 73 of `init.py` (the Talisman wrapper)! Talisman forces serving over HTTPS, but since localhost is insecure, this will cause an error! You'll need to disable it for the app to run properly in localhost, otherwise you'll get an `HTTPStatus.BAD_REQUEST`.
 
-So now it's time to run the application. All will work as it does on the [official website](https://onlinelifecalendar.herokuapp.com) except for sending emails and getting password verification, as those are managed by the Heroku host, not the code.
+So now it's time to run the application. All will work as it used to on the hosted website except for sending emails and getting password verification, as those are managed by the Heroku host, not the code.
 
 ```bash
 rm -r migrations
